@@ -1,0 +1,460 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "antenna_high_gain",
+      "file": "antenna_high_gain.glb",
+      "bytes": 57416,
+      "tris": 3912,
+      "kind": "module"
+    },
+    {
+      "id": "antenna_omni",
+      "file": "antenna_omni.glb",
+      "bytes": 23500,
+      "tris": 2248,
+      "kind": "module"
+    },
+    {
+      "id": "antenna_standard",
+      "file": "antenna_standard.glb",
+      "bytes": 34412,
+      "tris": 2244,
+      "kind": "module"
+    },
+    {
+      "id": "asteroid",
+      "file": "asteroid.glb",
+      "bytes": 199924,
+      "tris": 20640,
+      "kind": "env"
+    },
+    {
+      "id": "astronaut",
+      "file": "astronaut.glb",
+      "bytes": 181644,
+      "tris": 9760,
+      "kind": "character"
+    },
+    {
+      "id": "atmo_sensor",
+      "file": "atmo_sensor.glb",
+      "bytes": 32556,
+      "tris": 2032,
+      "kind": "module"
+    },
+    {
+      "id": "battery_backup",
+      "file": "battery_backup.glb",
+      "bytes": 26848,
+      "tris": 1242,
+      "kind": "module"
+    },
+    {
+      "id": "battery_hc",
+      "file": "battery_hc.glb",
+      "bytes": 42440,
+      "tris": 2316,
+      "kind": "module"
+    },
+    {
+      "id": "chem_main_engine",
+      "file": "chem_main_engine.glb",
+      "bytes": 43352,
+      "tris": 3966,
+      "kind": "module"
+    },
+    {
+      "id": "chem_thrusters",
+      "file": "chem_thrusters.glb",
+      "bytes": 44344,
+      "tris": 3632,
+      "kind": "module"
+    },
+    {
+      "id": "data_buffer",
+      "file": "data_buffer.glb",
+      "bytes": 24384,
+      "tris": 1448,
+      "kind": "module"
+    },
+    {
+      "id": "data_storage",
+      "file": "data_storage.glb",
+      "bytes": 28120,
+      "tris": 1060,
+      "kind": "module"
+    },
+    {
+      "id": "debris",
+      "file": "debris.glb",
+      "bytes": 62264,
+      "tris": 4012,
+      "kind": "env"
+    },
+    {
+      "id": "deep_space_link",
+      "file": "deep_space_link.glb",
+      "bytes": 19972,
+      "tris": 1080,
+      "kind": "module"
+    },
+    {
+      "id": "drill",
+      "file": "drill.glb",
+      "bytes": 40436,
+      "tris": 2352,
+      "kind": "module"
+    },
+    {
+      "id": "earth",
+      "file": "earth.glb",
+      "bytes": 153256,
+      "tris": 15738,
+      "kind": "env"
+    },
+    {
+      "id": "energy_regulator",
+      "file": "energy_regulator.glb",
+      "bytes": 29692,
+      "tris": 1988,
+      "kind": "module"
+    },
+    {
+      "id": "flight_computer",
+      "file": "flight_computer.glb",
+      "bytes": 49616,
+      "tris": 2912,
+      "kind": "module"
+    },
+    {
+      "id": "frame_asteroid",
+      "file": "frame_asteroid.glb",
+      "bytes": 162016,
+      "tris": 13540,
+      "kind": "frame"
+    },
+    {
+      "id": "frame_titan",
+      "file": "frame_titan.glb",
+      "bytes": 144728,
+      "tris": 13288,
+      "kind": "frame"
+    },
+    {
+      "id": "gnc_unit",
+      "file": "gnc_unit.glb",
+      "bytes": 26632,
+      "tris": 1788,
+      "kind": "module"
+    },
+    {
+      "id": "heat_shield",
+      "file": "heat_shield.glb",
+      "bytes": 29064,
+      "tris": 1912,
+      "kind": "capsule_part"
+    },
+    {
+      "id": "heater",
+      "file": "heater.glb",
+      "bytes": 32400,
+      "tris": 3028,
+      "kind": "module"
+    },
+    {
+      "id": "hires_camera",
+      "file": "hires_camera.glb",
+      "bytes": 41648,
+      "tris": 2504,
+      "kind": "module"
+    },
+    {
+      "id": "hq_console",
+      "file": "hq_console.glb",
+      "bytes": 55136,
+      "tris": 2952,
+      "kind": "env"
+    },
+    {
+      "id": "hq_hangar",
+      "file": "hq_hangar.glb",
+      "bytes": 113152,
+      "tris": 8000,
+      "kind": "env"
+    },
+    {
+      "id": "imu",
+      "file": "imu.glb",
+      "bytes": 33356,
+      "tris": 1898,
+      "kind": "module"
+    },
+    {
+      "id": "ion_engine",
+      "file": "ion_engine.glb",
+      "bytes": 44052,
+      "tris": 3748,
+      "kind": "module"
+    },
+    {
+      "id": "landing_system",
+      "file": "landing_system.glb",
+      "bytes": 36932,
+      "tris": 2664,
+      "kind": "overlay"
+    },
+    {
+      "id": "landing_system__asteroid",
+      "file": "landing_system__asteroid.glb",
+      "bytes": 15732,
+      "tris": 2976,
+      "kind": "overlay"
+    },
+    {
+      "id": "launch_pad",
+      "file": "launch_pad.glb",
+      "bytes": 127388,
+      "tris": 9308,
+      "kind": "env"
+    },
+    {
+      "id": "micrometeoroid_shield",
+      "file": "micrometeoroid_shield.glb",
+      "bytes": 28928,
+      "tris": 2166,
+      "kind": "module"
+    },
+    {
+      "id": "nav_camera",
+      "file": "nav_camera.glb",
+      "bytes": 22716,
+      "tris": 1364,
+      "kind": "module"
+    },
+    {
+      "id": "parachute",
+      "file": "parachute.glb",
+      "bytes": 37672,
+      "tris": 2976,
+      "kind": "module"
+    },
+    {
+      "id": "pdu",
+      "file": "pdu.glb",
+      "bytes": 49940,
+      "tris": 3262,
+      "kind": "module"
+    },
+    {
+      "id": "power_bus",
+      "file": "power_bus.glb",
+      "bytes": 34280,
+      "tris": 3178,
+      "kind": "overlay"
+    },
+    {
+      "id": "power_bus__asteroid",
+      "file": "power_bus__asteroid.glb",
+      "bytes": 46096,
+      "tris": 3024,
+      "kind": "overlay"
+    },
+    {
+      "id": "propellant_tank",
+      "file": "propellant_tank.glb",
+      "bytes": 36608,
+      "tris": 3464,
+      "kind": "module"
+    },
+    {
+      "id": "radar_altimeter",
+      "file": "radar_altimeter.glb",
+      "bytes": 31368,
+      "tris": 1292,
+      "kind": "module"
+    },
+    {
+      "id": "radiation_sensor",
+      "file": "radiation_sensor.glb",
+      "bytes": 22516,
+      "tris": 1408,
+      "kind": "module"
+    },
+    {
+      "id": "radiation_shield",
+      "file": "radiation_shield.glb",
+      "bytes": 25000,
+      "tris": 1728,
+      "kind": "module"
+    },
+    {
+      "id": "reaction_wheels",
+      "file": "reaction_wheels.glb",
+      "bytes": 48900,
+      "tris": 3220,
+      "kind": "module"
+    },
+    {
+      "id": "recovery_beacon",
+      "file": "recovery_beacon.glb",
+      "bytes": 19700,
+      "tris": 902,
+      "kind": "module"
+    },
+    {
+      "id": "reinforced_frame",
+      "file": "reinforced_frame.glb",
+      "bytes": 42164,
+      "tris": 3672,
+      "kind": "overlay"
+    },
+    {
+      "id": "reinforced_frame__asteroid",
+      "file": "reinforced_frame__asteroid.glb",
+      "bytes": 41060,
+      "tris": 2724,
+      "kind": "overlay"
+    },
+    {
+      "id": "return_capsule",
+      "file": "return_capsule.glb",
+      "bytes": 38060,
+      "tris": 3362,
+      "kind": "module"
+    },
+    {
+      "id": "robotic_arm",
+      "file": "robotic_arm.glb",
+      "bytes": 36876,
+      "tris": 1368,
+      "kind": "module"
+    },
+    {
+      "id": "rocket",
+      "file": "rocket.glb",
+      "bytes": 106596,
+      "tris": 10896,
+      "kind": "big"
+    },
+    {
+      "id": "rotor_system",
+      "file": "rotor_system.glb",
+      "bytes": 27952,
+      "tris": 3576,
+      "kind": "overlay"
+    },
+    {
+      "id": "rtg",
+      "file": "rtg.glb",
+      "bytes": 48120,
+      "tris": 3808,
+      "kind": "module"
+    },
+    {
+      "id": "sample_container",
+      "file": "sample_container.glb",
+      "bytes": 29984,
+      "tris": 1824,
+      "kind": "module"
+    },
+    {
+      "id": "sample_sealer",
+      "file": "sample_sealer.glb",
+      "bytes": 25624,
+      "tris": 1400,
+      "kind": "module"
+    },
+    {
+      "id": "signal_amp",
+      "file": "signal_amp.glb",
+      "bytes": 20340,
+      "tris": 1148,
+      "kind": "module"
+    },
+    {
+      "id": "solar_array",
+      "file": "solar_array.glb",
+      "bytes": 41272,
+      "tris": 1764,
+      "kind": "module"
+    },
+    {
+      "id": "spectrometer",
+      "file": "spectrometer.glb",
+      "bytes": 32028,
+      "tris": 1304,
+      "kind": "module"
+    },
+    {
+      "id": "star_tracker",
+      "file": "star_tracker.glb",
+      "bytes": 24608,
+      "tris": 1604,
+      "kind": "module"
+    },
+    {
+      "id": "temp_sensor",
+      "file": "temp_sensor.glb",
+      "bytes": 21820,
+      "tris": 1308,
+      "kind": "module"
+    },
+    {
+      "id": "test_stand",
+      "file": "test_stand.glb",
+      "bytes": 76020,
+      "tris": 6072,
+      "kind": "env"
+    },
+    {
+      "id": "thermal_insulation",
+      "file": "thermal_insulation.glb",
+      "bytes": 35472,
+      "tris": 3696,
+      "kind": "overlay"
+    },
+    {
+      "id": "thermal_insulation__asteroid",
+      "file": "thermal_insulation__asteroid.glb",
+      "bytes": 30620,
+      "tris": 2160,
+      "kind": "overlay"
+    },
+    {
+      "id": "thermal_radiator",
+      "file": "thermal_radiator.glb",
+      "bytes": 27912,
+      "tris": 1344,
+      "kind": "module"
+    },
+    {
+      "id": "titan_terrain",
+      "file": "titan_terrain.glb",
+      "bytes": 286480,
+      "tris": 38595,
+      "kind": "env"
+    },
+    {
+      "id": "transceiver",
+      "file": "transceiver.glb",
+      "bytes": 31844,
+      "tris": 1682,
+      "kind": "module"
+    },
+    {
+      "id": "vibration_dampers",
+      "file": "vibration_dampers.glb",
+      "bytes": 38232,
+      "tris": 3660,
+      "kind": "module"
+    },
+    {
+      "id": "wide_camera",
+      "file": "wide_camera.glb",
+      "bytes": 28916,
+      "tris": 2022,
+      "kind": "module"
+    }
+  ]
+}

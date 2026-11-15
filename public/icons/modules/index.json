@@ -1,0 +1,626 @@
+{
+ "rtg": {
+  "1x": "rtg.webp",
+  "2x": "rtg@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/rtg.glb",
+  "department": "power",
+  "lum": 0.16,
+  "cover": 0.43
+ },
+ "solar_array": {
+  "1x": "solar_array.webp",
+  "2x": "solar_array@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/solar_array.glb",
+  "department": "power",
+  "lum": 0.21,
+  "cover": 0.2
+ },
+ "battery_hc": {
+  "1x": "battery_hc.webp",
+  "2x": "battery_hc@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/battery_hc.glb",
+  "department": "power",
+  "lum": 0.39,
+  "cover": 0.47
+ },
+ "battery_backup": {
+  "1x": "battery_backup.webp",
+  "2x": "battery_backup@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/battery_backup.glb",
+  "department": "power",
+  "lum": 0.27,
+  "cover": 0.52
+ },
+ "pdu": {
+  "1x": "pdu.webp",
+  "2x": "pdu@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/pdu.glb",
+  "department": "power",
+  "lum": 0.27,
+  "cover": 0.48
+ },
+ "energy_regulator": {
+  "1x": "energy_regulator.webp",
+  "2x": "energy_regulator@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/energy_regulator.glb",
+  "department": "power",
+  "lum": 0.37,
+  "cover": 0.42
+ },
+ "power_bus": {
+  "1x": "power_bus.webp",
+  "2x": "power_bus@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/power_bus.glb",
+  "department": "power",
+  "lum": 0.13,
+  "cover": 0.13
+ },
+ "chem_main_engine": {
+  "1x": "chem_main_engine.webp",
+  "2x": "chem_main_engine@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/chem_main_engine.glb",
+  "department": "propulsion",
+  "lum": 0.15,
+  "cover": 0.3
+ },
+ "chem_thrusters": {
+  "1x": "chem_thrusters.webp",
+  "2x": "chem_thrusters@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/chem_thrusters.glb",
+  "department": "propulsion",
+  "lum": 0.26,
+  "cover": 0.43
+ },
+ "ion_engine": {
+  "1x": "ion_engine.webp",
+  "2x": "ion_engine@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/ion_engine.glb",
+  "department": "propulsion",
+  "lum": 0.24,
+  "cover": 0.41
+ },
+ "propellant_tank": {
+  "1x": "propellant_tank.webp",
+  "2x": "propellant_tank@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/propellant_tank.glb",
+  "department": "propulsion",
+  "lum": 0.45,
+  "cover": 0.36
+ },
+ "reaction_wheels": {
+  "1x": "reaction_wheels.webp",
+  "2x": "reaction_wheels@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/reaction_wheels.glb",
+  "department": "propulsion",
+  "lum": 0.48,
+  "cover": 0.51
+ },
+ "rotor_system": {
+  "1x": "rotor_system.webp",
+  "2x": "rotor_system@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/rotor_system.glb",
+  "department": "propulsion",
+  "lum": 0.49,
+  "cover": 0.22
+ },
+ "landing_system": {
+  "1x": "landing_system.webp",
+  "2x": "landing_system@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/landing_system.glb",
+  "department": "propulsion",
+  "lum": 0.31,
+  "cover": 0.15
+ },
+ "landing_system__asteroid": {
+  "1x": "landing_system__asteroid.webp",
+  "2x": "landing_system__asteroid@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/landing_system__asteroid.glb",
+  "department": "propulsion",
+  "lum": 0.26,
+  "cover": 0.22
+ },
+ "nav_camera": {
+  "1x": "nav_camera.webp",
+  "2x": "nav_camera@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/nav_camera.glb",
+  "department": "navigation",
+  "lum": 0.31,
+  "cover": 0.41
+ },
+ "star_tracker": {
+  "1x": "star_tracker.webp",
+  "2x": "star_tracker@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/star_tracker.glb",
+  "department": "navigation",
+  "lum": 0.19,
+  "cover": 0.27
+ },
+ "imu": {
+  "1x": "imu.webp",
+  "2x": "imu@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/imu.glb",
+  "department": "navigation",
+  "lum": 0.24,
+  "cover": 0.49
+ },
+ "radar_altimeter": {
+  "1x": "radar_altimeter.webp",
+  "2x": "radar_altimeter@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/radar_altimeter.glb",
+  "department": "navigation",
+  "lum": 0.43,
+  "cover": 0.3
+ },
+ "flight_computer": {
+  "1x": "flight_computer.webp",
+  "2x": "flight_computer@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/flight_computer.glb",
+  "department": "navigation",
+  "lum": 0.35,
+  "cover": 0.43
+ },
+ "gnc_unit": {
+  "1x": "gnc_unit.webp",
+  "2x": "gnc_unit@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/gnc_unit.glb",
+  "department": "navigation",
+  "lum": 0.43,
+  "cover": 0.43
+ },
+ "hires_camera": {
+  "1x": "hires_camera.webp",
+  "2x": "hires_camera@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/hires_camera.glb",
+  "department": "science",
+  "lum": 0.28,
+  "cover": 0.32
+ },
+ "wide_camera": {
+  "1x": "wide_camera.webp",
+  "2x": "wide_camera@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/wide_camera.glb",
+  "department": "science",
+  "lum": 0.34,
+  "cover": 0.44
+ },
+ "spectrometer": {
+  "1x": "spectrometer.webp",
+  "2x": "spectrometer@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/spectrometer.glb",
+  "department": "science",
+  "lum": 0.43,
+  "cover": 0.44
+ },
+ "atmo_sensor": {
+  "1x": "atmo_sensor.webp",
+  "2x": "atmo_sensor@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/atmo_sensor.glb",
+  "department": "science",
+  "lum": 0.27,
+  "cover": 0.13
+ },
+ "temp_sensor": {
+  "1x": "temp_sensor.webp",
+  "2x": "temp_sensor@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/temp_sensor.glb",
+  "department": "science",
+  "lum": 0.38,
+  "cover": 0.33
+ },
+ "radiation_sensor": {
+  "1x": "radiation_sensor.webp",
+  "2x": "radiation_sensor@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/radiation_sensor.glb",
+  "department": "science",
+  "lum": 0.39,
+  "cover": 0.33
+ },
+ "drill": {
+  "1x": "drill.webp",
+  "2x": "drill@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/drill.glb",
+  "department": "science",
+  "lum": 0.2,
+  "cover": 0.17
+ },
+ "robotic_arm": {
+  "1x": "robotic_arm.webp",
+  "2x": "robotic_arm@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/robotic_arm.glb",
+  "department": "science",
+  "lum": 0.3,
+  "cover": 0.37
+ },
+ "sample_container": {
+  "1x": "sample_container.webp",
+  "2x": "sample_container@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/sample_container.glb",
+  "department": "science",
+  "lum": 0.44,
+  "cover": 0.43
+ },
+ "sample_sealer": {
+  "1x": "sample_sealer.webp",
+  "2x": "sample_sealer@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/sample_sealer.glb",
+  "department": "science",
+  "lum": 0.34,
+  "cover": 0.45
+ },
+ "data_storage": {
+  "1x": "data_storage.webp",
+  "2x": "data_storage@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/data_storage.glb",
+  "department": "science",
+  "lum": 0.38,
+  "cover": 0.52
+ },
+ "antenna_standard": {
+  "1x": "antenna_standard.webp",
+  "2x": "antenna_standard@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/antenna_standard.glb",
+  "department": "comms",
+  "lum": 0.28,
+  "cover": 0.15
+ },
+ "antenna_high_gain": {
+  "1x": "antenna_high_gain.webp",
+  "2x": "antenna_high_gain@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/antenna_high_gain.glb",
+  "department": "comms",
+  "lum": 0.28,
+  "cover": 0.29
+ },
+ "antenna_omni": {
+  "1x": "antenna_omni.webp",
+  "2x": "antenna_omni@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/antenna_omni.glb",
+  "department": "comms",
+  "lum": 0.19,
+  "cover": 0.19
+ },
+ "signal_amp": {
+  "1x": "signal_amp.webp",
+  "2x": "signal_amp@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/signal_amp.glb",
+  "department": "comms",
+  "lum": 0.32,
+  "cover": 0.5
+ },
+ "transceiver": {
+  "1x": "transceiver.webp",
+  "2x": "transceiver@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/transceiver.glb",
+  "department": "comms",
+  "lum": 0.21,
+  "cover": 0.43
+ },
+ "data_buffer": {
+  "1x": "data_buffer.webp",
+  "2x": "data_buffer@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/data_buffer.glb",
+  "department": "comms",
+  "lum": 0.34,
+  "cover": 0.49
+ },
+ "deep_space_link": {
+  "1x": "deep_space_link.webp",
+  "2x": "deep_space_link@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/deep_space_link.glb",
+  "department": "comms",
+  "lum": 0.23,
+  "cover": 0.32
+ },
+ "thermal_insulation": {
+  "1x": "thermal_insulation.webp",
+  "2x": "thermal_insulation@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/thermal_insulation.glb",
+  "department": "structure",
+  "lum": 0.14,
+  "cover": 0.26
+ },
+ "thermal_insulation__asteroid": {
+  "1x": "thermal_insulation__asteroid.webp",
+  "2x": "thermal_insulation__asteroid@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/thermal_insulation__asteroid.glb",
+  "department": "structure",
+  "lum": 0.16,
+  "cover": 0.36
+ },
+ "thermal_radiator": {
+  "1x": "thermal_radiator.webp",
+  "2x": "thermal_radiator@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/thermal_radiator.glb",
+  "department": "structure",
+  "lum": 0.37,
+  "cover": 0.37
+ },
+ "heater": {
+  "1x": "heater.webp",
+  "2x": "heater@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/heater.glb",
+  "department": "structure",
+  "lum": 0.53,
+  "cover": 0.32
+ },
+ "radiation_shield": {
+  "1x": "radiation_shield.webp",
+  "2x": "radiation_shield@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/radiation_shield.glb",
+  "department": "structure",
+  "lum": 0.15,
+  "cover": 0.39
+ },
+ "reinforced_frame": {
+  "1x": "reinforced_frame.webp",
+  "2x": "reinforced_frame@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/reinforced_frame.glb",
+  "department": "structure",
+  "lum": 0.18,
+  "cover": 0.24
+ },
+ "reinforced_frame__asteroid": {
+  "1x": "reinforced_frame__asteroid.webp",
+  "2x": "reinforced_frame__asteroid@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/reinforced_frame__asteroid.glb",
+  "department": "structure",
+  "lum": 0.2,
+  "cover": 0.27
+ },
+ "micrometeoroid_shield": {
+  "1x": "micrometeoroid_shield.webp",
+  "2x": "micrometeoroid_shield@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/micrometeoroid_shield.glb",
+  "department": "structure",
+  "lum": 0.35,
+  "cover": 0.3
+ },
+ "vibration_dampers": {
+  "1x": "vibration_dampers.webp",
+  "2x": "vibration_dampers@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/vibration_dampers.glb",
+  "department": "structure",
+  "lum": 0.34,
+  "cover": 0.41
+ },
+ "return_capsule": {
+  "1x": "return_capsule.webp",
+  "2x": "return_capsule@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/return_capsule.glb",
+  "department": "recovery",
+  "lum": 0.48,
+  "cover": 0.48
+ },
+ "heat_shield": {
+  "1x": "heat_shield.webp",
+  "2x": "heat_shield@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/heat_shield.glb",
+  "department": "recovery",
+  "lum": 0.57,
+  "cover": 0.38
+ },
+ "parachute": {
+  "1x": "parachute.webp",
+  "2x": "parachute@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/parachute.glb",
+  "department": "recovery",
+  "lum": 0.42,
+  "cover": 0.38
+ },
+ "recovery_beacon": {
+  "1x": "recovery_beacon.webp",
+  "2x": "recovery_beacon@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "public/models/recovery_beacon.glb",
+  "department": "recovery",
+  "lum": 0.31,
+  "cover": 0.29
+ }
+}

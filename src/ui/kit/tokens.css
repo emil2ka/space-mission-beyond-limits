@@ -1,0 +1,149 @@
+/* =====================================================================
+   Space Mission: Beyond Limits — tokens.css
+   Comic-ink UI language. Plain CSS custom properties, framework-free.
+   ===================================================================== */
+
+:root {
+  /* ---------- INK ---------- */
+  --ink: #12142A;            /* outlines, text on light, hard shadows */
+  --ink-deep: #070919;       /* hard shadow on dark surfaces */
+  --ink-soft: #2B2E4A;
+
+  /* ---------- SPACE BASE (blends with 3D canvas) ---------- */
+  --space: #0E1330;
+  --space-2: #161B42;
+  --space-3: #20275A;
+  --titan-haze: #4A2A14;     /* Titan viewport placeholder */
+
+  /* ---------- CREAM SHEET (reading surfaces) ---------- */
+  --cream: #F3EAD7;
+  --cream-hi: #FBF6EA;       /* input fill, hover */
+  --cream-2: #E6D8B9;        /* cel shade tone */
+  --cream-3: #D3C199;        /* deep shade */
+  --cream-off: #DED7C8;      /* disabled / taken */
+
+  /* ---------- NIGHT PANEL (HUD surfaces) ---------- */
+  --night: #2A2840;
+  --night-2: #1F1D32;
+  --night-3: #37344F;
+  --night-rim: #4D4970;      /* inner dividers on night */
+  --night-edge: #6E6889;     /* 2px outer rim of night panels on space (3.5:1) */
+  --graphite: #3A3D4F;
+  --purple-grey: #6E6889;
+  --purple-grey-hi: #A59FC0;
+
+  /* ---------- ACCENTS  (base / cel shade / light tint / text-on-cream) ---------- */
+  --teal: #34C3B5;   --teal-2: #1F9C91;   --teal-3: #A8E8DF;   --teal-ink: #0B6E66;
+  --orange: #FF8A3D; --orange-2: #E0691E; --orange-3: #FFD3B3; --orange-ink: #A8430A;
+  --gold: #D9A93A;   --gold-2: #B0841F;   --gold-3: #F2DC9B;   --gold-ink: #7A5A10;
+
+  /* ---------- STATUS (always paired with icon + word) ---------- */
+  --ok: #4CCB94;   --ok-2: #2E9F6F;   --ok-3: #C3EED8;   --ok-ink: #0E6B45;
+  --warn: #F5C443; --warn-2: #D29E1C; --warn-3: #FBE7A6; --warn-ink: #7A5600;
+  --risk: #FF8A3D; --risk-2: #E0691E; --risk-3: #FFD3B3; --risk-ink: #A8430A;
+  --crit: #E0525A; --crit-2: #B63A44; --crit-3: #F6C4C2; --crit-ink: #A31F2B;
+  --info: #A9B4EC; --info-2: #8592D4; --info-3: #DCE1F8; --info-ink: #36418A;
+  --off: #D6D1E3;  --off-2: #B4AEC8;  --off-ink: #4A4560;
+  --crit-on-night: #FF959A;  /* crisis text on night panels (6.5:1) */
+  --crisis-tint: rgba(232, 84, 52, .25);
+
+  /* ---------- ROLES ---------- */
+  --role-commander: #FF9EC7; --role-commander-2: #E077A6;
+  --role-engineer:  #FFA552; --role-engineer-2:  #E0832C;
+  --role-science:   #3FD0C0; --role-science-2:   #22A596;
+  --role-comms:     #B8A9F0; --role-comms-2:     #9483D6;
+
+  /* ---------- TEXT ON SURFACES ---------- */
+  --text-on-cream: #12142A;          /* 15.0:1 */
+  --text-on-cream-muted: #5A5470;    /*  5.9:1 */
+  --text-on-night: #F3EAD7;          /* 11.8:1 */
+  --text-on-night-muted: #BDB7D6;    /*  7.3:1 */
+  --text-on-space: #F3EAD7;          /* 15.1:1 */
+  --text-on-space-muted: #AEB3D6;    /*  8.9:1 */
+  --text-on-accent: #12142A;         /* ink on teal 8.3 · orange 7.7 · gold 8.4 · crit 4.8 */
+
+  /* ---------- FOCUS ---------- */
+  --focus-on-dark: #34C3B5;          /* 8.3:1 on space */
+  --focus-on-light: #0B8A80;         /* 3.5:1 on cream */
+  --focus-w: 3px;
+  --focus-offset: 3px;
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-display: 'Rubik', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', monospace;
+  --fs-display: 56px; --lh-display: 1.02;
+  --fs-h1: 36px;      --lh-h1: 1.1;
+  --fs-h2: 26px;      --lh-h2: 1.15;
+  --fs-h3: 19px;      --lh-h3: 1.2;
+  --fs-body: 15px;    --lh-body: 1.45;
+  --fs-small: 13px;   --lh-small: 1.35;
+  --fs-micro: 12px;   /* absolute floor */
+  --fs-mono: 14px;
+  --fs-num-xl: 80px;  --fs-num-l: 48px; --fs-num-m: 28px;
+  --fs-body-phone: 16px;
+
+  /* ---------- SPACING (4px grid) ---------- */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px;
+  --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px; --sp-16: 64px;
+
+  /* ---------- RADII ---------- */
+  --r-xs: 4px; --r-s: 8px; --r-m: 12px; --r-l: 16px; --r-xl: 24px; --r-pill: 999px;
+
+  /* ---------- OUTLINES ---------- */
+  --bw-s: 2px;     /* small elements: chips, icons, stats */
+  --bw: 2.5px;     /* buttons, inputs, tracks */
+  --bw-l: 3px;     /* panels, cards, modals */
+
+  /* ---------- HARD INK SHADOWS (never blurred) ---------- */
+  --sh-1: 2px 2px 0 var(--ink);
+  --sh-2: 4px 4px 0 var(--ink);
+  --sh-3: 6px 6px 0 var(--ink);
+  --sh-dark: 5px 5px 0 var(--ink-deep);
+
+  /* ---------- HALFTONE (CSS-only dot patterns) ---------- */
+  --ht-ink: radial-gradient(circle, rgba(18,20,42,.30) 1.3px, transparent 1.7px);
+  --ht-ink-light: radial-gradient(circle, rgba(18,20,42,.16) 1px, transparent 1.4px);
+  --ht-cream: radial-gradient(circle, rgba(243,234,215,.16) 1.1px, transparent 1.5px);
+  --ht-cream-faint: radial-gradient(circle, rgba(243,234,215,.07) 1px, transparent 1.4px);
+  --ht-crit: radial-gradient(circle, rgba(150,24,34,.55) 1.9px, transparent 2.3px);
+  --ht-gold: radial-gradient(circle, rgba(122,90,16,.38) 1.5px, transparent 1.9px);
+  --ht-orange: radial-gradient(circle, rgba(255,160,90,.20) 1.4px, transparent 1.8px);
+  --ht-size-s: 5px 5px; --ht-size: 7px 7px; --ht-size-l: 10px 10px;
+  --ht-mask-corner: radial-gradient(circle at 100% 0%, #000 0, transparent 72%);
+  --ht-mask-side: linear-gradient(100deg, transparent 62%, #000 100%);
+  --ht-mask-edges: radial-gradient(ellipse 72% 68% at 50% 50%, transparent 58%, #000 88%);
+  --bg-stars:
+    radial-gradient(circle, rgba(243,234,215,.10) 1px, transparent 1.5px) 0 0 / 24px 24px,
+    radial-gradient(circle, rgba(243,234,215,.05) 1px, transparent 1.4px) 12px 12px / 24px 24px;
+
+  /* ---------- SHAPES ---------- */
+  --burst-shape: polygon(50% 0%, 59% 14%, 74% 5%, 77% 22%, 94% 24%, 87% 39%, 100% 50%, 87% 60%, 95% 76%, 77% 77%, 75% 95%, 60% 86%, 50% 100%, 40% 86%, 25% 94%, 23% 77%, 5% 76%, 13% 60%, 0% 50%, 13% 40%, 6% 24%, 23% 23%, 26% 5%, 41% 14%);
+
+  /* ---------- MOTION ---------- */
+  --dur-press: 80ms;
+  --dur-fast: 120ms;
+  --dur-base: 160ms;
+  --dur-slow: 200ms;
+  --dur-toast: 4000ms;
+  --dur-radio: 2000ms;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-snap: cubic-bezier(.34, 1.56, .64, 1);   /* slight overshoot */
+  --ease-in: cubic-bezier(.5, 0, .75, 0);
+
+  /* ---------- Z-LAYERS ---------- */
+  --z-base: 0;
+  --z-hud: 10;        /* chips over 3D */
+  --z-sticky: 20;     /* sticky 3D on phone, top bar */
+  --z-sheet: 30;      /* bottom sheets */
+  --z-crisis: 40;     /* crisis tint / blackout */
+  --z-radio: 45;      /* radio speech bubble */
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  /* ---------- BREAKPOINTS (reference; CSS vars can't be used in queries) ----------
+     phone ≤ 600px · tablet 601–900px · desktop > 900px                      */
+  --bp-phone: 600px;
+  --bp-tablet: 900px;
+}

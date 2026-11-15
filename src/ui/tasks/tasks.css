@@ -1,0 +1,243 @@
+/* Individual Tasks (screen 10) + its in-flight widgets. Comic UI kit: cream reading cards, night HUD panels,
+   2–3 px ink outlines, hard shadows, no blur. Phone (≤ 600 px) stacks everything in one column. */
+
+.app .tk-screen { min-height: 100vh; min-height: 100dvh; }
+.app .tk-page {
+  display: grid; gap: var(--sp-4); align-content: start; width: 100%; max-width: 1440px; margin: 0 auto;
+  padding: var(--sp-4) max(var(--sp-4), var(--sar)) var(--sp-6) max(var(--sp-4), var(--sal));
+}
+.app .tk-sub { margin: var(--sp-3) 0 var(--sp-2); font-size: 16px; }
+.app .tk-foot { border-top: 0; padding-top: 0; }
+
+/* ---------- team strip ---------- */
+.app .tk-team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-3); }
+.app .tk-team__role {
+  --st: var(--night-3);
+  display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; column-gap: var(--sp-2); align-items: center;
+  width: 100%; min-height: 64px; padding: 8px 10px; text-align: left;
+  border: var(--bw) solid var(--ink); border-radius: var(--r-m); background: var(--night); color: var(--text-on-night);
+  box-shadow: var(--sh-dark); cursor: pointer;
+}
+.app .tk-team__role:disabled { cursor: default; opacity: 1; }
+.app .tk-team__role > .ic { grid-row: 1 / span 2; }
+.app .tk-team__text { display: flex; flex-direction: column; min-width: 0; }
+.app .tk-team__name { font: 800 14px/1.15 var(--font-display); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app .tk-team__who { font-size: 12px; color: var(--text-on-night-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app .tk-team__state {
+  grid-column: 2; display: inline-flex; align-items: center; gap: 4px; width: fit-content; margin-top: 4px; padding: 1px 8px 1px 2px;
+  border: var(--bw-s) solid var(--ink); border-radius: var(--r-pill); background: var(--st); color: var(--ink); font: 700 12px/1.2 var(--font-display);
+}
+.app .tk-team__role--todo .tk-team__state { --st: var(--off); }
+.app .tk-team__role--stale .tk-team__state { --st: var(--warn); }
+.app .tk-team__role--excellent .tk-team__state { --st: var(--ok); }
+.app .tk-team__role--good .tk-team__state { --st: var(--teal-3); }
+.app .tk-team__role--weak .tk-team__state { --st: var(--risk-3); }
+.app .tk-team__role.is-current { outline: 3px solid var(--teal); outline-offset: 2px; }
+
+/* ---------- layout ---------- */
+.app .tk-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 360px); gap: var(--sp-4); align-items: start; }
+.app .tk-card { padding: 0 0 var(--sp-4); overflow: hidden; }
+.app .tk-card > :not(.card__head) { margin-left: var(--sp-4); margin-right: var(--sp-4); }
+.app .tk-card .card__head { margin-bottom: var(--sp-3); }
+.app .tk-goal { display: flex; gap: var(--sp-2); align-items: flex-start; margin-bottom: var(--sp-3); font: 700 16px/1.35 var(--font-body); }
+.app .tk-goal .ic { flex: none; }
+.app .tk-side { position: sticky; top: var(--sp-3); display: grid; gap: var(--sp-3); padding: var(--sp-4); }
+.app .tk-preview { padding: 10px 12px; border: var(--bw-s) solid var(--ink); border-radius: var(--r-m); background: var(--night-2); box-shadow: var(--sh-1); }
+.app .tk-preview__line { margin-top: 4px; font: 800 17px/1.3 var(--font-display); color: var(--cream); }
+.app .tk-effect p { margin-top: 4px; color: var(--text-on-night-muted); }
+.app .tk-actions { display: grid; gap: var(--sp-2); }
+.app .tk-actions .btn--lg { width: 100%; }
+.app .tk-skip { display: grid; gap: var(--sp-2); }
+.app .tk-next { padding: var(--sp-4); display: grid; gap: var(--sp-3); }
+.app .tk-next.is-ready { box-shadow: 0 0 0 3px var(--ok), var(--sh-dark); }
+.app .tk-planner { max-height: 70vh; overflow: auto; padding-right: 4px; }
+
+/* ---------- result ---------- */
+.app .tk-result {
+  --r-bg: var(--ok-3);
+  display: grid; gap: var(--sp-2); padding: 10px 12px; border: var(--bw-l) solid var(--ink); border-radius: var(--r-m);
+  background: var(--r-bg); color: var(--ink); box-shadow: var(--sh-2);
+}
+.app .tk-result--good { --r-bg: var(--teal-3); }
+.app .tk-result--weak { --r-bg: var(--risk-3); }
+.app .tk-result__grade { font: 900 22px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .02em; }
+.app .tk-result__grade small { font-size: 13px; text-transform: none; }
+.app .tk-result__notes { display: grid; gap: 2px; padding-left: 18px; list-style: disc; font-size: 14px; }
+
+/* ---------- reorder list ---------- */
+.app .tk-reorder { display: grid; gap: var(--sp-2); }
+.app .tk-reorder__row {
+  display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: var(--sp-2);
+  min-height: 48px; padding: 4px 6px 4px 4px; border: var(--bw-s) solid var(--ink); border-radius: var(--r-m);
+  background: var(--cream-hi); box-shadow: var(--sh-1); touch-action: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.app .tk-reorder__row.is-dragging { background: var(--teal-3); box-shadow: var(--sh-2); transform: translate(-2px, -2px); z-index: 2; }
+.app .tk-reorder__row--muted { background: var(--cream-off); color: var(--text-on-cream-muted); }
+.app .tk-reorder__handle {
+  display: grid; place-items: center; width: 34px; height: 40px; border: var(--bw-s) solid var(--ink); border-radius: var(--r-s);
+  background: var(--cream-2); color: var(--ink); font: 900 14px/1 var(--font-mono); letter-spacing: -2px; cursor: grab; touch-action: none;
+}
+.app .tk-reorder__row.is-dragging .tk-reorder__handle { cursor: grabbing; background: var(--teal); }
+.app .tk-reorder__n {
+  display: grid; place-items: center; width: 28px; height: 28px; border: var(--bw-s) solid var(--ink); border-radius: 50%;
+  background: var(--orange); color: var(--ink); font: 800 13px/1 var(--font-mono);
+}
+.app .tk-reorder__body { min-width: 0; }
+.app .tk-reorder__arrows { display: inline-flex; gap: 2px; }
+.app .tk-reorder__arrows .btn--mini { min-width: 30px; padding: 0 6px; }
+.app .tk-goalrow, .app .tk-sacrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; min-width: 0; font-size: 14px; }
+.app .tk-goalrow b, .app .tk-sacrow b { font: 800 14px/1.2 var(--font-display); }
+.app .tk-goalrow__sys { display: inline-flex; gap: 2px; margin-left: auto; }
+.app .tk-sacrow__goals { flex-basis: 100%; color: var(--text-on-cream-muted); }
+.app .tk-stars { color: var(--gold-2); letter-spacing: 1px; font-size: 13px; }
+.app .tk-stars i { font-style: normal; color: var(--cream-3); }
+.app .tk-locked { display: flex; gap: 6px; align-items: flex-start; margin-top: var(--sp-2); color: var(--text-on-cream-muted); }
+.app .tk-cmd { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+
+/* ---------- wiring schematic ---------- */
+.app .tk-wiring {
+  display: grid; grid-template-columns: 74px minmax(0, 1fr) 74px; gap: 0; align-items: stretch;
+  padding: var(--sp-3); border: var(--bw-l) solid var(--ink); border-radius: var(--r-m); background: var(--night-2); color: var(--text-on-night); box-shadow: var(--sh-2);
+}
+.app .tk-wiring--compact { grid-template-columns: 52px minmax(0, 1fr) 52px; padding: var(--sp-2); }
+.app .tk-rail {
+  --rail: var(--teal);
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 4px;
+  border: var(--bw) solid var(--ink); border-radius: var(--r-m); background: var(--night-3); color: var(--cream);
+  font: 800 11px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; text-align: center;
+}
+.app .tk-rail--secondary { --rail: var(--orange); }
+.app .tk-rail.is-armed { box-shadow: 0 0 0 3px var(--warn); cursor: pointer; }
+.app .tk-rail:disabled { opacity: 1; cursor: default; }
+.app .tk-rail.is-over { --rail: var(--crit); background: #4a2430; }
+.app .tk-rail__name { font-size: 13px; }
+.app .tk-rail__pipe { position: relative; flex: 1; width: 16px; min-height: 60px; border: var(--bw-s) solid var(--ink); border-radius: 8px; background: var(--night-2); overflow: hidden; }
+.app .tk-rail__pipe i { position: absolute; left: 0; right: 0; bottom: 0; background: var(--rail); }
+.app .tk-rail__pipe b { position: absolute; left: 0; right: 0; height: 2px; background: var(--cream); }
+.app .tk-rail__load { display: grid; padding: 1px 4px; border-radius: 4px; background: var(--night); font-size: 13px; text-transform: none; }
+.app .tk-rail__load small { opacity: .7; font-size: 10px; }
+.app .tk-rail__over { padding: 1px 4px; border: var(--bw-s) solid var(--ink); border-radius: 4px; background: var(--crit); color: var(--ink); }
+.app .tk-wiring__nodes { display: grid; gap: 6px; padding: 2px 0; }
+.app .tk-node { display: grid; grid-template-columns: 26px minmax(0, 1fr) 26px; align-items: center; }
+.app .tk-node__wire { height: 26px; border: 0; background: transparent; position: relative; cursor: pointer; padding: 0; }
+.app .tk-node__wire::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 6px; transform: translateY(-50%); border-radius: 3px; background: repeating-linear-gradient(90deg, var(--night-rim) 0 4px, transparent 4px 8px); }
+.app .tk-node__wire.is-on::after { height: 8px; border: var(--bw-s) solid var(--ink); background: var(--teal); }
+.app .tk-node__wire--secondary.is-on::after { background: var(--orange); }
+.app .tk-node__wire:disabled { cursor: default; }
+.app .tk-node.is-off .tk-node__wire.is-on::after { background: var(--off-2); }
+.app .tk-node__chip {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 6px; align-items: center;
+  min-height: 46px; padding: 4px 8px; text-align: left;
+  border: var(--bw-s) solid var(--ink); border-radius: var(--r-s); background: var(--cream); color: var(--ink); box-shadow: var(--sh-1); cursor: pointer;
+}
+.app .tk-node__chip > :first-child { grid-row: 1 / span 2; }
+.app .tk-node__name { font: 800 13px/1.15 var(--font-display); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app .tk-node__w { font-size: 12px; }
+.app .tk-node__tag { grid-column: 2 / span 2; font: 700 11px/1.1 var(--font-body); color: var(--text-on-cream-muted); }
+.app .tk-node__tag--crit { color: var(--crit-ink); }
+.app .tk-node__tag--warn { color: var(--warn-ink); }
+.app .tk-node.is-selected .tk-node__chip { background: var(--warn); transform: translate(-1px, -1px); box-shadow: var(--sh-2); }
+.app .tk-node.is-off .tk-node__chip { background: var(--cream-off); color: var(--text-on-cream-muted); text-decoration: line-through; }
+.app .tk-node--fixed .tk-node__chip { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto; background: var(--cream-2); cursor: default; }
+.app .tk-node--fixed .tk-node__chip > :first-child { grid-row: auto; }
+.app .tk-wiring__legend { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: var(--sp-2); color: var(--text-on-night-muted); }
+.app .tk-wiring__key::before { content: ''; display: inline-block; width: 18px; height: 8px; margin-right: 6px; border: var(--bw-s) solid var(--ink); border-radius: 3px; background: var(--teal); vertical-align: middle; }
+.app .tk-wiring__key--secondary::before { background: var(--orange); }
+.app .tk-wiring__hint { grid-column: 1 / -1; margin-top: var(--sp-2); text-align: center; color: var(--text-on-night-muted); }
+
+/* ---------- science ---------- */
+.app .tk-sci__tabs { margin-bottom: var(--sp-3); }
+.app .tk-sci__tabs .seg__item { gap: 6px; font-size: 13px; }
+.app .tk-sci__bench { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-4); align-items: center; }
+.app .tk-sci__plot { display: grid; gap: 4px; }
+.app .tk-spectrum { display: block; width: 100%; height: 190px; border: var(--bw-l) solid var(--ink); border-radius: var(--r-m); box-shadow: var(--sh-2); background: var(--night-2); }
+.app .tk-knob { display: grid; justify-items: center; gap: var(--sp-2); }
+.app .tk-knob__dial { width: 150px; height: 150px; border-radius: 50%; touch-action: none; cursor: grab; }
+.app .tk-knob__dial:active { cursor: grabbing; }
+.app .tk-knob__dial svg { width: 100%; height: 100%; display: block; }
+.app .tk-knob__dial:focus-visible { outline: var(--focus-w) solid var(--focus-on-light); outline-offset: 2px; }
+.app .tk-knob__btns { display: flex; align-items: center; gap: 4px; }
+.app .tk-knob__btns .btn--sm { min-width: 38px; padding: 0 8px; }
+.app .tk-knob__val { min-width: 48px; text-align: center; font-weight: 800; }
+.app .tk-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-2); }
+.app .tk-mode {
+  display: grid; gap: 4px; justify-items: start; padding: 10px; text-align: left;
+  border: var(--bw) solid var(--ink); border-radius: var(--r-m); background: var(--cream-hi); color: var(--ink); box-shadow: var(--sh-1); cursor: pointer;
+}
+.app .tk-mode.is-selected { background: var(--teal); box-shadow: inset 0 -4px 0 var(--teal-2), var(--sh-2); }
+.app .tk-mode:disabled { opacity: .45; cursor: not-allowed; }
+.app .tk-mode__name { font: 900 15px/1.1 var(--font-display); text-transform: uppercase; }
+.app .tk-mode__row { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; }
+.app .tk-mode__risk { padding: 1px 8px; border: var(--bw-s) solid var(--ink); border-radius: var(--r-pill); font: 700 12px/1.3 var(--font-display); background: var(--ok-3); }
+.app .tk-mode__risk--warn { background: var(--warn-3); }
+.app .tk-mode__risk--crit { background: var(--crit-3); }
+
+/* ---------- comms ---------- */
+.app .tk-comms { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-4); align-items: start; }
+.app .tk-comms__aim { display: grid; gap: var(--sp-3); justify-items: center; }
+.app .tk-radar { display: grid; justify-items: center; gap: var(--sp-2); }
+.app .tk-radar__scope { width: min(var(--radar, 260px), 100%); aspect-ratio: 1; border-radius: 50%; touch-action: none; cursor: crosshair; box-shadow: var(--sh-2); }
+.app .tk-radar__scope:focus-visible { outline: var(--focus-w) solid var(--focus-on-light); outline-offset: 3px; }
+.app .tk-radar__pad { display: grid; justify-items: center; gap: 2px; }
+.app .tk-radar__pad > span { display: flex; gap: 34px; }
+.app .tk-radar__pad .btn--mini { min-width: 34px; }
+.app .tk-meter { width: min(260px, 100%); padding: 8px 10px; border: var(--bw-s) solid var(--ink); border-radius: var(--r-m); background: var(--night-2); color: var(--cream); box-shadow: var(--sh-1); }
+.app .tk-meter__head { display: flex; align-items: center; gap: 6px; font: 800 13px/1 var(--font-display); }
+.app .tk-meter__head b { margin-left: auto; }
+.app .tk-meter__bars { display: flex; align-items: flex-end; gap: 3px; height: 40px; margin-top: 6px; }
+.app .tk-meter__bars i { flex: 1; border: 1.5px solid var(--ink); border-radius: 2px; background: var(--night-3); }
+.app .tk-meter__bars i.is-lo { background: var(--crit); }
+.app .tk-meter__bars i.is-mid { background: var(--warn); }
+.app .tk-meter__bars i.is-hi { background: var(--ok); }
+
+/* ---------- in flight (crisis card + side card) ---------- */
+.app .tk-fly { display: grid; gap: var(--sp-2); }
+.app .tk-fly .tk-wiring { box-shadow: var(--sh-1); }
+.app .tk-fly .tk-node__chip { min-height: 40px; }
+.app .tk-fly-card { padding: var(--sp-3); display: grid; gap: var(--sp-2); }
+.app .tk-fly-card .tk-radar__scope { width: min(200px, 100%); }
+.app .tk-fly-card .tk-meter { width: min(200px, 100%); }
+
+/* ---------- report ---------- */
+.app .tk-report { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--sp-3); }
+.app .tk-report__role { display: grid; gap: 4px; align-content: start; padding: 10px; border: var(--bw-s) solid var(--ink); border-radius: var(--r-m); background: var(--cream-hi); color: var(--ink); box-shadow: var(--sh-1); }
+.app .tk-report__grade { font: 900 16px/1.1 var(--font-display); text-transform: uppercase; }
+.app .tk-report__grade--excellent { color: var(--ok-ink); } .tk-report__grade--good { color: var(--teal-ink); } .tk-report__grade--weak { color: var(--risk-ink); }
+.app .tk-report__role > .row { flex-wrap: nowrap; }
+.app .tk-report__role ul { display: grid; gap: 2px; padding-left: 16px; list-style: disc; font-size: 13px; }
+
+/* ---------- tablet / phone ---------- */
+@media (max-width: 1100px) {
+  .app .tk-cmd { grid-template-columns: minmax(0, 1fr); }
+  .app .tk-comms { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .app .tk-layout { grid-template-columns: minmax(0, 1fr); }
+  .app .tk-side { position: static; }
+  .app .tk-team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .app .tk-page { padding-left: max(var(--sp-3), var(--sal)); padding-right: max(var(--sp-3), var(--sar)); gap: var(--sp-3); }
+  .app .tk-team { gap: var(--sp-2); }
+  .app .tk-team__role { min-height: 56px; padding: 6px 8px; }
+  .app .tk-team__role > .ic { --ic: 24px; width: 24px; height: 24px; }
+  .app .tk-card > :not(.card__head) { margin-left: var(--sp-3); margin-right: var(--sp-3); }
+  .app .tk-goal { font-size: 15px; }
+  .app .tk-sci__bench { grid-template-columns: minmax(0, 1fr); }
+  .app .tk-spectrum { height: 150px; }
+  .app .tk-knob__dial { width: 128px; height: 128px; }
+  .app .tk-modes { grid-template-columns: minmax(0, 1fr); }
+  .app .tk-wiring { padding: var(--sp-2); }
+  .app .tk-rail { font-size: 9px; padding: 6px 2px; }
+  .app .tk-node { grid-template-columns: 14px minmax(0, 1fr) 14px; }
+  .app .tk-wiring { grid-template-columns: 44px minmax(0, 1fr) 44px; }
+  .app .tk-node__chip { padding: 4px 6px; column-gap: 4px; }
+  .app .tk-node__name { white-space: normal; overflow-wrap: anywhere; font-size: 12px; }
+  .app .tk-sci__tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app .tk-sci__tabs .seg__item { justify-content: flex-start; text-align: left; }
+  .app .tk-reorder__arrows .btn--mini { min-width: 28px; padding: 0 4px; }
+  .app .tk-actions { position: sticky; bottom: 0; z-index: var(--z-sticky); padding: var(--sp-2) 0 max(var(--sp-2), var(--sab)); background: var(--night); }
+  .app .tk-next .row--between { flex-direction: column; align-items: stretch; }
+  .app .tk-next .row--between > .row:last-child { flex-direction: column; align-items: stretch; }
+}

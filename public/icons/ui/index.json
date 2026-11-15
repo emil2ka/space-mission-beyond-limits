@@ -1,0 +1,560 @@
+{
+ "dept_power": {
+  "1x": "dept_power.webp",
+  "2x": "dept_power@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "dept_propulsion": {
+  "1x": "dept_propulsion.webp",
+  "2x": "dept_propulsion@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "dept_navigation": {
+  "1x": "dept_navigation.webp",
+  "2x": "dept_navigation@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "dept_science": {
+  "1x": "dept_science.webp",
+  "2x": "dept_science@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "dept_comms": {
+  "1x": "dept_comms.webp",
+  "2x": "dept_comms@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "dept_structure": {
+  "1x": "dept_structure.webp",
+  "2x": "dept_structure@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "dept_recovery": {
+  "1x": "dept_recovery.webp",
+  "2x": "dept_recovery@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "role_commander": {
+  "1x": "role_commander.webp",
+  "2x": "role_commander@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "role_engineer": {
+  "1x": "role_engineer.webp",
+  "2x": "role_engineer@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "role_science": {
+  "1x": "role_science.webp",
+  "2x": "role_science@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "role_comms": {
+  "1x": "role_comms.webp",
+  "2x": "role_comms@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/01_depts_roles.png"
+ },
+ "res_mass": {
+  "1x": "res_mass.webp",
+  "2x": "res_mass@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_budget": {
+  "1x": "res_budget.webp",
+  "2x": "res_budget@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_credits": {
+  "1x": "res_credits.webp",
+  "2x": "res_credits@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_power_gen": {
+  "1x": "res_power_gen.webp",
+  "2x": "res_power_gen@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_power_use": {
+  "1x": "res_power_use.webp",
+  "2x": "res_power_use@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_battery": {
+  "1x": "res_battery.webp",
+  "2x": "res_battery@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_heat": {
+  "1x": "res_heat.webp",
+  "2x": "res_heat@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_signal": {
+  "1x": "res_signal.webp",
+  "2x": "res_signal@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_data": {
+  "1x": "res_data.webp",
+  "2x": "res_data@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "res_fuel": {
+  "1x": "res_fuel.webp",
+  "2x": "res_fuel@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/02_resources.png"
+ },
+ "st_ok": {
+  "1x": "st_ok.webp",
+  "2x": "st_ok@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "st_warn": {
+  "1x": "st_warn.webp",
+  "2x": "st_warn@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "st_crit": {
+  "1x": "st_crit.webp",
+  "2x": "st_crit@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "st_info": {
+  "1x": "st_info.webp",
+  "2x": "st_info@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "st_locked": {
+  "1x": "st_locked.webp",
+  "2x": "st_locked@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "need_required": {
+  "1x": "need_required.webp",
+  "2x": "need_required@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "need_recommended": {
+  "1x": "need_recommended.webp",
+  "2x": "need_recommended@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "need_optional": {
+  "1x": "need_optional.webp",
+  "2x": "need_optional@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/03_statuses.png"
+ },
+ "need_useless": {
+  "1x": "need_useless.webp",
+  "2x": "need_useless@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/07_regen.png"
+ },
+ "act_add": {
+  "1x": "act_add.webp",
+  "2x": "act_add@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_remove": {
+  "1x": "act_remove.webp",
+  "2x": "act_remove@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_approve": {
+  "1x": "act_approve.webp",
+  "2x": "act_approve@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_veto": {
+  "1x": "act_veto.webp",
+  "2x": "act_veto@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_launch": {
+  "1x": "act_launch.webp",
+  "2x": "act_launch@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_radio": {
+  "1x": "act_radio.webp",
+  "2x": "act_radio@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/07_regen.png"
+ },
+ "act_settings": {
+  "1x": "act_settings.webp",
+  "2x": "act_settings@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_sound": {
+  "1x": "act_sound.webp",
+  "2x": "act_sound@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_sound_off": {
+  "1x": "act_sound_off.webp",
+  "2x": "act_sound_off@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_exit": {
+  "1x": "act_exit.webp",
+  "2x": "act_exit@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_replay": {
+  "1x": "act_replay.webp",
+  "2x": "act_replay@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_play": {
+  "1x": "act_play.webp",
+  "2x": "act_play@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_pause": {
+  "1x": "act_pause.webp",
+  "2x": "act_pause@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "act_skip": {
+  "1x": "act_skip.webp",
+  "2x": "act_skip@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/04_actions.png"
+ },
+ "fl_phase": {
+  "1x": "fl_phase.webp",
+  "2x": "fl_phase@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_waypoint": {
+  "1x": "fl_waypoint.webp",
+  "2x": "fl_waypoint@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_crisis": {
+  "1x": "fl_crisis.webp",
+  "2x": "fl_crisis@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_blackout": {
+  "1x": "fl_blackout.webp",
+  "2x": "fl_blackout@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_rule": {
+  "1x": "fl_rule.webp",
+  "2x": "fl_rule@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_timer": {
+  "1x": "fl_timer.webp",
+  "2x": "fl_timer@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_hull": {
+  "1x": "fl_hull.webp",
+  "2x": "fl_hull@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_sample": {
+  "1x": "fl_sample.webp",
+  "2x": "fl_sample@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_capsule": {
+  "1x": "fl_capsule.webp",
+  "2x": "fl_capsule@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_storm": {
+  "1x": "fl_storm.webp",
+  "2x": "fl_storm@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_debris": {
+  "1x": "fl_debris.webp",
+  "2x": "fl_debris@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "fl_log": {
+  "1x": "fl_log.webp",
+  "2x": "fl_log@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/05_flight.png"
+ },
+ "mis_titan": {
+  "1x": "mis_titan.webp",
+  "2x": "mis_titan@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/07_regen.png"
+ },
+ "mis_asteroid": {
+  "1x": "mis_asteroid.webp",
+  "2x": "mis_asteroid@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/06_missions_hq.png"
+ },
+ "hq_upgrade": {
+  "1x": "hq_upgrade.webp",
+  "2x": "hq_upgrade@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/06_missions_hq.png"
+ },
+ "hq_history": {
+  "1x": "hq_history.webp",
+  "2x": "hq_history@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/06_missions_hq.png"
+ },
+ "hq_repair": {
+  "1x": "hq_repair.webp",
+  "2x": "hq_repair@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/06_missions_hq.png"
+ },
+ "hq_insurance": {
+  "1x": "hq_insurance.webp",
+  "2x": "hq_insurance@2x.webp",
+  "size": [
+   128,
+   128
+  ],
+  "source": "sheets/06_missions_hq.png"
+ }
+}

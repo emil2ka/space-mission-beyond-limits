@@ -1,0 +1,81 @@
+/* Team rules UI (decision 0013): ownership badges, budget split, request queue, second key, role tabs, Team Trust. */
+.own-badge, .rules-panel, .trust-card, .key-card, .role-tabs, .lobby-free, .rules-toasts, .report-player { --chip-sm-h: 28px; }
+.own-badge .chip--sm, .rules-panel .chip--sm, .trust-card .chip--sm, .lobby-free .chip--sm {
+  min-height: var(--chip-sm-h); padding: 1px 10px 1px 3px; font-size: 12px;
+}
+.own-badge .chip--sm .ic, .rules-panel .chip--sm .ic, .trust-card .chip--sm .ic { --ic: 22px; --ic-fs: 5px; }
+
+/* catalog card badge */
+.own-badge { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.own-badge__who { font-size: 12px; color: var(--muted); }
+
+/* constructor side panel */
+.rules-panel { padding: var(--sp-3); border: var(--bw-s) solid var(--night-rim, rgba(255,255,255,.18)); border-radius: var(--r-m, 14px); background: rgba(255,255,255,.04); }
+.rules-depts { line-height: 1.35; }
+.budget-split__row { display: grid; gap: 2px; min-width: 0; }
+.budget-split__head { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+.budget-split__head .chip { font-size: 12px; min-height: 26px; min-width: 0; flex: 0 1 auto; overflow: hidden; }
+.budget-split__head b { margin-left: auto; }
+.budget-split__head .chip .ic { --ic: 20px; --ic-fs: 5px; }
+.budget-split__step { display: flex; gap: 4px; flex: none; }
+.budget-split__head b, .budget-split .meter__status .t-mono { white-space: nowrap; }
+.budget-split .meter__status { display: block; }
+.req-row { display: grid; gap: 8px; padding: 10px; border: var(--bw-s) solid var(--ink); border-radius: 12px; background: var(--cream-hi, #FFF8E8); color: var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.req-row__head { display: flex; gap: 8px; align-items: flex-start; }
+.req-row__title { font-size: 14px; line-height: 1.3; }
+.req-row .t-muted { color: #5A5470; }
+.req-queue__done { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.req-done { display: flex; gap: 6px; align-items: flex-start; opacity: .9; }
+.req-done--vetoed b { color: var(--crit); }
+.req-done--approved b { color: var(--ok, #2E9E5B); }
+
+/* Team Trust */
+.trust-card { display: grid; gap: 8px; padding: var(--sp-3); border: var(--bw-s) solid var(--ink); border-radius: 14px; background: var(--cream-hi, #FFF8E8); color: var(--ink); }
+.trust-card--dark { background: rgba(255,255,255,.05); color: var(--text-on-night); border-color: var(--night-rim, rgba(255,255,255,.2)); }
+.trust-card__head { display: flex; gap: 10px; align-items: center; }
+.trust-card__tier { font: 800 17px/1.2 var(--font-display); }
+.trust-card__bar { position: relative; height: 12px; border: var(--bw-s) solid var(--ink); border-radius: 99px; background: var(--cream-2, #EDE3CC); overflow: hidden; }
+.trust-card__bar i { position: absolute; inset: 0 auto 0 0; background: var(--teal, #2BB3A8); }
+.trust-card--watch .trust-card__bar i { background: var(--warn, #F2B33D); }
+.trust-card--audit .trust-card__bar i { background: var(--crit, #E04B53); }
+.trust-card__bar span { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); opacity: .55; }
+.trust-card__effect { margin: 0; font-size: 14px; line-height: 1.35; }
+.trust-card__hist { display: grid; gap: 4px; }
+.trust-card__line { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 6px; font-size: 13px; line-height: 1.35; }
+.trust-chip { white-space: nowrap; }
+
+/* second key */
+.key-card { display: grid; gap: 8px; padding: 10px; border: var(--bw-l, 3px) solid var(--crit); border-radius: 14px; background: var(--cream-hi, #FFF8E8); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+.key-card__head { display: flex; align-items: center; gap: 8px; }
+.key-card__title { font: 900 18px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .04em; color: var(--crit-2, #A3262E); }
+.key-card .trust-chip { justify-self: start; white-space: normal; }
+.key-card__risk { margin: 0; padding: 8px; border-left: 4px solid var(--crit); background: rgba(224,75,83,.08); }
+
+/* role tabs (flight) */
+.role-tabs__bar { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; }
+.role-tabs__tab { position: relative; justify-content: center; min-width: 0; }
+.role-tabs__tab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.role-tabs__tab.is-selected.role-tabs__tab--commander { box-shadow: inset 0 -5px 0 var(--role-commander); }
+.role-tabs__tab.is-selected.role-tabs__tab--engineer { box-shadow: inset 0 -5px 0 var(--role-engineer); }
+.role-tabs__tab.is-selected.role-tabs__tab--science { box-shadow: inset 0 -5px 0 var(--role-science); }
+.role-tabs__tab.is-selected.role-tabs__tab--comms { box-shadow: inset 0 -5px 0 var(--role-comms); }
+.role-tabs__alert { position: absolute; top: -6px; right: -4px; display: grid; place-items: center; width: 22px; height: 22px; border: var(--bw-s) solid var(--ink); border-radius: 50%; background: var(--crit); color: #fff; font: 900 13px/1 var(--font-display); }
+
+/* lobby free roles */
+.lobby-free__row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.lobby-free__pick { min-width: 140px; }
+.lobby-free__pick .select { min-height: 40px; font-size: 14px; }
+.chip--extra { --chip-bg: var(--gold, #F2C14E); }
+
+/* report */
+.report-player { display: grid; gap: 4px; }
+
+/* toasts: bottom-left so they never cover the error toast (bottom-right) */
+.toast-stack.rules-toasts { align-content: start; }
+.rules-toasts { right: auto; left: max(var(--sp-4), var(--sal, 0px)); --dur-toast: 6.5s; max-width: min(420px, calc(100vw - 32px)); }
+.toast--ok { --st-bg: var(--ok-3, #8FD9A8); }
+@media (max-width: 720px) {
+  .toast-stack.rules-toasts { top: calc(var(--sat, 0px) + 64px); bottom: auto; left: max(12px, var(--sal, 0px)); right: max(12px, var(--sar, 0px)); max-width: none; }
+  /* phone: only the newest rules toast */
+  .rules-toasts .toast:not(:last-child) { display: none; }
+}

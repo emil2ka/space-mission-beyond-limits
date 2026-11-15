@@ -1,0 +1,24 @@
+/* «!» AI-use notice (AiNotice.tsx): a yellow icon button fixed top-right, just left of the settings gear, inside the slot
+   every top bar keeps free (.app-topbar padding-right). */
+.ai-notice { position: fixed; right: calc(max(12px, var(--sar)) + 56px); top: calc(var(--sat) + 8px); z-index: var(--z-toast); }
+.ai-notice .ai-notice__btn { width: 48px; min-height: 48px; background: var(--warn); }
+@media (hover: hover) { .ai-notice .ai-notice__btn:hover { background: var(--warn-3); } }
+.ai-notice__mark { font: 900 28px/1 var(--font-display, inherit); color: var(--ink); }
+.ai-notice__badge {
+  display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--cream); border: var(--bw-s, 2px) solid var(--ink); font: 900 20px/1 var(--font-display, inherit); color: var(--ink);
+}
+.ai-notice .ai-notice__panel {
+  position: absolute; right: -56px; top: 58px; width: min(360px, calc(100vw - 24px));
+  max-height: calc(100dvh - 90px - var(--sat)); overflow: auto; display: grid; gap: var(--sp-3); animation: sm-pop var(--dur-slow) var(--ease-snap) both;
+}
+.ai-notice .ai-notice__panel .card__head { margin-bottom: 0; }
+.ai-notice .ai-notice__intro { margin: 0; font-weight: 700; }
+.ai-notice .ai-notice__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); }
+.ai-notice .ai-notice__item { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: start; gap: var(--sp-3); }
+.ai-notice .ai-notice__item--team { padding-top: var(--sp-3); border-top: var(--bw-s) dashed var(--ink-soft); }
+.ai-notice .setting__hint { margin: 2px 0 0; }
+@media (max-width: 600px) {
+  .ai-notice { top: calc(var(--sat) + 4px); right: calc(max(8px, var(--sar)) + 54px); }
+  .ai-notice .ai-notice__panel { position: fixed; left: max(12px, var(--sal)); right: max(12px, var(--sar)); top: calc(var(--sat) + 64px); width: auto; max-height: calc(100dvh - 76px - var(--sat)); }
+}

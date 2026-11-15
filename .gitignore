@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.local
+*.log
+coverage/
+.obsidian/workspace*.json
+assets-src/**/*.blend1
+*.tsbuildinfo
+
+# raw Claude Design exports (optimized copies live in public/models)
+assets-src/*.glb
+
+# Device QA measurement output (scripts/qa)
+scripts/qa/out/

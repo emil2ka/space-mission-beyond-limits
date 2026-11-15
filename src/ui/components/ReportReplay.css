@@ -1,0 +1,28 @@
+/* Mission Report replay player (ReportReplay.tsx) on the UI kit: .viewport + .replay-bar / .player-ctrl / .chapters. */
+.rr { display: flex; flex-direction: column; gap: var(--sp-3); }
+.rr-stage { max-height: 60vh; min-height: 200px; background-color: #03040a; }
+.rr-stage .viewport__canvas > div { position: absolute; inset: 0; }
+.rr-caption { max-width: 100%; }
+.rr-end {
+  position: absolute; inset: 0; z-index: var(--z-hud); display: grid; place-content: center; justify-items: center; gap: var(--sp-3); text-align: center;
+  background-color: var(--space); background-image: var(--ht-cream-faint); background-size: var(--ht-size);
+  color: var(--text-on-space);
+}
+.rr-end .outcome { font-size: clamp(30px, 5vw, 52px); }
+.score--night span { color: var(--text-on-space-muted); }
+.rr-end .score b { font-size: 48px; }
+/* chapters: the kit's 3-column grid, buttons with a progress fill */
+.rr .chapter { text-align: left; min-height: 44px; padding: 4px 0; color: inherit; }
+.rr .chapter__bar { position: relative; display: block; overflow: hidden; }
+.rr .chapter__bar > i { position: absolute; inset: 0 auto 0 0; background: var(--teal); transition: width .1s linear; }
+.rr .chapter.is-done .chapter__bar, .rr .chapter.is-current .chapter__bar { background: var(--night-2); }
+.rr .chapter--crisis .chapter__bar > i { background: var(--orange); }
+.rr .chapter.is-current .chapter__label { color: var(--text-on-night); }
+.rr-calm .chapter__bar > i { transition: none; }
+.rr-skip { margin-left: auto; }
+.rr-collapsed { font-size: 14px; }
+@media (max-width: 600px) {
+  .rr-stage { aspect-ratio: 4 / 3; }
+  .rr .replay-bar { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .rr .replay-bar .chapters { order: 5; flex-basis: 100%; }
+}

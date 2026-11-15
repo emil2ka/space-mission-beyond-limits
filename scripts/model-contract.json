@@ -1,0 +1,1484 @@
+{
+  "_doc": "Required named nodes / materials / clips per model id, and the frame slot tables (hulls v2). Source of truth: docs/05 Assets/Model Contract.md and docs/05 Assets/Batches/parts/*.txt",
+  "batches": {
+    "B1": [
+      "frame_titan",
+      "rotor_system",
+      "landing_system",
+      "thermal_insulation",
+      "power_bus",
+      "rocket",
+      "launch_pad",
+      "test_stand",
+      "hq_hangar",
+      "hq_console",
+      "titan_terrain"
+    ],
+    "B2": [
+      "rtg",
+      "solar_array",
+      "battery_hc",
+      "battery_backup",
+      "pdu",
+      "imu",
+      "radar_altimeter",
+      "flight_computer",
+      "antenna_standard",
+      "antenna_high_gain",
+      "transceiver"
+    ],
+    "B3": [
+      "hires_camera",
+      "wide_camera",
+      "spectrometer",
+      "atmo_sensor",
+      "temp_sensor",
+      "radiation_sensor",
+      "drill",
+      "data_storage",
+      "thermal_radiator",
+      "heater",
+      "astronaut"
+    ],
+    "B4": [
+      "frame_asteroid",
+      "thermal_insulation__asteroid",
+      "power_bus__asteroid",
+      "landing_system__asteroid",
+      "reinforced_frame",
+      "reinforced_frame__asteroid",
+      "return_capsule",
+      "heat_shield",
+      "parachute",
+      "recovery_beacon"
+    ],
+    "B5": [
+      "energy_regulator",
+      "chem_main_engine",
+      "chem_thrusters",
+      "ion_engine",
+      "propellant_tank",
+      "reaction_wheels",
+      "nav_camera",
+      "star_tracker",
+      "gnc_unit",
+      "asteroid",
+      "earth",
+      "debris"
+    ],
+    "B6": [
+      "robotic_arm",
+      "sample_container",
+      "sample_sealer",
+      "antenna_omni",
+      "signal_amp",
+      "data_buffer",
+      "deep_space_link",
+      "radiation_shield",
+      "micrometeoroid_shield",
+      "vibration_dampers"
+    ]
+  },
+  "kind": {
+    "frame_titan": "frame",
+    "rotor_system": "overlay",
+    "landing_system": "overlay",
+    "thermal_insulation": "overlay",
+    "power_bus": "overlay",
+    "rocket": "big",
+    "launch_pad": "env",
+    "test_stand": "env",
+    "hq_hangar": "env",
+    "hq_console": "env",
+    "titan_terrain": "env",
+    "astronaut": "character",
+    "frame_asteroid": "frame",
+    "thermal_insulation__asteroid": "overlay",
+    "power_bus__asteroid": "overlay",
+    "landing_system__asteroid": "overlay",
+    "reinforced_frame": "overlay",
+    "reinforced_frame__asteroid": "overlay",
+    "asteroid": "env",
+    "earth": "env",
+    "debris": "env",
+    "heat_shield": "capsule_part"
+  },
+  "frames": {
+    "_doc": "Hulls v2 (docs/05 Assets/Batches/parts/hulls_v2_contract.txt). p = bay-floor centre, n = outward normal (slot local +Y). Mirrored by src/scene/layout.ts SLOT_TABLE and scripts/lib/synthetic.mjs. bay = opening size along the slot local X / Z; lift = adapter height (bay floor → module base) for a module wider than the bay; cradle = tall modules lie crosswise (Titan RTG saddle, v2.1).",
+    "frame_titan": {
+      "body": {
+        "halfWidth": 0.55,
+        "halfLength": 0.8,
+        "deckY": 0.55,
+        "bayDepth": 0.04
+      },
+      "bounds": {
+        "minY": [
+          -0.08,
+          0.05
+        ],
+        "maxY": [
+          0.75,
+          1.15
+        ],
+        "halfXZ": [
+          1,
+          1.35
+        ]
+      },
+      "pads": [
+        [
+          1,
+          0.62,
+          1.05
+        ],
+        [
+          -1,
+          0.62,
+          1.05
+        ],
+        [
+          -1,
+          0.62,
+          -1.05
+        ],
+        [
+          1,
+          0.62,
+          -1.05
+        ]
+      ],
+      "rotorHubY": [
+        0.74,
+        0.92
+      ],
+      "skidY": -0.45,
+      "deckMinGap": 0.28,
+      "slotTol": 0.06,
+      "slots": {
+        "slot_power_1": {
+          "p": [
+            0,
+            0.53,
+            -0.56
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.84,
+            0.51
+          ],
+          "lift": 0.08,
+          "cradle": true
+        },
+        "slot_power_2": {
+          "p": [
+            0.51,
+            0.28,
+            -0.54
+          ],
+          "n": [
+            1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_power_3": {
+          "p": [
+            -0.51,
+            0.28,
+            -0.54
+          ],
+          "n": [
+            -1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_power_4": {
+          "p": [
+            0.51,
+            0.28,
+            -0.18
+          ],
+          "n": [
+            1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_power_5": {
+          "p": [
+            -0.51,
+            0.28,
+            -0.18
+          ],
+          "n": [
+            -1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_power_6": {
+          "p": [
+            0.28,
+            0.28,
+            -0.76
+          ],
+          "n": [
+            0,
+            0,
+            -1
+          ],
+          "bay": [
+            0.28,
+            0.33
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_1": {
+          "p": [
+            0.51,
+            0.28,
+            0.18
+          ],
+          "n": [
+            1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_2": {
+          "p": [
+            -0.51,
+            0.28,
+            0.18
+          ],
+          "n": [
+            -1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_3": {
+          "p": [
+            0.51,
+            0.28,
+            0.54
+          ],
+          "n": [
+            1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_4": {
+          "p": [
+            -0.51,
+            0.28,
+            0.54
+          ],
+          "n": [
+            -1,
+            0,
+            0
+          ],
+          "bay": [
+            0.27,
+            0.27
+          ],
+          "lift": 0.08
+        },
+        "slot_science_1": {
+          "p": [
+            0,
+            0.28,
+            0.76
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "bay": [
+            0.28,
+            0.33
+          ],
+          "lift": 0.08
+        },
+        "slot_science_2": {
+          "p": [
+            -0.305,
+            0.28,
+            0.76
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "bay": [
+            0.28,
+            0.33
+          ],
+          "lift": 0.08
+        },
+        "slot_science_3": {
+          "p": [
+            0.305,
+            0.28,
+            0.76
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "bay": [
+            0.28,
+            0.33
+          ],
+          "lift": 0.08
+        },
+        "slot_science_4": {
+          "p": [
+            -0.3,
+            0.51,
+            0.55
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.08
+        },
+        "slot_science_5": {
+          "p": [
+            0.3,
+            0.51,
+            0.55
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_1": {
+          "p": [
+            0,
+            0.51,
+            0.55
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_2": {
+          "p": [
+            0,
+            0.51,
+            0.22
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_3": {
+          "p": [
+            0,
+            0.51,
+            -0.11
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_4": {
+          "p": [
+            -0.28,
+            0.28,
+            -0.76
+          ],
+          "n": [
+            0,
+            0,
+            -1
+          ],
+          "bay": [
+            0.28,
+            0.33
+          ],
+          "lift": 0.08
+        },
+        "slot_comms_1": {
+          "p": [
+            -0.3,
+            0.51,
+            0.22
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.11
+        },
+        "slot_comms_2": {
+          "p": [
+            0.3,
+            0.51,
+            0.22
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.11
+        },
+        "slot_comms_3": {
+          "p": [
+            -0.3,
+            0.51,
+            -0.11
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.11
+        },
+        "slot_comms_4": {
+          "p": [
+            0.3,
+            0.51,
+            -0.11
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.26,
+            0.26
+          ],
+          "lift": 0.11
+        },
+        "slot_propulsion_1": {
+          "p": [
+            0,
+            0.04,
+            0.4
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.28,
+            0.28
+          ],
+          "lift": 0.09
+        },
+        "slot_propulsion_2": {
+          "p": [
+            -0.28,
+            0.04,
+            -0.3
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.28,
+            0.28
+          ],
+          "lift": 0.09,
+          "maxFoot": 0.4
+        },
+        "slot_propulsion_3": {
+          "p": [
+            0.28,
+            0.04,
+            -0.3
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.28,
+            0.28
+          ],
+          "lift": 0.09,
+          "maxFoot": 0.4
+        }
+      }
+    },
+    "frame_asteroid": {
+      "body": {
+        "apothem": 0.65,
+        "height": 0.9,
+        "ringTopY": 0.95,
+        "bayDepth": 0.04
+      },
+      "bounds": {
+        "minY": [
+          -0.08,
+          0.05
+        ],
+        "maxY": [
+          0.88,
+          1.2
+        ],
+        "halfXZ": [
+          0.68,
+          1
+        ]
+      },
+      "footY": -0.35,
+      "deckMinGap": 0.27,
+      "slotTol": 0.06,
+      "slots": {
+        "slot_power_1": {
+          "p": [
+            0,
+            0.27,
+            -0.61
+          ],
+          "n": [
+            0,
+            0,
+            -1
+          ],
+          "bay": [
+            0.46,
+            0.3
+          ],
+          "lift": 0.08
+        },
+        "slot_power_2": {
+          "p": [
+            0.5283,
+            0.27,
+            -0.305
+          ],
+          "n": [
+            0.866,
+            0,
+            -0.5
+          ],
+          "bay": [
+            0.46,
+            0.3
+          ],
+          "lift": 0.08
+        },
+        "slot_power_3": {
+          "p": [
+            -0.5283,
+            0.27,
+            -0.305
+          ],
+          "n": [
+            -0.866,
+            0,
+            -0.5
+          ],
+          "bay": [
+            0.46,
+            0.3
+          ],
+          "lift": 0.08
+        },
+        "slot_power_4": {
+          "p": [
+            0.5283,
+            0.27,
+            0.305
+          ],
+          "n": [
+            0.866,
+            0,
+            0.5
+          ],
+          "bay": [
+            0.46,
+            0.3
+          ],
+          "lift": 0.08
+        },
+        "slot_power_5": {
+          "p": [
+            -0.5283,
+            0.27,
+            0.305
+          ],
+          "n": [
+            -0.866,
+            0,
+            0.5
+          ],
+          "bay": [
+            0.46,
+            0.3
+          ],
+          "lift": 0.08
+        },
+        "slot_power_6": {
+          "p": [
+            0,
+            0.27,
+            0.61
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "bay": [
+            0.46,
+            0.3
+          ],
+          "lift": 0.08
+        },
+        "slot_science_1": {
+          "p": [
+            -0.16,
+            0.65,
+            0.61
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_science_2": {
+          "p": [
+            0.16,
+            0.65,
+            0.61
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_science_3": {
+          "p": [
+            -0.4483,
+            0.65,
+            0.4436
+          ],
+          "n": [
+            -0.866,
+            0,
+            0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_science_4": {
+          "p": [
+            0.4483,
+            0.65,
+            0.4436
+          ],
+          "n": [
+            0.866,
+            0,
+            0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_1": {
+          "p": [
+            -0.16,
+            0.65,
+            -0.61
+          ],
+          "n": [
+            0,
+            0,
+            -1
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_2": {
+          "p": [
+            0.16,
+            0.65,
+            -0.61
+          ],
+          "n": [
+            0,
+            0,
+            -1
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_3": {
+          "p": [
+            -0.4483,
+            0.65,
+            -0.4436
+          ],
+          "n": [
+            -0.866,
+            0,
+            -0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_structure_4": {
+          "p": [
+            0.4483,
+            0.65,
+            -0.4436
+          ],
+          "n": [
+            0.866,
+            0,
+            -0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_1": {
+          "p": [
+            0.6083,
+            0.65,
+            0.1664
+          ],
+          "n": [
+            0.866,
+            0,
+            0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_2": {
+          "p": [
+            0.6083,
+            0.65,
+            -0.1664
+          ],
+          "n": [
+            0.866,
+            0,
+            -0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_3": {
+          "p": [
+            -0.6083,
+            0.65,
+            -0.1664
+          ],
+          "n": [
+            -0.866,
+            0,
+            -0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_navigation_4": {
+          "p": [
+            -0.6083,
+            0.65,
+            0.1664
+          ],
+          "n": [
+            -0.866,
+            0,
+            0.5
+          ],
+          "bay": [
+            0.26,
+            0.24
+          ],
+          "lift": 0.08
+        },
+        "slot_comms_1": {
+          "p": [
+            0.28,
+            0.87,
+            0.485
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.07
+        },
+        "slot_comms_2": {
+          "p": [
+            0.28,
+            0.87,
+            -0.485
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.07
+        },
+        "slot_comms_3": {
+          "p": [
+            -0.28,
+            0.87,
+            -0.485
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.07
+        },
+        "slot_comms_4": {
+          "p": [
+            -0.28,
+            0.87,
+            0.485
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.07
+        },
+        "slot_recovery_1": {
+          "p": [
+            0,
+            0.95,
+            0
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.84,
+            0.84
+          ],
+          "lift": 0
+        },
+        "slot_recovery_2": {
+          "p": [
+            0.56,
+            0.87,
+            0
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.1
+        },
+        "slot_recovery_3": {
+          "p": [
+            -0.56,
+            0.87,
+            0
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.1
+        },
+        "slot_recovery_4": {
+          "p": [
+            0,
+            0.87,
+            -0.53
+          ],
+          "n": [
+            0,
+            1,
+            0
+          ],
+          "bay": [
+            0.2,
+            0.2
+          ],
+          "lift": 0.1
+        },
+        "slot_propulsion_1": {
+          "p": [
+            0,
+            0.03,
+            0
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.36,
+            0.36
+          ],
+          "lift": 0.07
+        },
+        "slot_propulsion_2": {
+          "p": [
+            0.21,
+            0.03,
+            0.3637
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.24,
+            0.24
+          ],
+          "lift": 0.07
+        },
+        "slot_propulsion_3": {
+          "p": [
+            0.21,
+            0.03,
+            -0.3637
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.24,
+            0.24
+          ],
+          "lift": 0.07
+        },
+        "slot_propulsion_4": {
+          "p": [
+            -0.42,
+            0.03,
+            0
+          ],
+          "n": [
+            0,
+            -1,
+            0
+          ],
+          "bay": [
+            0.24,
+            0.24
+          ],
+          "lift": 0.07
+        }
+      }
+    }
+  },
+  "maxTris": {
+    "frame": 15000,
+    "overlay": 4000,
+    "module": 4000,
+    "big": 15000,
+    "env": 40000,
+    "character": 10000,
+    "launch_pad": 25000,
+    "test_stand": 8000,
+    "hq_console": 6000,
+    "capsule_part": 2000,
+    "heat_shield": 2000,
+    "recovery_beacon": 2000,
+    "asteroid": 24000,
+    "earth": 20000,
+    "debris": 6000
+  },
+  "nodes": {
+    "frame_titan": [
+      "slot_power_1",
+      "slot_power_2",
+      "slot_power_3",
+      "slot_power_4",
+      "slot_power_5",
+      "slot_power_6",
+      "slot_propulsion_1",
+      "slot_propulsion_2",
+      "slot_propulsion_3",
+      "slot_navigation_1",
+      "slot_navigation_2",
+      "slot_navigation_3",
+      "slot_navigation_4",
+      "slot_science_1",
+      "slot_science_2",
+      "slot_science_3",
+      "slot_science_4",
+      "slot_science_5",
+      "slot_comms_1",
+      "slot_comms_2",
+      "slot_comms_3",
+      "slot_comms_4",
+      "slot_structure_1",
+      "slot_structure_2",
+      "slot_structure_3",
+      "slot_structure_4",
+      "cam_front",
+      "cam_top"
+    ],
+    "rotor_system": [
+      "pivot_rotor_1",
+      "pivot_rotor_1_lo",
+      "pivot_rotor_2",
+      "pivot_rotor_2_lo",
+      "pivot_rotor_3",
+      "pivot_rotor_3_lo",
+      "pivot_rotor_4",
+      "pivot_rotor_4_lo"
+    ],
+    "landing_system": [
+      "pivot_leg_1",
+      "pivot_leg_2",
+      "pivot_leg_3",
+      "pivot_leg_4"
+    ],
+    "thermal_insulation": [],
+    "power_bus": [
+      "fx_flow"
+    ],
+    "rocket": [
+      "pivot_fairing_l",
+      "pivot_fairing_r",
+      "pivot_stage2",
+      "mount_payload",
+      "fx_nozzle",
+      "fx_nozzle_2"
+    ],
+    "launch_pad": [
+      "pivot_arm_1",
+      "pivot_arm_2",
+      "mount_rocket"
+    ],
+    "test_stand": [
+      "pivot_turntable",
+      "mount_craft"
+    ],
+    "hq_hangar": [
+      "mount_stand",
+      "mount_console_1",
+      "mount_console_2",
+      "mount_console_3",
+      "mount_console_4"
+    ],
+    "hq_console": [],
+    "titan_terrain": [
+      "lake"
+    ],
+    "rtg": [
+      "fx_glow"
+    ],
+    "solar_array": [
+      "pivot_panel_l",
+      "pivot_panel_r"
+    ],
+    "battery_hc": [
+      "charge_1",
+      "charge_2",
+      "charge_3",
+      "charge_4",
+      "charge_5"
+    ],
+    "battery_backup": [
+      "fx_glow"
+    ],
+    "pdu": [
+      "pivot_switch_1",
+      "pivot_switch_2",
+      "pivot_switch_3"
+    ],
+    "imu": [],
+    "radar_altimeter": [],
+    "flight_computer": [],
+    "antenna_standard": [
+      "pivot_dish"
+    ],
+    "antenna_high_gain": [
+      "pivot_dish",
+      "pivot_dish_tilt"
+    ],
+    "transceiver": [
+      "fx_glow"
+    ],
+    "hires_camera": [
+      "pivot_pan",
+      "pivot_tilt",
+      "fx_lens"
+    ],
+    "wide_camera": [
+      "fx_lens"
+    ],
+    "spectrometer": [
+      "fx_lens"
+    ],
+    "atmo_sensor": [
+      "pivot_vane"
+    ],
+    "temp_sensor": [],
+    "radiation_sensor": [],
+    "drill": [
+      "pivot_drill_slide",
+      "pivot_drill",
+      "fx_dust"
+    ],
+    "data_storage": [],
+    "thermal_radiator": [
+      "pivot_radiator"
+    ],
+    "heater": [
+      "fx_glow"
+    ],
+    "astronaut": [],
+    "frame_asteroid": [
+      "slot_power_1",
+      "slot_power_2",
+      "slot_power_3",
+      "slot_power_4",
+      "slot_power_5",
+      "slot_power_6",
+      "slot_propulsion_1",
+      "slot_propulsion_2",
+      "slot_propulsion_3",
+      "slot_propulsion_4",
+      "slot_navigation_1",
+      "slot_navigation_2",
+      "slot_navigation_3",
+      "slot_navigation_4",
+      "slot_science_1",
+      "slot_science_2",
+      "slot_science_3",
+      "slot_science_4",
+      "slot_comms_1",
+      "slot_comms_2",
+      "slot_comms_3",
+      "slot_comms_4",
+      "slot_structure_1",
+      "slot_structure_2",
+      "slot_structure_3",
+      "slot_structure_4",
+      "slot_recovery_1",
+      "slot_recovery_2",
+      "slot_recovery_3",
+      "slot_recovery_4",
+      "cam_front",
+      "cam_top"
+    ],
+    "thermal_insulation__asteroid": [],
+    "power_bus__asteroid": [
+      "fx_flow"
+    ],
+    "landing_system__asteroid": [
+      "pivot_leg_1",
+      "pivot_leg_2",
+      "pivot_leg_3",
+      "fx_anchor_1",
+      "fx_anchor_2",
+      "fx_anchor_3"
+    ],
+    "reinforced_frame": [],
+    "reinforced_frame__asteroid": [],
+    "return_capsule": [
+      "mount_heat_shield",
+      "mount_parachute",
+      "mount_beacon"
+    ],
+    "heat_shield": [
+      "fx_glow"
+    ],
+    "parachute": [
+      "pivot_chute"
+    ],
+    "recovery_beacon": [
+      "fx_glow"
+    ],
+    "energy_regulator": [
+      "fx_glow"
+    ],
+    "chem_main_engine": [
+      "fx_nozzle",
+      "pivot_gimbal"
+    ],
+    "chem_thrusters": [
+      "fx_nozzle_1",
+      "fx_nozzle_2",
+      "fx_nozzle_3",
+      "fx_nozzle_4"
+    ],
+    "ion_engine": [
+      "fx_beam"
+    ],
+    "propellant_tank": [
+      "fx_level"
+    ],
+    "reaction_wheels": [
+      "pivot_wheel_1",
+      "pivot_wheel_2",
+      "pivot_wheel_3"
+    ],
+    "nav_camera": [
+      "fx_lens"
+    ],
+    "star_tracker": [
+      "fx_lens"
+    ],
+    "gnc_unit": [],
+    "asteroid": [
+      "lod0",
+      "lod1",
+      "mount_sample"
+    ],
+    "earth": [
+      "pivot_clouds"
+    ],
+    "debris": [
+      "debris_1",
+      "debris_2",
+      "debris_3"
+    ],
+    "robotic_arm": [
+      "pivot_arm_1",
+      "pivot_arm_2",
+      "pivot_arm_3",
+      "pivot_claw",
+      "pivot_claw_l",
+      "pivot_claw_r",
+      "fx_grab"
+    ],
+    "sample_container": [
+      "pivot_lid",
+      "fx_seal"
+    ],
+    "sample_sealer": [
+      "pivot_jaw_1",
+      "pivot_jaw_2",
+      "pivot_jaw_3"
+    ],
+    "antenna_omni": [],
+    "signal_amp": [
+      "fx_glow"
+    ],
+    "data_buffer": [
+      "led_1",
+      "led_2",
+      "led_3",
+      "led_4",
+      "led_5",
+      "led_6"
+    ],
+    "deep_space_link": [
+      "fx_beam"
+    ],
+    "radiation_shield": [],
+    "micrometeoroid_shield": [],
+    "vibration_dampers": [
+      "pivot_damper_1",
+      "pivot_damper_2",
+      "pivot_damper_3",
+      "pivot_damper_4"
+    ]
+  },
+  "materials": {
+    "hq_console": [
+      "M_Role"
+    ],
+    "astronaut": [
+      "M_Role"
+    ],
+    "titan_terrain": [
+      "M_Lake"
+    ],
+    "thermal_insulation": [
+      "M_Gold"
+    ],
+    "thermal_insulation__asteroid": [
+      "M_Gold"
+    ],
+    "earth": [
+      "M_Ocean",
+      "M_Land"
+    ]
+  },
+  "clips": {
+    "astronaut": [
+      "Idle",
+      "Typing",
+      "Wave",
+      "ThumbsUp",
+      "Panic",
+      "Cheer",
+      "Shrug"
+    ]
+  }
+}
