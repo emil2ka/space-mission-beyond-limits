@@ -1,3 +1,3 @@
-# 0005 Длина тика — принято (2026-11-13)
-**Решение:** 1 тик = 10 игровых минут (Δt = 1/6 ч), в полёте 1 тик ≈ 1 с реального времени. Энергия в W, запас в Wh.
-**Почему:** полёт 8–12 минут = 500–700 тиков; с такими числами батарея 600 Wh при дефиците 35 W держится ~100 тиков — ощутимо, но не мгновенно.
+# 0005 Tick length — accepted (2026-11-13)
+**Decision:** 1 tick = 10 game minutes (Δt = 1/6 h); in flight, 1 tick ≈ 1 s of real time. Power is in W, stored energy in Wh.
+**Why:** a flight of 8–12 minutes = 500–700 ticks; with these numbers a 600 Wh battery at a 35 W deficit lasts ~100 ticks — noticeable, but not instant.

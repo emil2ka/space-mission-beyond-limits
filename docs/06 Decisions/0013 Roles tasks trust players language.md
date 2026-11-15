@@ -1,52 +1,52 @@
-# 0013 Индивидуальные задачи, кто ставит модули, Team Trust, 2–3 игрока, язык — принято (2026-11-15)
+# 0013 Individual tasks, who installs modules, Team Trust, 2–3 players, language — accepted (2026-11-15)
 
-**Контекст:** открытые вопросы 3, 5, 6, 8, 9 ([Open Questions](../07%20Tasks/Open%20Questions.md)).
+**Context:** open questions 3, 5, 6, 8, 9 ([Open Questions](../07%20Tasks/Open%20Questions.md)).
 
-## 1. Индивидуальные задачи (экран 10 ТЗ) — это настоящие мини-игры роли с последствиями в полёте
-- Экран «Индивидуальные задачи» стоит между Конструктором и Autonomy Planner. Все четверо делают свою задачу одновременно, примерно за 60–90 с. Таймера нет (ТЗ 9.5: таймер только для кризисов).
-- Каждая задача основана на действиях роли из ТЗ §3 и даёт оценку (отлично / хорошо / слабо). Оценка становится **модификатором полёта** из `src/engine`, а отчёт показывает её в цепочке причин.
-- Задачу можно пропустить: тогда засчитывается «слабо» с честным объяснением. Готовность команды ждёт, пока все отметятся.
-  - **Командир — «Приоритеты миссии»:** раскладывает цели миссии по важности и задаёт порядок жертв при аварии («чем пожертвовать ради главной цели», ТЗ 3.1). При кризисе Power Drop или Emergency Decision движок отключает системы в этом порядке.
-  - **Инженер — «Трассировка питания»:** схема в разрезе, потребители раскладываются по линиям «основная / второстепенная» так, чтобы ни одна линия не перегружалась. Второстепенную линию автономия и кризисы отключают первой (ТЗ 3.2: «отключает второстепенные линии»). Ошибка разводки — перегруз и более тяжёлый Power Drop.
-  - **Учёный — «Калибровка + режим измерений»:** у каждого установленного прибора эталонный пик подгоняется ручкой. Точность калибровки умножает качество данных. Режим (осторожно / норма / интенсивно) — компромисс между объёмом данных и теплом или риском перегрева (ТЗ 3.3).
-  - **Связист — «Наведение антенны + очередь пакетов»:** поиск Земли на радаре по силе сигнала с шумом и порядок отправки пакетов после blackout с учётом памяти (ТЗ 3.4). Точность наведения задаёт пропускную способность. Очередь решает, какие данные уцелеют при переполнении памяти.
-- В полёте те же виджеты возвращаются в коротких действиях кризисов: повторное наведение после blackout, изоляция узла при Power Drop, сбавить интенсивность при перегреве. Это P2-«мини-игры» из ТЗ, сделанные на тех же механиках.
+## 1. Individual tasks (screen 10 of the spec) are real role mini-games with consequences in flight
+- The "Individual Tasks" screen sits between the Constructor and the Autonomy Planner. All four players do their task at the same time, in about 60–90 s. There is no timer (spec (TZ v2.0) 9.5: timers only for crises).
+- Each task is based on the role's actions from spec §3 and gives a grade (excellent / good / weak). The grade becomes a **flight modifier** in `src/engine`, and the report shows it in the chain of causes.
+- A task can be skipped: it then counts as "weak", with an honest explanation. Team readiness waits until everyone has checked in.
+  - **Commander — "Mission Priorities":** ranks the mission goals by importance and sets the sacrifice order for an emergency ("what to sacrifice for the main goal", spec 3.1). During a Power Drop or Emergency Decision crisis, the engine switches systems off in this order.
+  - **Engineer — "Power Routing":** a cutaway schematic; consumers are split between the "main / secondary" lines so that no line is overloaded. Autonomy and crises switch the secondary line off first (spec 3.2: "switches off secondary lines"). A routing mistake means overload and a harsher Power Drop.
+  - **Scientist — "Calibration & Measurement Mode":** each installed instrument has a reference peak that is matched with a knob. Calibration accuracy multiplies data quality. The mode (cautious / normal / intensive) is a trade-off between data volume and heat or overheating risk (spec 3.3).
+  - **Comms officer — "Antenna Aiming & Packet Queue":** finding Earth on a radar by noisy signal strength, and the order of sending packets after a blackout given the available memory (spec 3.4). Aiming accuracy sets the bandwidth. The queue decides which data survives when memory overflows.
+- In flight, the same widgets come back as short crisis actions: re-aiming after a blackout, isolating a node during a Power Drop, lowering the intensity during overheating. These are the spec's P2 "mini-games", built on the same mechanics.
 
-## 2. Кто ставит модули — свой отдел сразу, чужой через командира
-- Отделы закреплены за ролями:
-  - Инженер — питание, двигатели, конструкция, возврат;
-  - Учёный — наука;
-  - Связист — связь и навигация;
-  - Командир ставит что угодно, потому что сам утверждает.
-- Свой отдел ставится и снимается сразу. Модуль чужого отдела превращается в **запрос** командиру: «одобрить» ставит модуль, «вето» отклоняет с причиной. Владелец отдела видит запрос.
-- Командир в начале конструктора **распределяет бюджет по отделам** (ТЗ 3.1). Если модуль выходит за долю своего отдела, он тоже идёт запросом.
-- Если у игрока несколько ролей (см. п. 4), он владеет всеми их отделами. В одиночном демо всё ставится сразу.
+## 2. Who installs modules — your own department right away, others via the commander
+- Departments are assigned to roles:
+  - Engineer — power, propulsion, structure, recovery;
+  - Scientist — science;
+  - Comms officer — comms and navigation;
+  - The commander installs anything, since they approve it themselves.
+- Modules in your own department are installed and removed right away. A module from another department becomes a **request** to the commander: "Approve" installs the module, "Veto" rejects it with a reason. The department owner sees the request.
+- At the start of the Constructor, the commander **splits the budget by department** (spec 3.1). If a module goes over its department's share, it also goes as a request.
+- If a player has several roles (see item 4), they own all of those roles' departments. In single-player demo, everything is installed right away.
 
-## 3. Team Trust — не только цифра
-- Падает, как в ТЗ, только за сознательно принятое критическое предупреждение, если риск сработал (−15). **Растёт на +10** за полёт, в котором никакое принятое предупреждение не сработало. Диапазон 0–100, причина всегда показывается.
-- Влияние:
-  - **≥ 80, «Слаженная команда»:** у кризисов на 5 с больше времени на решение. Связь в blackout не меняется, асимметрию это не ломает.
-  - **< 50, «Под наблюдением»:** утверждение вопреки критическому предупреждению требует **второго ключа** — подтверждения владельца этого отдела.
-  - **< 25, «Проверка агентства»:** перед следующим полётом обязательна диагностика на подготовке. Это расход в MC, но не блокировка: если MC не хватает, работает бесплатный путь из 0012.
-- Знак уровня и его эффект видны на панели командира, в лобби/штабе и в отчёте.
+## 3. Team Trust is more than a number
+- As in the spec, it drops only for a knowingly accepted critical warning if the risk fired (−15). **It rises by +10** for a flight in which no accepted warning fired. The range is 0–100, and the reason is always shown.
+- Effects:
+  - **≥ 80, "Tight-knit team":** crises give 5 s more time to decide. Comms during a blackout do not change, so the asymmetry is not broken.
+  - **< 50, "Under watch":** approving against a critical warning requires a **second key** — confirmation from the owner of that department.
+  - **< 25, "Agency audit":** before the next flight, diagnostics during preparation are mandatory. This costs MC but does not block: if there is not enough MC, the free path from 0012 applies.
+- The tier badge and its effect are shown on the commander's panel, in the lobby/HQ and in the report.
 
-## 4. 2–3 игрока разрешены (отступление от ТЗ «ровно 4»)
-- Комнату можно начать вдвоём, втроём или вчетвером. Одиночная игра — это прежний демо-режим с подписью.
-- Свободные роли раздаются игрокам: хост распределяет их в лобби, по умолчанию поровну. У игрока с двумя ролями вкладки панелей, обе задачи, фразы радио обеих ролей и права владельца отделов обеих ролей.
-- Асимметрия сохраняется по ролям: в каждой вкладке видно ровно то, что видит эта роль. Отчёт показывает вклад по ролям и по игрокам.
-- Новый игрок в лобби может забрать лишнюю роль у того, у кого их две.
+## 4. 2–3 players are allowed (a deviation from the spec's "exactly 4")
+- A room can be started with two, three or four players. Single-player is the existing demo mode, with a label.
+- Free roles are handed out to players: the host assigns them in the lobby, evenly by default. A player with two roles gets panel tabs, both tasks, the radio phrases of both roles and the department ownership rights of both roles.
+- Asymmetry is kept per role: each tab shows exactly what that role sees. The report shows contributions by role and by player.
+- A new player in the lobby can take the extra role from someone who has two.
 
-## 5. Язык — русский и английский
-- Переключатель RU/EN на главном экране и в настройках. По умолчанию язык браузера: `ru*` → русский, иначе английский. Выбор хранится у каждого игрока, игроки в одной комнате могут играть на разных языках.
-- Движок отдаёт **ключи сообщений и параметры**, а не готовую русскую прозу. Текст собирает UI, поэтому журнал, кризисы, предупреждения и отчёт переводятся.
-- Названия модулей и миссий одинаковы на обоих языках: они уже английские («Rotor System», «TITAN: SKY EXPLORER»). Описания переводятся.
-- Документация остаётся на русском (0007).
+## 5. Language — Russian and English
+- An RU/EN switch on the home screen and in the settings. The default is the browser language: `ru*` → Russian, otherwise English. The choice is stored per player; players in the same room can play in different languages.
+- The engine returns **message keys and parameters**, not ready-made Russian prose. The UI assembles the text, so the log, crises, warnings and report are all translated.
+- Module and mission names are the same in both languages: they are already English ("Rotor System", "TITAN: SKY EXPLORER"). Descriptions are translated.
+- The documentation stays in Russian (0007).
 
-**Почему:** ТЗ требует, чтобы у каждого было «полезная информация и конкретное действие». Задачи дают каждой роли руки, а не только экран. Правила отделов и Trust превращают командира в настоящего лидера, а не кнопку. Игра вдвоём или втроём нужна в школе, где часто не набирается ровно 4 человека. Двуязычность нужна для показа вне русскоязычной аудитории.
+**Why:** the spec requires that everyone has "useful information and a concrete action". The tasks give each role hands, not just a screen. The department rules and Trust turn the commander into a real leader rather than a button. Playing with two or three is needed at school, where there often aren't exactly 4 people. Bilingual support is needed to show the game beyond a Russian-speaking audience.
 
-**Альтернативы:**
-- задачи как ползунок без последствий — отклонено: ТЗ «не набор красивых экранов»;
-- любой ставит любой модуль без запросов — отклонено: роль командира пустеет;
-- Trust только как цифра — отклонено: это вопрос 5;
-- ровно 4 игрока — отклонено: блокирует игру в маленьких группах;
-- только русский — отклонено: проект показываем шире.
+**Alternatives:**
+- tasks as a slider with no consequences — rejected: the spec says "not a set of pretty screens";
+- anyone installs any module without requests — rejected: the commander's role becomes empty;
+- Trust only as a number — rejected: that is question 5;
+- exactly 4 players — rejected: blocks play in small groups;
+- Russian only — rejected: we show the project more widely.

@@ -1,7 +1,7 @@
-# 0008 Стиль: cel-shaded комикс (вариант 5) — предложено (2026-11-13)
-**Контекст:** первые 3 варианта (премиальная игрушка, low-poly, чистый sci-fi) не понравились. Из доски с 6 стилями выбран вариант 5.
-**Решение (предложено):** cel-shading: толстые чёрные контуры, плоские яркие цвета в 2–3 тона, полутоновые точки в тенях, драматичные ракурсы, оранжевый Титан.
-**Как в three.js:** `MeshToonMaterial` + gradientMap на 3 ступени; контуры — inverted hull (drei `<Outlines>`) или пост-эффект по глубине/нормалям; полутон — один шейдер в пост-обработке.
-**Плюсы:** проще модели (плоские цвета, без PBR-текстур) → генерация в Claude Design надёжнее; лёгкий рендер на телефонах; аварии отлично ложатся на язык комикса (кадр-удар, линии скорости, «застывший кадр» при blackout).
-**Риски:** тонкие детали (лопасти, штыри антенн) нужно делать толще, иначе контуры «рвутся»; контуры удваивают число draw calls при inverted hull — следить на телефонах.
-**Отклоняется от ТЗ:** ТЗ просит «Cute Futuristic Space Agency» с лавандой/циан. Нужно решить: палитру ТЗ сохраняем в UI, а 3D — в комиксе, или перекрашиваем всё.
+# 0008 Style: cel-shaded comic (option 5) — proposed (2026-11-13)
+**Context:** the first 3 options (premium toy, low-poly, clean sci-fi) were not liked. Option 5 was picked from a board of 6 styles.
+**Decision (proposed):** cel shading: thick black outlines, flat bright colors in 2–3 tones, halftone dots in the shadows, dramatic camera angles, an orange Titan.
+**How in three.js:** `MeshToonMaterial` + a 3-step gradientMap; outlines — inverted hull (drei `<Outlines>`) or a depth/normals post-effect; halftone — a single post-processing shader.
+**Pros:** simpler models (flat colors, no PBR textures) → more reliable generation in Claude Design; light rendering on phones; failures fit the comic language perfectly (impact frame, speed lines, a "freeze frame" during blackout).
+**Risks:** thin details (rotor blades, antenna rods) must be made thicker, otherwise the outlines "break up"; inverted-hull outlines double the number of draw calls — keep an eye on phones.
+**Deviates from the spec (TZ v2.0):** the spec asks for "Cute Futuristic Space Agency" with lavender/cyan. To decide: keep the spec's palette in the UI and the comic style in 3D, or repaint everything.

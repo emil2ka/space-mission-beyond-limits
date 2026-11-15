@@ -1,42 +1,42 @@
-# Экономика и прогресс
+# Economy and Progression
 
-Две валюты, их нельзя путать:
-- **Бюджет миссии (М$)** — выдаётся на каждую попытку, тратится в конструкторе, не переносится.
-- **Mission Credits (MC)** — мета-валюта команды, зарабатывается за результаты, переносится между попытками.
+Two currencies that must not be confused:
+- **Mission budget (M$)** — given for each attempt, spent in the Constructor, not carried over.
+- **Mission Credits (MC)** — the team's meta-currency, earned for results, carried over between attempts.
 
-## Награды (стартовые)
-| Исход | MC |
+## Rewards (starting values)
+| Outcome | MC |
 |---|---|
 | Perfect Success | 120 |
 | Success | 90 |
 | Partial Success | 50 |
-| Failed Mission | 20 (за опыт; никогда 0) |
-| + за каждую доставленную научную цель | +10 |
+| Failed Mission | 20 (for experience; never 0) |
+| + per delivered science goal | +10 |
 
-## Открытие второй миссии
-ASTEROID: SAMPLE RETURN = **150 MC**. Достижимо за 2 попытки Титана (или 1 Perfect + бонусы). Экран показывает цену, баланс и сколько не хватает.
+## Unlocking the second mission
+ASTEROID: SAMPLE RETURN = **150 MC**. Reachable in 2 Titan attempts (or 1 Perfect + bonuses). The screen shows the price, the balance and how much is missing.
 
-## Содержание штаба (MISSION PREPARATION COSTS)
-Перед новой попыткой: обслуживание штаба (10), диагностика (5), ремонт повреждённых модулей (по факту), замена расходников (5), страховка (опционально 15 — покрывает ремонт).
-- Итог показывается **до подтверждения**. Никаких неожиданных списаний.
-- Не хватает средств → **бесплатный базовый ремонт** и стартовая конфигурация. Баланс не уходит в минус, soft-lock невозможен (приёмочный тест E).
+## HQ upkeep (MISSION PREPARATION COSTS)
+Before a new attempt: HQ maintenance (10), diagnostics (5), repair of damaged modules (as needed), consumables refill (5), insurance (optional, 15 — covers repairs).
+- The total is shown **before confirmation**. No unexpected charges.
+- Not enough funds → **free basic repair** and the starter configuration. The balance never goes negative, a soft-lock is impossible (acceptance test E).
 
-## На что тратить MC
-1. Разблокировка астероида (150).
-2. Чертежи и улучшения штаба.
-3. Лёгкие сплавы: −10% массы корпуса (80).
-4. Улучшенные антенны (60).
-5. Более эффективные батареи: +25% ёмкости (60).
-6. Улучшенный контроллер питания (PDU v2: умное отключение) (50).
-7. Доп. монтажный слот любого отдела (70).
-8. Улучшенный Flight Computer: 6 правил (60).
-Каждое улучшение — понятный компромисс (цена, масса, энергия, надёжность или число применений).
+## What to spend MC on
+1. Unlocking the asteroid (150).
+2. HQ blueprints and upgrades.
+3. Light alloys: −10% hull mass (80).
+4. Upgraded antennas (60).
+5. More efficient batteries: +25% capacity (60).
+6. Upgraded power controller (PDU v2: smart shutoff) (50).
+7. Extra mounting slot for any department (70).
+8. Upgraded Flight Computer: 6 rules (60).
+Each upgrade is a clear trade-off (cost, mass, power, reliability or number of uses).
 
-## Хранение
-MC и разблокировки — на команду (комнату с сохранённым кодом штаба). P1: таблица `agency` в Supabase. В локальном режиме — localStorage хоста.
+## Storage
+MC and unlocks belong to the team (a room with a saved HQ code). P1: an `agency` table in Supabase. In local mode — the host's localStorage.
 
-## Как сделано (M3, 2026-11-14)
-- Движок: `src/engine/economy.ts` (часть A) — числа выше, правила и тест E в `economy.test.ts`.
-- Экраны (часть B): штаб и подготовка — `src/ui/screens/HQ.tsx`, см. [Screens](Screens.md) (раздел M3). Подготовка показывает каждую статью и итог до кнопки; списывается ровно показанная сумма (проверено в браузере: 20 и 26 MC).
-- Хранение: хост пишет `exportAgency` в `localStorage` (`sm:agency`) — только когда штаб комнаты реально изменился (награда, покупка, открытие, подготовка), а не при каждой публикации: иначе при перезагрузке все вкладки-хосты этого браузера перезаписывали бы друг друга. Новая комната хоста загружает его (`loadAgency`). Это «штаб браузера» — последняя команда, которая здесь играла. Supabase-режим пока тоже хранит у хоста (таблица `agency` — P1).
-- Dev: `?dev=1` открывает все миссии и НЕ читает/пишет сохранение (песочница); `?dev=1&unlock=0` — настоящая экономика с dev-ускорением (так проверялся тест E).
+## How it is done (M3, 2026-11-14)
+- Engine: `src/engine/economy.ts` (part A) — the numbers above, the rules and test E in `economy.test.ts`.
+- Screens (part B): HQ and preparation — `src/ui/screens/HQ.tsx`, see [Screens](Screens.md) (M3 section). Preparation shows every item and the total before the button; exactly the amount shown is charged (verified in the browser: 20 and 26 MC).
+- Storage: the host writes `exportAgency` to `localStorage` (`sm:agency`) — only when the room's HQ actually changed (reward, purchase, unlock, preparation), not on every publish: otherwise, on reload, all host tabs of this browser would overwrite each other. A new room created by the host loads it (`loadAgency`). This is the "browser's HQ" — the last team that played here. Supabase mode also stores it on the host for now (the `agency` table is P1).
+- Dev: `?dev=1` unlocks all missions and does NOT read/write the save (sandbox); `?dev=1&unlock=0` — the real economy with dev speed-up (this is how test E was checked).

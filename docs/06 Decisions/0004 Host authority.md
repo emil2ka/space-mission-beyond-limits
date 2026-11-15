@@ -1,4 +1,4 @@
-# 0004 Хост-авторитет поверх Supabase Realtime — принято (2026-11-13)
-**Решение:** логика выполняется у хоста (чистый `reduce` из engine), Supabase — только канал и хранилище состояния. При уходе хоста — передача следующему.
-**Почему:** не нужен свой сервер; логика одна для локального и онлайн-режима; детерминированность упрощает тесты.
-**Альтернативы:** Supabase Edge Functions как авторитет (задержка, сложнее разработка) — можно позже.
+# 0004 Host authority on top of Supabase Realtime — accepted (2026-11-13)
+**Decision:** game logic runs on the host (a pure `reduce` from the engine); Supabase is only the channel and the state store. When the host leaves, authority passes to the next player.
+**Why:** no server of our own is needed; the logic is the same for local and online modes; determinism makes testing easier.
+**Alternatives:** Supabase Edge Functions as the authority (latency, harder development) — possible later.

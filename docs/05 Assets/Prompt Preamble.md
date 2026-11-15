@@ -1,6 +1,6 @@
-# Промпт-преамбула (вставлять в начало КАЖДОГО промпта генератора)
+# Prompt Preamble (paste at the start of EVERY generator prompt)
 
-Стиль 5 — cel-shaded комикс ([0008 Cel-shaded comic style](../06%20Decisions/0008%20Cel-shaded%20comic%20style.md)). Референсы: `05 Assets/Style/S5/`.
+Style 5 — cel-shaded comic ([0008 Cel-shaded comic style](../06%20Decisions/0008%20Cel-shaded%20comic%20style.md)).
 
 ```text
 STYLE RULE — apply to EVERY model/image in this request:
@@ -14,4 +14,4 @@ Game: "Space Mission: Beyond Limits". Cel-shaded comic 3D game look.
 - Export: one GLB per model, each with its own "COPY GLB · BASE64" button.
 ```
 
-Предыдущий вариант (лавандовая «премиальная игрушка») отклонён 2026-11-13.
+The previous option (a lavender "premium toy") was rejected on 2026-11-13.

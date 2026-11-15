@@ -1,200 +1,198 @@
 <p align="center">
-  <img src="media/banner.png" alt="Space Mission: Beyond Limits — кооперативная 3D-игра в браузере" width="100%" />
+  <img src="media/banner.png" alt="Space Mission: Beyond Limits — a co-op 3D browser game" width="100%" />
 </p>
 
 <p align="center">
-  <a href="https://space-mission-tau.vercel.app"><b>▶ Играть онлайн</b></a>
-  &nbsp;·&nbsp; <a href="#как-сыграть">Как сыграть</a>
-  &nbsp;·&nbsp; <a href="#соответствие-тз">Соответствие ТЗ</a>
-  &nbsp;·&nbsp; <a href="#как-устроено">Как устроено</a>
-  &nbsp;·&nbsp; <a href="docs/README.md">Документация</a>
+  <a href="https://space-mission-tau.vercel.app"><b>▶ Play online</b></a>
+  &nbsp;·&nbsp; <a href="#how-to-play">How to play</a>
+  &nbsp;·&nbsp; <a href="#spec-compliance">Spec compliance</a>
+  &nbsp;·&nbsp; <a href="#how-it-works">How it works</a>
+  &nbsp;·&nbsp; <a href="docs/README.md">Docs</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/emil2ka/space-mission-beyond-limits/actions/workflows/ci.yml"><img src="https://github.com/emil2ka/space-mission-beyond-limits/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-  <img src="https://img.shields.io/badge/тесты-269%20✓-34C3B5" alt="269 тестов" />
+  <img src="https://img.shields.io/badge/tests-269%20passing-34C3B5" alt="269 tests" />
   <img src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/three.js-R3F-000000?logo=threedotjs&logoColor=white" alt="three.js" />
   <img src="https://img.shields.io/badge/Supabase-Realtime-3ECF8E?logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/язык-RU%20%2F%20EN-F28A3B" alt="RU / EN" />
+  <img src="https://img.shields.io/badge/language-EN%20%2F%20RU-F28A3B" alt="EN / RU" />
 </p>
 
 # Space Mission: Beyond Limits
 
-**Кооперативная образовательная 3D-игра в браузере для 2–4 игроков.** Игроки — команда космического агентства. Каждый ведёт свой отдел и видит свою часть данных, но все решения меняют **один общий аппарат**. Команда собирает аппарат, укладывается в массу, бюджет, энергию и тепло, запускает его на Титан или к астероиду и вместе разбирается с авариями и потерей связи.
+**A co-op educational 3D browser game for 2–4 players.** The players are a space agency team. Each one runs a department and sees only part of the data, but every decision changes **one shared spacecraft**. The team builds the craft within mass, budget, power and heat limits, launches it to Titan or to an asteroid, and handles failures and signal loss together.
 
-Игра не исправляет ошибки за игроков. Она предупреждает о риске и оставляет команде право его принять, а итоговый отчёт показывает, **какое решение к чему привело**.
+The game never fixes mistakes for the players. It warns about a risk and leaves the team the right to take it, and the final report shows **which decision led to what**.
 
-> Сделано по ТЗ «SPACE MISSION: BEYOND LIMITS» v2.0. Главный принцип ТЗ — «сначала работающая причинно-следственная система, затем визуальная полировка» — и есть порядок, в котором строилась игра: сначала движок с тестами, потом 3D и интерфейс.
+> Built from the spec "SPACE MISSION: BEYOND LIMITS" v2.0. The spec's core principle — "a working cause-and-effect system first, visual polish second" — is also the order the game was built in: first a tested simulation engine, then 3D and the interface.
 
 <table>
   <tr>
-    <td width="50%"><img src="media/02-build-titan.jpg" alt="Конструктор: аппарат для Титана" /><br /><sub><b>Конструктор.</b> Каталог по отделам, несколько экземпляров модулей, живой расчёт массы, бюджета, энергии и тепла.</sub></td>
-    <td width="50%"><img src="media/05-flight.jpg" alt="Mission Control: полёт над Титаном" /><br /><sub><b>Mission Control.</b> Полёт по фазам, точки маршрута, связь с задержкой, панель своей роли.</sub></td>
+    <td width="50%"><img src="media/02-build-titan.jpg" alt="Constructor: the Titan spacecraft" /><br /><sub><b>Constructor.</b> Catalog by department, several copies of a module, live mass, budget, power and heat.</sub></td>
+    <td width="50%"><img src="media/05-flight.jpg" alt="Mission Control: flight over Titan" /><br /><sub><b>Mission Control.</b> Flight phases, waypoints, delayed signal, your role's panel.</sub></td>
   </tr>
   <tr>
-    <td><img src="media/06-crisis.jpg" alt="Кризис во время полёта" /><br /><sub><b>Кризис.</b> Таймер, решение каждой роли, без решения срабатывает автономное правило.</sub></td>
-    <td><img src="media/07-blackout.jpg" alt="Потеря связи (blackout)" /><br /><sub><b>Blackout.</b> Земля не видит аппарат — работает бортовой алгоритм If–Then, роли видят разное.</sub></td>
+    <td><img src="media/06-crisis.jpg" alt="Crisis during the flight" /><br /><sub><b>Crisis.</b> A timer and a decision for each role; with no decision, an autonomy rule kicks in.</sub></td>
+    <td><img src="media/07-blackout.jpg" alt="Signal blackout" /><br /><sub><b>Blackout.</b> Earth can't see the craft — the onboard If–Then rules take over, and each role sees something different.</sub></td>
   </tr>
   <tr>
-    <td><img src="media/08-report.jpg" alt="Отчёт о миссии" /><br /><sub><b>Отчёт.</b> Итог, счёт, Team Trust, повтор миссии и цепочки «решение → последствие».</sub></td>
-    <td><img src="media/09-hq.jpg" alt="Штаб агентства" /><br /><sub><b>Штаб.</b> Кредиты, ремонт, страховка и улучшения с честной ценой.</sub></td>
+    <td><img src="media/08-report.jpg" alt="Mission report" /><br /><sub><b>Report.</b> Outcome, score, Team Trust, a mission replay and "decision → consequence" chains.</sub></td>
+    <td><img src="media/09-hq.jpg" alt="Agency HQ" /><br /><sub><b>HQ.</b> Credits, repairs, insurance and upgrades with an honest trade-off.</sub></td>
   </tr>
   <tr>
-    <td><img src="media/03-build-asteroid.jpg" alt="Конструктор: аппарат для астероида" /><br /><sub><b>Вторая миссия — астероид.</b> Другие ограничения: вакуум, топливо, манипулятор, капсула возврата.</sub></td>
-    <td><img src="media/04-launch.jpg" alt="Запуск ракеты" /><br /><sub><b>Запуск.</b> 3D-ролик старта перед полётом.</sub></td>
+    <td><img src="media/03-build-asteroid.jpg" alt="Constructor: the asteroid spacecraft" /><br /><sub><b>Second mission — the asteroid.</b> Different limits: vacuum, fuel, a robotic arm, a return capsule.</sub></td>
+    <td><img src="media/04-launch.jpg" alt="Rocket launch" /><br /><sub><b>Launch.</b> A 3D launch sequence before the flight.</sub></td>
   </tr>
 </table>
 
-<p align="center"><img src="media/10-phone-flight.jpg" alt="Игра на телефоне" width="300" /><br /><sub>Телефон: 3D сверху, панель роли снизу, без горизонтальной прокрутки.</sub></p>
+<p align="center"><img src="media/10-phone-flight.jpg" alt="The game on a phone" width="300" /><br /><sub>Phone: 3D on top, the role panel below, no horizontal scrolling.</sub></p>
 
-## Как сыграть
+## How to play
 
-1. Откройте **https://space-mission-tau.vercel.app**, введите имя и нажмите **«Создать комнату»**.
-2. Отправьте команде 6-значный код комнаты. Остальные вводят его на своих устройствах — от 2 до 4 игроков.
-3. Каждый выбирает роль, хост выбирает миссию. Дальше: брифинг → бюджет и сборка аппарата → задачи ролей и правила If–Then → проверка готовности, утверждение или вето командира → запуск → полёт с кризисами → отчёт → штаб.
+1. Open **https://space-mission-tau.vercel.app**, enter your name and press **"Create a room"**.
+2. Send the 6-character room code to your team. The others enter it on their own devices — 2 to 4 players.
+3. Everyone picks a role, the host picks a mission. Then: briefing → budget and building → role tasks and If–Then rules → readiness check, the commander approves or sends it back → launch → flight with crises → report → HQ.
 
-**Одному:** кнопка «Демо-режим» — все роли в одной вкладке, переключение «смотреть как». Режим честно помечен плашкой «ДЕМО», это не выдаётся за мультиплеер.
+**Solo:** "Demo mode: play solo" puts all roles in one tab with a "view as" switch. Demo mode is clearly labelled as a demo and never passed off as multiplayer.
 
-## Роли
+The game is in **English and Russian** — each player picks their own language.
 
-| Роль | За что отвечает | Что делает |
+## Roles
+
+| Role | Responsible for | What they do |
 |---|---|---|
-| **Командир** | стратегия, бюджет, риски | распределяет бюджет, утверждает конфигурацию или накладывает вето, принимает решения в авариях; Team Trust падает только за сознательно проигнорированное предупреждение |
-| **Главный инженер** | энергия, масса, тепло, надёжность | собирает аппарат, видит точный источник дефицита энергии, распределяет питание, изолирует и чинит узлы |
-| **Научный специалист** | приборы, данные, образец | выбирает и калибрует приборы, решает: больше данных с риском перегрева или осторожнее |
-| **Специалист связи** | антенна, сигнал, память | наводит антенну, выбирает очередь пакетов, решает, что сохранить, когда память заполнена |
+| **Commander** | strategy, budget, risk | splits the budget, approves the configuration or vetoes it, makes the calls during failures; Team Trust drops only when a clearly shown warning was knowingly ignored |
+| **Chief Engineer** | power, mass, heat, reliability | builds the craft, sees the exact source of a power deficit, routes power, isolates and repairs parts |
+| **Science Officer** | instruments, data, the sample | picks and calibrates instruments, decides between more data with a risk of overheating or a safer pace |
+| **Communications Officer** | antenna, signal, memory | points the antenna, orders the packet queue, decides what to keep when memory is full |
 
-## Миссии
+## Missions
 
 | | **Titan: Sky Explorer** | **Asteroid: Sample Return** |
 |---|---|---|
-| Цель | автономный роторный аппарат исследует атмосферу и поверхность | сблизиться, взять образец, упаковать и вернуть капсулу на Землю |
-| Энергия | солнечные панели почти бесполезны — основной источник RTG | Солнца достаточно, но ориентация и манёвры решают |
-| Движение | роторы в плотной атмосфере | роторы не работают в вакууме — химические двигатели и двигатели малой тяги, ионный не для резких манёвров |
-| Риски | холод, метановые бури, задержка связи, blackout при входе | топливо, обломки, заклинивание манипулятора, выбор места забора |
+| Goal | an autonomous rotorcraft studies Titan's atmosphere and surface | rendezvous, take a sample, seal it and return the capsule to Earth |
+| Power | solar panels are almost useless — the main source is the RTG | enough sunlight, but orientation and manoeuvres matter |
+| Movement | rotors in a dense atmosphere | rotors don't work in a vacuum — chemical engines and thrusters; the ion engine is not for sharp manoeuvres |
+| Risks | cold, methane storms, signal delay, a blackout on entry | fuel, debris, a jammed arm, choosing the sampling site |
 
-## Соответствие ТЗ
+## Spec compliance
 
-### Приёмочные тесты (§15)
+### Acceptance tests (§15)
 
-| Тест | Что проверяет | Статус | Чем проверено |
+| Test | What it checks | Status | Verified by |
 |---|---|---|---|
-| **A — энергетика Титана** | панель почти ничего не даёт, каждый RTG добавляет генерацию (и массу, цену, тепло), батареи добавляют ёмкость, а не генерацию; показана причина дефицита | ✅ | [`acceptance.test.ts`](src/engine/__tests__/acceptance.test.ts), [`energy.test.ts`](src/engine/__tests__/energy.test.ts), браузер |
-| **B — несовместимость** | ротор на астероиде не засчитывается как двигатель, игра объясняет почему | ✅ | [`acceptance.test.ts`](src/engine/__tests__/acceptance.test.ts), браузер |
-| **C — цепочка последствий** | тяжёлый модуль → масса и цена → предупреждение о лимите → вето или утверждение с записью → отчёт связывает перегруз с последствиями | ✅ | [`acceptance.test.ts`](src/engine/__tests__/acceptance.test.ts), [`flight.test.ts`](src/engine/__tests__/flight.test.ts), браузер |
-| **D — blackout** | роли видят разное, тактическое радио, антенна и очередь пакетов, диагностика инженера, таймер и корпус у командира, по таймеру срабатывает автономный алгоритм | ✅ | [`blackout.test.ts`](src/engine/__tests__/blackout.test.ts), браузер |
-| **E — экономика** | кредиты за Титан, цена и разблокировка астероида, ремонт до следующего запуска, без отрицательного баланса и тупиков | ✅ | [`economy.test.ts`](src/engine/__tests__/economy.test.ts), браузер |
-| **F — мультиплеер** | 4 клиента в одной комнате, уникальные роли, все видят изменения, отключение и возврат с сохранением состояния | ✅ | [`multiplayer.test.ts`](src/engine/__tests__/multiplayer.test.ts), [`transport.test.ts`](src/net/__tests__/transport.test.ts); 4 вкладки локально, 2 игрока онлайн через Supabase |
+| **A — Titan power** | a solar panel gives almost nothing, each RTG adds generation (and mass, cost, heat), batteries add capacity, not generation; the cause of a deficit is shown | ✅ | [`acceptance.test.ts`](src/engine/__tests__/acceptance.test.ts), [`energy.test.ts`](src/engine/__tests__/energy.test.ts), browser |
+| **B — incompatibility** | a rotor on the asteroid does not count as propulsion, and the game explains why | ✅ | [`acceptance.test.ts`](src/engine/__tests__/acceptance.test.ts), browser |
+| **C — chain of consequences** | a heavy module → mass and cost → an over-limit warning → veto or approval on record → the report links the overload to its consequences | ✅ | [`acceptance.test.ts`](src/engine/__tests__/acceptance.test.ts), [`flight.test.ts`](src/engine/__tests__/flight.test.ts), browser |
+| **D — blackout** | roles see different data, tactical radio, antenna and packet queue, engineer diagnostics, timer and hull for the commander, the autonomy rules fire when the timer runs out | ✅ | [`blackout.test.ts`](src/engine/__tests__/blackout.test.ts), browser |
+| **E — economy** | credits for Titan, the asteroid's price and unlock, repairs before the next launch, no negative balance and no soft-lock | ✅ | [`economy.test.ts`](src/engine/__tests__/economy.test.ts), browser |
+| **F — multiplayer** | 4 clients in one room, unique roles, everyone sees changes, a player drops and returns with the state kept | ✅ | [`multiplayer.test.ts`](src/engine/__tests__/multiplayer.test.ts), [`transport.test.ts`](src/net/__tests__/transport.test.ts); 4 tabs locally, 2 players online via Supabase |
 
-### Приоритеты MVP (§1)
+### MVP priorities (§1)
 
-- **P0 — всё:** комнаты, роли, две миссии, каталог, конструктор, расчёт массы, энергии и бюджета, запуск, события, отчёт.
-- **P1 — всё:** настоящий онлайн-мультиплеер (Supabase Realtime), If–Then Planner, blackout с асимметрией экранов, тактическое радио, экономика штаба.
-- **P2 — частично:** мини-игры ролей и сложные 3D-анимации есть; дополнительных миссий и чертежей нет.
+- **P0 — all done:** rooms, roles, two missions, catalog, builder, mass / power / budget calculation, launch, events, report.
+- **P1 — all done:** real online multiplayer (Supabase Realtime), If–Then Planner, blackout with asymmetric screens, tactical radio, HQ economy.
+- **P2 — partly:** role mini-games and complex 3D animations are in; extra missions and blueprints are not.
 
-### Критерий готовности (§16)
+### Definition of done (§16)
 
-Путь от создания комнаты до итогового отчёта проходится без тупиков на обеих миссиях. Миссии отличаются механиками · каталог разделён на отделы · несколько экземпляров модулей в пределах слотов, массы и бюджета · батареи не считаются генераторами · решения влияют на несколько систем сразу · у каждой роли свои полезные действия · blackout связан с автономным алгоритмом · экономика объяснима · отчёт учит на ошибках.
+The whole path from creating a room to the final report can be played on both missions with no dead ends. The missions differ in mechanics · the catalog is split into departments · several copies of a module are allowed within slots, mass and budget · batteries are not counted as generators · decisions affect several systems at once · every role has its own useful actions · the blackout is tied to the autonomy rules · the economy is explainable · the report teaches through mistakes.
 
-### Чем отличается от ТЗ
+### Where it differs from the spec
 
-- **Полноценное 3D вместо 2D-иллюстраций** — модули видно на корпусе, перегрев и аварии видно в сцене ([решение 0002](docs/06%20Decisions/0002%20Full%203D%20with%20animations.md)).
-- **2–4 игрока вместо ровно 4** — свободные роли берёт кто-то из команды ([решение 0013](docs/06%20Decisions/0013%20Roles%20tasks%20trust%20players%20language.md)).
-- **Русский и английский** — язык свой у каждого игрока.
-- Числа баланса — условные игровые параметры, а не реальные характеристики NASA ([таблица баланса](docs/03%20Design/Balance%20Table.md)).
+- **Full 3D instead of 2D illustrations** — you see modules on the hull, overheating and failures in the scene ([decision 0002](docs/06%20Decisions/0002%20Full%203D%20with%20animations.md)).
+- **2–4 players instead of exactly 4** — free roles are taken by someone on the team ([decision 0013](docs/06%20Decisions/0013%20Roles%20tasks%20trust%20players%20language.md)).
+- **English and Russian** — each player picks their own language.
+- Balance numbers are game parameters, not real NASA specifications ([balance table](docs/03%20Design/Balance%20Table.md)).
 
-## Как устроено
+## How it works
 
 ```mermaid
 flowchart LR
-  UI["Экраны и панели ролей<br/>src/ui"] -- "действие" --> Store["Состояние клиента<br/>src/store (zustand)"]
-  Scene["3D-сцены<br/>src/scene (three.js)"] -. "читает" .-> Store
-  Store -- "reduce(state, action)" --> Engine["Движок — чистые функции<br/>src/engine"]
-  Store <--> Net{"Транспорт комнаты<br/>src/net"}
-  Net --> Local["BroadcastChannel<br/>вкладки одного браузера"]
-  Net --> Supa["Supabase Realtime<br/>+ таблица rooms"]
+  UI["Screens and role panels<br/>src/ui"] -- "action" --> Store["Client state<br/>src/store (zustand)"]
+  Scene["3D scenes<br/>src/scene (three.js)"] -. "reads" .-> Store
+  Store -- "reduce(state, action)" --> Engine["Engine — pure functions<br/>src/engine"]
+  Store <--> Net{"Room transport<br/>src/net"}
+  Net --> Local["BroadcastChannel<br/>tabs of one browser"]
+  Net --> Supa["Supabase Realtime<br/>+ rooms table"]
 ```
 
-- **Вся игровая логика — в `src/engine/`** как чистые функции без React и three.js: каталог, расчёт массы, бюджета, энергии и тепла, правила If–Then, полёт, кризисы, экономика, отчёт. Поэтому её можно проверять тестами без браузера.
-- **Авторитет хоста** ([решение 0004](docs/06%20Decisions/0004%20Host%20authority.md)): хост применяет действия игроков и рассылает состояние. Если хост пропал, через 10 с хостом становится следующий игрок в сети.
-- **Детерминированные кризисы** ([решение 0006](docs/06%20Decisions/0006%20Deterministic%20crises.md)): у каждой аварии есть причина в сборке или состоянии аппарата (перегрузка шины, тепло, нет щита…), случайность — только небольшой шум. Поэтому отчёт может честно сказать «это случилось из-за X».
-- **Без ключей Supabase** игра работает в локальном демо-режиме и честно это показывает.
-- **3D-модели** — glTF, проверка и оптимизация скриптами (`gltf-transform`, `meshoptimizer`), cel-shading с обводкой, подвижные части анимируются кодом. Графика Авто / Low / High, тяжёлые 3D-чанки грузятся после входа в комнату.
+- **All game logic lives in `src/engine/`** as pure functions with no React or three.js: catalog, mass / budget / power / heat, If–Then rules, flight, crises, economy, report. That is why it can be tested without a browser.
+- **Host authority** ([decision 0004](docs/06%20Decisions/0004%20Host%20authority.md)): the host applies players' actions and broadcasts the state. If the host disappears, the next online player becomes host after 10 s.
+- **Deterministic crises** ([decision 0006](docs/06%20Decisions/0006%20Deterministic%20crises.md)): every failure has a cause in the build or the craft's state (overloaded bus, heat, no shield…), with only a little random noise. That's why the report can honestly say "this happened because of X".
+- **Without Supabase keys** the game runs in a local demo mode and says so.
+- **3D models** are glTF, validated and optimized by scripts (`gltf-transform`, `meshoptimizer`), cel-shaded with outlines; moving parts are animated in code. Graphics Auto / Low / High; the heavy 3D chunks load after you join a room.
 
-## Запуск локально
+## Run locally
 
-Нужны Node.js 22+ и pnpm.
+You need Node.js 22+ and pnpm.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Откроется `http://localhost:5173`. Без ключей — локальный режим: каждая вкладка браузера — отдельный игрок.
+It opens at `http://localhost:5173`. Without keys it runs in local mode: every browser tab is a separate player.
 
-| Команда | Что делает |
+| Command | What it does |
 |---|---|
-| `pnpm test` | все тесты (Vitest) |
-| `pnpm typecheck` | проверка типов TypeScript |
-| `pnpm build` | production-сборка в `dist/` |
-| `pnpm dev:lan` | dev-сервер, доступный с телефона в той же Wi-Fi-сети |
+| `pnpm test` | all tests (Vitest) |
+| `pnpm typecheck` | TypeScript type check |
+| `pnpm build` | production build into `dist/` |
+| `pnpm dev:lan` | dev server reachable from a phone on the same Wi-Fi |
 
-**Онлайн-режим:** создайте проект Supabase, выполните [`supabase/schema.sql`](supabase/schema.sql) в SQL Editor, скопируйте `.env.example` в `.env.local` и впишите URL проекта и publishable-ключ. Пошагово — [Multiplayer.md](docs/04%20Tech/Multiplayer.md).
+**Online mode:** create a Supabase project, run [`supabase/schema.sql`](supabase/schema.sql) in the SQL Editor, copy `.env.example` to `.env.local` and fill in the project URL and the publishable key. Step by step — [Multiplayer.md](docs/04%20Tech/Multiplayer.md).
 
-## Тесты
+## Tests
 
-**269 тестов в 21 файле**, проходят в CI на каждый пуш:
+**269 tests in 21 files**, run by CI on every push:
 
-- **движок** — приёмочные тесты ТЗ A–F, энергия, полёт Титана и астероида, blackout, правила If–Then, задачи ролей, экономика, повтор миссии, мультиплеер;
-- **3D** — контракт моделей (узлы, слоты, бюджеты треугольников), механика подвижных частей, выбор качества графики;
-- **переводы** — у русского и английского одинаковые ключи, все данные переведены;
-- **сеть и звук** — сохранение комнаты, события звука.
+- **engine** — spec acceptance tests A–F, power, Titan and asteroid flights, blackout, If–Then rules, role tasks, economy, mission replay, multiplayer;
+- **3D** — model contract (nodes, slots, triangle budgets), mechanics of moving parts, graphics quality selection;
+- **translations** — English and Russian have the same keys, all data is translated;
+- **network and audio** — room saving, sound events.
 
-## Структура
+## Repository layout
 
-| Путь | Что там |
+| Path | What's there |
 |---|---|
-| `src/engine/` | симуляция: данные каталога и миссий, расчёты, полёт, кризисы, экономика, отчёт |
-| `src/ui/` | экраны, панели ролей, UI-кит |
-| `src/scene/` | 3D-сцены: стенд, запуск, Титан, астероид, возвращение |
-| `src/net/` | транспорт комнаты: локальный и Supabase |
-| `src/store/` | состояние клиента |
-| `src/audio/` | звук, синтезируется в коде |
-| `src/i18n/` | русский и английский |
-| `public/models/` | оптимизированные 3D-модели (GLB) |
-| `scripts/` | проверка и оптимизация моделей, рендер иконок модулей, замеры на устройствах |
-| `supabase/` | схема базы для онлайн-режима |
-| `docs/` | документация: [геймдизайн, техника, решения](docs/README.md) |
+| `src/engine/` | simulation: catalog and mission data, calculations, flight, crises, economy, report |
+| `src/ui/` | screens, role panels, UI kit |
+| `src/scene/` | 3D scenes: test stand, launch, Titan, asteroid, return |
+| `src/net/` | room transport: local and Supabase |
+| `src/store/` | client state |
+| `src/audio/` | sound, synthesized in code |
+| `src/i18n/` | English and Russian |
+| `public/models/` | optimized 3D models (GLB) |
+| `scripts/` | model validation and optimization, module icon rendering, device measurements |
+| `supabase/` | database schema for online mode |
+| `docs/` | documentation: [game design, tech, decisions](docs/README.md) |
 
-## Честно о статусе
+## Honest status
 
-- Мультиплеер проверен в 4 вкладках (локальный транспорт) и с 2 игроками онлайн через Supabase. **Полный полёт вчетвером на разных устройствах ещё не проводился.**
-- Телефоны и слабые ноутбуки проверены в эмуляции (замедление процессора в 4–6 раз, программный рендер). На реальных школьных устройствах — нет.
-- На графике Low нет комикс-обводок — это размен ради FPS на телефонах.
-- Остальное — в [Known Issues](docs/04%20Tech/Known%20Issues.md).
+- Multiplayer was tested in 4 tabs (local transport) and with 2 players online via Supabase. **A full four-player flight on separate devices has not been run yet.**
+- Phones and weak laptops were tested in emulation (CPU slowed 4–6×, software rendering), not on real school devices.
+- The Low graphics setting has no comic outlines — a trade-off for FPS on phones.
+- More in [Known Issues](docs/04%20Tech/Known%20Issues.md).
 
-## Использование ИИ
+## Use of AI
 
-С помощью ИИ-инструментов по нашим заданиям сделаны:
+Made with AI tools from our briefs:
 
-- **3D-модели** — аппараты и модули, ракета, астронавт, штаб, Титан и астероид (Claude Design);
-- **интерфейс и иконки** — дизайн экранов, UI-кит (Claude Design), 62 иконки (ChatGPT);
-- **концепт-арт** — варианты стиля и концепты корпусов аппаратов (ChatGPT);
-- **тексты и перевод** — тексты игры, английская версия и документация (Claude).
+- **3D models** — spacecraft and modules, the rocket, the astronaut, HQ, Titan and the asteroid (Claude Design);
+- **interface and icons** — screen design, the UI kit (Claude Design), 62 icons (ChatGPT);
+- **concept art** — style options and spacecraft hull concepts (ChatGPT);
+- **texts and translation** — game texts, the English version and the documentation (Claude).
 
-**Наша команда:** ключевые решения (полноценное 3D, стиль, роли и правила), отбор вариантов и тестирование.
+**Our team:** key decisions (full 3D, style, roles and rules), choosing between options, and testing.
 
-То же самое написано в самой игре — под жёлтой кнопкой **«!»** в правом верхнем углу.
+The same is shown in the game itself — behind the yellow **"!"** button in the top-right corner.
 
-## Технологии
+## Tech stack
 
 React 19 · TypeScript · Vite · three.js + @react-three/fiber + drei · zustand · Supabase Realtime · Vitest · glTF-Transform + meshoptimizer
 
-## Лицензия
+## License
 
-Код — [MIT](LICENSE). 3D-модели, иконки и изображения сделаны для этого проекта и используются только в нём.
-
----
-
-<sub>**English.** *Space Mission: Beyond Limits* is a co-op educational 3D browser game for 2–4 players: a space agency team builds one shared spacecraft, flies it to Titan or an asteroid, handles crises and signal blackouts, and gets a report that links every decision to its consequences. Play at https://space-mission-tau.vercel.app (RU/EN). Run locally with `pnpm install && pnpm dev`; tests with `pnpm test`.</sub>
+Code — [MIT](LICENSE). The 3D models, icons and images were made for this project and are used only in it.

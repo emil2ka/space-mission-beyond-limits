@@ -1,7 +1,7 @@
-# 0009 — Модели P0 в 3 батча Claude Design
+# 0009 — P0 models in 3 Claude Design batches
 
-- **Дата:** 2026-11-14 · **Статус:** принято
-- **Контекст:** в пайплайне было «пачки по 4–6 моделей» (≈9 запросов на срез Титана). Решили сделать за 3 батча и очень качественно.
-- **Решение:** 3 батча по 11 GLB: B1 — корпус, накладки и окружение; B2 — энергия, навигация, связь; B3 — наука, тепло, астронавт. В каждом промпте есть правило качества (проход по качеству и по масштабу) и общий контракт координат, чтобы модели разных батчей сходились. Контракт — [Model Contract](../05%20Assets/Model%20Contract.md).
-- **Риски:** 11 моделей за запрос — дольше и больше шанс, что Claude Design остановится на полпути (тогда «продолжи с оставшихся id»). Скелет и клипы астронавта — самое рискованное место; запасной вариант — Blender.
-- **Дополнительно:** обводки в GLB не запекаются, их рисует игра. Накладки (`rotor_system`, `landing_system`, `thermal_insulation`, `power_bus`) делаются в координатах корпуса, а не на слот.
+- **Date:** 2026-11-14 · **Status:** accepted
+- **Context:** the pipeline used "packs of 4–6 models" (≈9 requests for the Titan slice). We decided to do it in 3 batches, at very high quality.
+- **Decision:** 3 batches of 11 GLBs: B1 — hull, overlays and environment; B2 — power, navigation, comms; B3 — science, thermal, astronaut. Every prompt includes a quality rule (a quality pass and a scale pass) and a shared coordinate contract, so models from different batches line up. The contract is [Model Contract](../05%20Assets/Model%20Contract.md).
+- **Risks:** 11 models per request takes longer and raises the chance that Claude Design stops halfway (then "continue with the remaining ids"). The astronaut's skeleton and clips are the riskiest part; the fallback is Blender.
+- **Also:** outlines are not baked into the GLB; the game draws them. Overlays (`rotor_system`, `landing_system`, `thermal_insulation`, `power_bus`) are made in hull coordinates, not per slot.

@@ -1,125 +1,125 @@
-# Полный список экранов (19)
+# Full Screen List (19)
 
-| # | Экран | Приоритет | Что на нём | 3D-фон / сцена |
+| # | Screen | Priority | What is on it | 3D background / scene |
 |---|---|---|---|---|
-| 1 | Главный | P0 | Логотип, «Создать комнату», «Войти по коду», настройки | Ангар штаба, ракета за окном |
-| 2 | Создание комнаты | P0 | Имя, код комнаты крупно, копировать | Ангар |
-| 3 | Подключение по коду | P0 | Поле кода (6 символов), имя | Ангар |
-| 4 | Lobby | P0 | 4 слота: имя, роль, ONLINE/OFFLINE/Reconnecting, READY | 4 астронавта у пультов |
-| 5 | Выбор роли | P0 | 4 карточки ролей, занятые — серые с именем | Камера подъезжает к пульту роли |
-| 6 | Выбор миссии | P0 | Титан / Астероид (замок + цена в MC) | Голограмма планеты/астероида |
-| 7 | Брифинг | P0 | Цель, среда, ограничения, обязательные системы | Голограмма + пролёт |
-| 8 | Распределение бюджета | P1 | Командир делит бюджет между отделами (ползунки) | — |
-| 9 | Конструктор | P0 | Каталог по отделам слева, аппарат в центре, параметры справа | Аппарат на стенде в чистой комнате |
-| 10 | Индивидуальные задачи | P1 | Между конструктором и проверкой готовности: мини-игра каждой роли без таймера (командир — приоритеты целей и порядок жертв, инженер — трассировка питания, учёный — калибровка и режим измерений, связь — наведение антенны и очередь пакетов), полоса команды, «Готово» / «Пропустить», Autonomy Planner. Подробно: [Individual Tasks](Individual%20Tasks.md) | Без 3D: крупный план узла не делали |
-| 11 | Autonomy Planner | P1 | Блоки правил, «Тест» | — |
-| 12 | Проверка готовности | P0 | Чек-лист: масса, энергия, тепло, связь, совместимость, обязательные | Проблемы подсвечены на модели |
-| 13 | Утверждение / вето | P0 | Командир: Approve / Veto / вернуть на доработку | Камера облетает аппарат |
-| 14 | Обратный отсчёт и запуск | P0 | 10…0, статус систем | Ракета, старт, отделение ступеней |
-| 15 | Mission Control | P0 | Фаза, таймлайн, панель роли, журнал, радио | Сцена миссии в реальном времени |
-| 16 | Кризисный экран / blackout | P0 (кризис) · P1 (blackout) | Аварийный слой, таймер, действия роли | Причина аварии в 3D |
-| 17 | Mission Report | P0 | Исход, цепочки причин, вклад ролей | Повтор моментов |
-| 18 | Кредиты, ремонт, улучшения | P1 | MC, обслуживание, магазин улучшений | Ангар, аппарат в ремонте |
-| 19 | Настройки доступности | P0 | Звук, Reduced Motion, Disable Flash, качество графики (Авто / Low / High, M5) | — |
+| 1 | Home | P0 | Logo, "Create a room", "Join by code", settings | HQ hangar, a rocket outside the window |
+| 2 | Create a room | P0 | Name, the room code in large type, copy | Hangar |
+| 3 | Join by code | P0 | A code field (6 characters), name | Hangar |
+| 4 | Lobby | P0 | 4 slots: name, role, ONLINE/OFFLINE/Reconnecting, READY | 4 astronauts at their consoles |
+| 5 | Role selection | P0 | 4 role cards, taken ones are grey with a name | The camera moves up to the role's console |
+| 6 | Mission selection | P0 | Titan / Asteroid (a lock + the price in MC) | A hologram of the planet/asteroid |
+| 7 | Briefing | P0 | Goal, environment, constraints, required systems | Hologram + a fly-by |
+| 8 | Budget split | P1 | The commander splits the budget between departments (sliders) | — |
+| 9 | Constructor | P0 | The catalog by department on the left, the craft in the center, parameters on the right | The craft on a stand in a clean room |
+| 10 | Individual Tasks | P1 | Between the Constructor and the readiness check: a mini-game for each role, with no timer (commander — goal priorities and sacrifice order, engineer — power routing, scientist — calibration and measurement mode, comms — antenna aiming and packet queue), the team strip, "Done" / "Skip", Autonomy Planner. Details: [Individual Tasks](Individual%20Tasks.md) | No 3D: the unit close-up was not made |
+| 11 | Autonomy Planner | P1 | Rule blocks, "Test" | — |
+| 12 | Readiness check | P0 | A checklist: mass, power, heat, comms, compatibility, required systems | Problems are highlighted on the model |
+| 13 | Approval / veto | P0 | Commander: Approve / Veto / send back for rework | The camera flies around the craft |
+| 14 | Countdown and launch | P0 | 10…0, system status | Rocket, liftoff, stage separation |
+| 15 | Mission Control | P0 | Phase, timeline, role panel, log, radio | The mission scene in real time |
+| 16 | Crisis screen / blackout | P0 (crisis) · P1 (blackout) | Emergency overlay, timer, role actions | The cause of the failure in 3D |
+| 17 | Mission Report | P0 | Outcome, chains of causes, role contributions | Replay of moments |
+| 18 | Credits, repairs, upgrades | P1 | MC, maintenance, the upgrade shop | Hangar, the craft under repair |
+| 19 | Accessibility settings | P0 | Sound, Reduced Motion, Disable Flash, graphics quality (Auto / Low / High, M5) | — |
 
-## Что сделано (M1, 2026-11-14)
-| # | Экран | Файл | Состояние |
+## What was done (M1, 2026-11-14)
+| # | Screen | File | State |
 |---|---|---|---|
-| 9 | Конструктор | `src/ui/screens/Constructor.tsx` | Каталог, параметры, 3D; кнопка «На проверку», причина последнего вето |
-| 12–13 | Проверка готовности + утверждение / вето | `src/ui/screens/Review.tsx` | Чек-лист по 8 пунктам, блокеры / предупреждения / заметки, подсветка узлов на стенде (клик — один пункт), командир: «Утвердить» (с предупреждениями — только с явной галочкой), «Вето» с причиной; остальные видят статус. **Проверено в браузере** |
-| 14 | Запуск | `src/ui/screens/Flight.tsx` (`Launch`) | `LaunchScene` на весь экран, хост шлёт `launchDone`, пропуск кликом у хоста. **Проверено** |
-| 15 | Mission Control | `src/ui/screens/Flight.tsx` | Сцена Титана, фазы + точки маршрута, панель своей роли (`panelFor`), журнал, NO SIGNAL, выбор режима у учёного, переключение роли в демо. **Проверено** |
-| 16 | Кризисный экран | `src/ui/screens/Flight.tsx` (`CrisisCard`) | Glitch 0.7 с, CRITICAL EVENT, аварийный слой, таймер, варианты роли, выбор других, итог кризиса; Reduced Motion / Disable Flash. **Проверено**. Нет: звук, blackout-асимметрия глубже `panelFor` |
-| 17 | Mission Report | `src/ui/screens/Report.tsx` | Исход, баллы по весам, 3 цепочки + «Подробнее», Team Trust, решения, вклад ролей, MC, «Ещё раз» / «В штаб». **Проверено**. Нет: 3D-повтор моментов (есть только их список) |
-| 19 | Настройки доступности | `src/ui/settings.ts`, `components/common.tsx` | Только Reduced Motion и Disable Flash (переключатели на панели полёта); отдельного экрана нет |
-| 11 | Autonomy Planner | `src/ui/AutonomyPlanner.tsx` (вкладка «Автономия» в конструкторе; список правил на проверке) | M2: правила ЕСЛИ/И/ТО, серые блоки с причиной, лимит Flight Computer, приоритет, конфликты, «Тест: 3 сценария», сохраняют инженер/командир. **Проверено в браузере** |
-| 15–16 | Tactical Radio + blackout | `src/ui/Radio.tsx`, `Flight.tsx` | M2: 2 фразы роли, крупно на 2 с, задержка в blackout; полоса 4 состояний сигнала; панели ролей в blackout (таймер, диагностика, антенна, очередь, «не уходит»); действие роли и полоса «отправлено → дошло → подтверждено»; итог автономии в отчёте. **Проверено в браузере** (тест D, скриншоты `m2-blackout-shots/`) |
+| 9 | Constructor | `src/ui/screens/Constructor.tsx` | Catalog, parameters, 3D; the "To review" button, the reason for the last veto |
+| 12–13 | Readiness check + approval / veto | `src/ui/screens/Review.tsx` | An 8-item checklist, blockers / warnings / notes, unit highlighting on the stand (click — one item); commander: "Approve" (with warnings — only with an explicit checkbox), "Veto" with a reason; the others see the status. **Verified in the browser** |
+| 14 | Launch | `src/ui/screens/Flight.tsx` (`Launch`) | `LaunchScene` full screen, the host sends `launchDone`, the host can skip with a click. **Verified** |
+| 15 | Mission Control | `src/ui/screens/Flight.tsx` | The Titan scene, phases + route points, your role's panel (`panelFor`), the log, NO SIGNAL, mode selection for the scientist, role switching in demo. **Verified** |
+| 16 | Crisis screen | `src/ui/screens/Flight.tsx` (`CrisisCard`) | A 0.7 s glitch, CRITICAL EVENT, the emergency overlay, the timer, role options, the others' choices, the crisis outcome; Reduced Motion / Disable Flash. **Verified**. Missing: sound, blackout asymmetry deeper than `panelFor` |
+| 17 | Mission Report | `src/ui/screens/Report.tsx` | Outcome, points by weight, 3 chains + "More", Team Trust, decisions, role contributions, MC, "Again" / "To HQ". **Verified**. Missing: the 3D replay of moments (only their list exists) |
+| 19 | Accessibility settings | `src/ui/settings.ts`, `components/common.tsx` | Only Reduced Motion and Disable Flash (toggles on the flight panel); no separate screen |
+| 11 | Autonomy Planner | `src/ui/AutonomyPlanner.tsx` (the "Autonomy" tab in the Constructor; the rule list on the review screen) | M2: IF/AND/THEN rules, grayed-out blocks with a reason, the Flight Computer limit, priority, conflicts, "Test: 3 scenarios", saved by the engineer/commander. **Verified in the browser** |
+| 15–16 | Tactical Radio + blackout | `src/ui/Radio.tsx`, `Flight.tsx` | M2: 2 phrases per role, shown large for 2 s, delay during a blackout; a strip with the 4 signal states; role panels during a blackout (timer, diagnostics, antenna, queue, "not sent"); the role's action and the "sent → arrived → confirmed" strip; the autonomy summary in the report. **Verified in the browser** (test D, screenshots in `m2-blackout-shots/`) |
 
-## Что сделано (M3, часть B, 2026-11-14)
-| # | Экран | Файл | Состояние |
+## What was done (M3, part B, 2026-11-14)
+| # | Screen | File | State |
 |---|---|---|---|
-| 6, 18 | Штаб: MC, миссии, улучшения, история | `src/ui/screens/HQ.tsx` (`HQ`), оверлей `src/ui/view.ts` | Открывается кнопкой «Штаб · N MC» в лобби и «В штаб» в отчёте. Баланс, карточка Астероида: цена, баланс, «не хватает N MC» / «после открытия N MC», полоска, «Открыть за 150 MC» (`unlockMission`); предупреждение, если после открытия не хватит на подготовку (будет бесплатный ремонт). Магазин 6 улучшений: эффект, «Компромисс», цена, куплено/не хватает, доп. слот — выбор отдела (`buyUpgrade`). История попыток, число бесплатных ремонтов, последняя подготовка, страховка. Нажимать могут командир или хост (как в движке), остальные видят «Вы можете смотреть». **Проверено в браузере** |
-| 18 | Подготовка к запуску (MISSION PREPARATION COSTS) | `src/ui/screens/HQ.tsx` (`Prep`) | Из «Ещё раз» в отчёте, из штаба, из лобби (если подготовка не оплачена — старт заблокирован). Все статьи `prepCosts` (обслуживание, диагностика, ремонт модулей и корпуса, расходники, страховка — галочка), итог, «будет списано», «баланс после» — ДО кнопки; при нехватке — блок «бесплатный базовый ремонт + стартовая конфигурация» со списком стартовой сборки; «дальше: та же миссия — к сборке / в лобби — выбрать миссию»; `confirmPrep`. **Проверено в браузере** |
-| 15 | Mission Control Астероида | `src/ui/screens/Flight.tsx` (`AsteroidView`, `AsteroidPanelView`) | `AsteroidScene` до отделения капсулы, потом `ReturnScene`; прогресс перелёта/сближения по `asteroid.cruise/approach`; бейдж фазы с деталями и «Обломки рядом»; у учёного 3 места с подсказкой, риском заклинивания для ЭТОЙ сборки, ценностью данных и скоростью (`chooseSite`); топливо с прогнозом, двигатели, защита (инженер/командир), отбор, образец/герметизация, данные состава, капсула. Таймер кризиса считает от его собственного срока (Debris без радара — 8 с). Титан не тронут. **Проверено в браузере** (800 / 960 / 375 px — аппарат в кадре) |
-| 16 | Кризисы Debris Alert / Arm Jam | `Flight.tsx` (`CrisisCard`) | Тот же кризисный экран: CRITICAL EVENT, варианты ролей, выбор других, итог. **Проверено** |
-| 17 | Отчёт Астероида | `src/ui/screens/Report.tsx` | Три плашки: образец (собран/запечатан, масса, место, кто выбрал), капсула (найдена/потеряна, топливо), данные состава + флаги Perfect; цепочки; MC: заработано, баланс штаба, подготовка (или «бесплатный ремонт»), что нужно ремонтировать; «В штаб» и «Ещё раз — подготовка». **Проверено** |
+| 6, 18 | HQ: MC, missions, upgrades, history | `src/ui/screens/HQ.tsx` (`HQ`), overlay `src/ui/view.ts` | Opened with the "HQ · N MC" button in the lobby and "To HQ" in the report. Balance; the Asteroid card: price, balance, "N MC short" / "after unlocking N MC", a progress bar, "Unlock for 150 MC" (`unlockMission`); a warning if, after unlocking, there won't be enough for preparation (there will be a free repair). The shop of 6 upgrades: effect, "Trade-off", price, bought/short, the extra slot — department choice (`buyUpgrade`). Attempt history, the number of free repairs, the last preparation, insurance. The commander or the host can press the buttons (as in the engine); the others see "You can watch". **Verified in the browser** |
+| 18 | Launch preparation (MISSION PREPARATION COSTS) | `src/ui/screens/HQ.tsx` (`Prep`) | From "Again" in the report, from HQ, from the lobby (if preparation has not been paid for, the start is blocked). All `prepCosts` items (maintenance, diagnostics, module and hull repairs, consumables, insurance — a checkbox), the total, "will be charged", "balance after" — BEFORE the button; when short — a "free basic repair + starter configuration" block with the starter build list; "next: same mission — to the build / to the lobby — pick a mission"; `confirmPrep`. **Verified in the browser** |
+| 15 | Asteroid Mission Control | `src/ui/screens/Flight.tsx` (`AsteroidView`, `AsteroidPanelView`) | `AsteroidScene` until the capsule separates, then `ReturnScene`; cruise/approach progress from `asteroid.cruise/approach`; a phase badge with details and "Debris nearby"; for the scientist, 3 sites with a hint, the jam risk for THIS build, the data value and the speed (`chooseSite`); propellant with a forecast, engines, protection (engineer/commander), sampling, sample/sealing, composition data, the capsule. The crisis timer counts from the crisis's own deadline (Debris without radar — 8 s). Titan is untouched. **Verified in the browser** (800 / 960 / 375 px — the craft is in frame) |
+| 16 | Debris Alert / Arm Jam crises | `Flight.tsx` (`CrisisCard`) | The same crisis screen: CRITICAL EVENT, role options, the others' choices, the outcome. **Verified** |
+| 17 | Asteroid report | `src/ui/screens/Report.tsx` | Three tiles: the sample (collected/sealed, mass, site, who chose it), the capsule (found/lost, propellant), composition data + the Perfect flags; chains; MC: earned, HQ balance, preparation (or "free repair"), what needs repair; "To HQ" and "Again — prep". **Verified** |
 
 
-## 2–3 игрока, отделы, Team Trust (0013 §2–4, 2026-11-15)
-Компоненты — `src/ui/rules/` (у каждого файла свой объект `TEXT` на русском, движок отдаёт данные, а не прозу).
-| # | Экран | Что добавлено | Файл |
+## 2–3 players, departments, Team Trust (0013 §2–4, 2026-11-15)
+Components — `src/ui/rules/` (each file has its own `TEXT` object in Russian; the engine returns data, not prose).
+| # | Screen | What was added | File |
 |---|---|---|---|
-| 1 | Главный | «Создать комнату (2–4 игрока)»; демо — «играть одному» | `screens/Home.tsx` |
-| 4–5 | Лобби | Старт с 2, 3 или 4 игроками. В слоте — все роли игрока и жёлтый значок «+ роль (при старте)» для роли, которую он получит по умолчанию. Карточка «Свободные роли»: роль → кому по умолчанию, у хоста выпадающий список «Отдать…»; список дополнительных ролей с «Освободить» (хост) / «Отказаться» (сам игрок). Карточка роли игрока с двумя ролями — «У N две — забрать» (новичок забирает лишнюю). Карточка Team Trust с уровнем, эффектом и причинами | `screens/Lobby.tsx`, `rules/LobbyRoles.tsx`, `rules/Trust.tsx` |
-| 8–9 | Распределение бюджета + конструктор | Экран 8 сделан панелью в правой колонке конструктора: у командира в начале открыт редактор долей (−/+ 5 %, «Утвердить распределение»), у остальных — доли, потрачено / доля по отделам. На карточке модуля значок «ваш отдел» / «через командира» (+ владелец), «сверх доли на N М$», «запрос ждёт командира»; «+» / «−» чужого отдела отправляют запрос. Очередь запросов: у командира «Одобрить» / «Вето» с причиной, у владельца отдела «в вашем отделе», у автора «Отозвать»; последние решения. У командира — карточка Team Trust | `screens/Constructor.tsx`, `rules/BuildRules.tsx` |
-| 12–13 | Проверка и утверждение | При Team Trust < 50 командир заранее видит «потребует второго ключа». После «Утвердить» карточка «Второй ключ»: владелец отдела — «Повернуть ключ» / «Отказать» с причиной; командир и остальные видят, чей ключ ждём | `screens/Review.tsx`, `rules/SecondKey.tsx` |
-| 15–16 | Mission Control | Игрок с несколькими ролями: вкладки ролей над панелью (каждая — своя асимметрия, «!» — эта роль ещё не выбрала в кризисе; при новом кризисе вкладка сама переключается на роль, которой нужно ответить), блоки радио всех своих ролей. Плашка вверху — все роли игрока. На панели командира — уровень Team Trust (и «+5 с к таймерам кризисов») | `screens/Flight.tsx`, `rules/RoleTabs.tsx` |
-| 17 | Отчёт | Изменения Team Trust с причинами (−15 / +10), уровень и его эффект на следующий полёт; в «Решениях» — запросы, вето на запросы, отказ второго ключа и чей ключ повернули; карточка «Вклад игроков» (роли игрока, модули, запросы одобрено / вето, решения, кризисы, радио, ключи) | `screens/Report.tsx`, `rules/ReportRules.tsx` |
-| 18 | Штаб / подготовка | Карточка Team Trust; при < 25 в статьях подготовки «Проверка агентства: обязательная диагностика» | `screens/HQ.tsx` |
-| — | Тосты | Внизу слева (на телефоне — сверху): автору — «Запрос одобрен» / «Вето командира» с причиной, командиру — «Новый запрос», владельцу отдела — «Запрос в ваш отдел», владельцу — «Нужен ваш второй ключ», командиру — «Второй ключ повёрнут / не дан» | `rules/RulesToasts.tsx` (в `App.tsx`) |
+| 1 | Home | "Create a room (2–4 players)"; demo — "play solo" | `screens/Home.tsx` |
+| 4–5 | Lobby | Start with 2, 3 or 4 players. A slot shows all of the player's roles and a yellow "+ role (at the start)" badge for the role they will get by default. A "Free roles" card: role → who gets it by default; the host has a "Give…" drop-down; a list of extra roles with "Free up" (host) / "Give up" (the player themselves). The role card of a player with two roles — "N has two — take it" (a newcomer takes the extra one). A Team Trust card with the tier, its effect and the reasons | `screens/Lobby.tsx`, `rules/LobbyRoles.tsx`, `rules/Trust.tsx` |
+| 8–9 | Budget split + Constructor | Screen 8 is a panel in the Constructor's right column: the commander first sees the share editor (−/+ 5 %, "Approve the split"), the others see the shares and spent / share per department. A module card shows a badge "your department" / "via the commander" (+ the owner), "over the share by N M$", "request waits for the commander"; "+" / "−" for another department send a request. The request queue: the commander has "Approve" / "Veto" with a reason, the department owner sees "in your department", the author has "Withdraw"; recent decisions. The commander has a Team Trust card | `screens/Constructor.tsx`, `rules/BuildRules.tsx` |
+| 12–13 | Review and approval | With Team Trust < 50, the commander sees in advance that it "will require a second key". After "Approve", a "Second key" card: the department owner — "Turn the key" / "Refuse" with a reason; the commander and the others see whose key we are waiting for | `screens/Review.tsx`, `rules/SecondKey.tsx` |
+| 15–16 | Mission Control | A player with several roles: role tabs above the panel (each with its own asymmetry; "!" means that role has not chosen yet in a crisis; on a new crisis the tab switches by itself to the role that needs to answer), radio blocks for all their roles. The bar at the top shows all of the player's roles. The commander's panel shows the Team Trust tier (and "+5 s to crisis timers") | `screens/Flight.tsx`, `rules/RoleTabs.tsx` |
+| 17 | Report | Team Trust changes with reasons (−15 / +10), the tier and its effect on the next flight; "Commander's decisions" lists requests, request vetoes, second-key refusals and whose key was turned; a "Player contributions" card (the player's roles, modules, requests approved / vetoed, decisions, crises, radio, keys) | `screens/Report.tsx`, `rules/ReportRules.tsx` |
+| 18 | HQ / preparation | A Team Trust card; at < 25 the preparation items include "Agency audit: mandatory diagnostics" | `screens/HQ.tsx` |
+| — | Toasts | Bottom left (on a phone — at the top): to the author — "Request approved" / "Commander's veto" with a reason; to the commander — "New request"; to the department owner — "Request for your department"; to the owner — "Your second key is needed"; to the commander — "Second key turned / refused" | `rules/RulesToasts.tsx` (in `App.tsx`) |
 
-Скриншоты: `05 Assets/UI/kit/shots/rules/` (2 и 3 игрока, вкладки LocalTransport). Проверка: `node scripts/qa/rules.mjs`.
+Checked with 2 and 3 players in LocalTransport tabs: `node scripts/qa/rules.mjs`.
 
-## Индивидуальные задачи (0013 §1, 2026-11-15)
-Правила и числа: [Individual Tasks](Individual%20Tasks.md).
+## Individual tasks (0013 §1, 2026-11-15)
+Rules and numbers: [Individual Tasks](Individual%20Tasks.md).
 
-| # | Экран | Что сделано | Файл |
+| # | Screen | What was done | File |
 |---|---|---|---|
-| 9 | Конструктор | Кнопка «К задачам ролей» вместо «На проверку» (действие `openTasks`) | `screens/Constructor.tsx` |
-| 10 | Индивидуальные задачи | Полоса команды: 4 роли, кто держит, состояние. Карточка роли: одна строка цели, мини-игра, живой прогноз, «В полёте», «Готово» / «Отправить заново» / «Пропустить» с честным предупреждением, итог с причинами. Блок «Дальше»: Autonomy Planner, «В конструктор» (хост), «На проверку» после всех четырёх. Хост может пропустить задачу за игрока не в сети | `screens/Tasks.tsx`, `tasks/widgets.tsx`, `tasks/tasks.css` |
-| 10 | — виджеты | Список с перетаскиванием (мышь, палец, ▲▼, стрелки). Схема двух линий питания (нажать потребителя → линию или «розетку» сбоку). Спектр на canvas + ручка калибровки. Радар с развёрткой и шумным измерителем сигнала. Выбор режима измерений с данными и теплом | `tasks/widgets.tsx` |
-| 15–16 | Mission Control | Связь после blackout — маленький радар «Антенна потеряла Землю». Инженер в Power Drop — схема, выбор узла для изоляции. Учёный в Overheat — снизить режим измерений | `tasks/FlightTasks.tsx`, `screens/Flight.tsx` |
-| 17 | Отчёт | Блок «Индивидуальные задачи»: оценка каждой роли и что задача сделала; цепочки `task:*` среди причин | `tasks/FlightTasks.tsx`, `screens/Report.tsx` |
+| 9 | Constructor | The "To role tasks" button instead of "To review" (the `openTasks` action) | `screens/Constructor.tsx` |
+| 10 | Individual Tasks | The team strip: 4 roles, who holds them, the state. The role card: a one-line goal, the mini-game, a live preview, "In flight", "Done" / "Send again" / "Skip" with an honest warning, the result with reasons. The "Next" block: Autonomy Planner, "To the constructor" (host), "To review" once all four are done. The host can skip a task for an offline player | `screens/Tasks.tsx`, `tasks/widgets.tsx`, `tasks/tasks.css` |
+| 10 | — widgets | A drag-and-drop list (mouse, finger, ▲▼, arrows). A schematic of two power lines (tap a consumer → a line, or the "socket" on the side). A canvas spectrum + a calibration knob. A radar with a sweep and a noisy signal meter. A measurement mode picker with data and heat | `tasks/widgets.tsx` |
+| 15–16 | Mission Control | Comms after a blackout — a small "The antenna lost Earth" radar. The engineer during a Power Drop — a schematic, picking the node to isolate. The scientist during an Overheat — lowering the measurement mode | `tasks/FlightTasks.tsx`, `screens/Flight.tsx` |
+| 17 | Report | The "Individual Tasks" block: each role's grade and what the task did; the `task:*` chains among the causes | `tasks/FlightTasks.tsx`, `screens/Report.tsx` |
 
-**Проверено:**
-- В headless Chrome на 1440×900 (Титан и Астероид) и на 375×812 (Титан) все четыре задачи сыграны настоящей мышью и клавиатурой: перетаскивание, клики по схеме, поворот ручки, клик по радару.
-- Затем «На проверку». Полёт Титана: переналадка антенны после входа в атмосферу и изоляция узла в Power Drop. Отчёт с блоком задач.
-- Вариант «все пропустили»: цепочки калибровки и тяжёлого Power Drop в отчёте.
-- Скриншоты: `05 Assets/UI/kit/shots/tasks/`. Проверка: `node scripts/qa/tasks.mjs <titan|asteroid> [ширина] [высота] [префикс] [--fly] [--skip]`.
+**Verified:**
+- In headless Chrome at 1440×900 (Titan and Asteroid) and at 375×812 (Titan), all four tasks were played with a real mouse and keyboard: drag and drop, clicks on the schematic, turning the knob, clicking the radar.
+- Then "To review". The Titan flight: re-aiming the antenna after atmospheric entry and isolating a node during a Power Drop. The report with the tasks block.
+- The "everyone skipped" variant: the calibration and harsh Power Drop chains in the report.
+- Check: `node scripts/qa/tasks.mjs <titan|asteroid> [width] [height] [prefix] [--fly] [--skip]`.
 
-**Не проверено:** Overheat-переключатель учёного в браузере (только тест движка); живая игра 2–4 устройствами.
+**Not verified:** the scientist's Overheat switch in the browser (engine test only); live play on 2–4 devices.
 
-## Раскладка Mission Control (desktop)
+## Mission Control layout (desktop)
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│ MISSION CONTROL · Титан        фазы ▬▬▬▬ · точки ○ ○ ○   T+2:20 │
+│ MISSION CONTROL · Titan      phases ▬▬▬▬ · points ○ ○ ○  T+2:20 │
 ├───────────────────────────────────────────────┬──────────────────┤
-│                                               │ Ваша панель роли │
-│        3D Титан (TitanScene)                  │ [демо: роль ▾]   │
-│   CRITICAL EVENT / NO SIGNAL поверх сцены     │ кризис: таймер,  │
-│                                               │ варианты, другие │
-├───────────────────────────────────────────────┤ показатели роли  │
-│ Журнал событий (causes)                       │ RM / Flash       │
+│                                               │ Your role panel  │
+│        3D Titan (TitanScene)                  │ [demo: role ▾]   │
+│   CRITICAL EVENT / NO SIGNAL over the scene   │ crisis: timer,   │
+│                                               │ options, others  │
+├───────────────────────────────────────────────┤ role indicators  │
+│ Event log (causes)                            │ RM / Flash       │
 └───────────────────────────────────────────────┴──────────────────┘
 ```
 
-## Раскладка конструктора (desktop)
+## Constructor layout (desktop)
 ```
 ┌───────────────┬───────────────────────────────┬────────────────┐
-│ Каталог       │                               │ Параметры      │
-│ [Энергия ▾]   │        3D-аппарат             │ Масса 820/1100 │
-│  RTG   −  2 + │     (крутится мышью)          │ Бюджет 312/420 │
-│  Solar −  0 + │                               │ Энергия:       │
-│  Battery …    │   режим вида роли ▸ Рентген   │  +220 / −155 W │
-│ [Двигатели ▸] │                               │ Тепло ●●●○○    │
-│ …             │                               │ Слоты 3/4 ...  │
+│ Catalog       │                               │ Parameters     │
+│ [Power ▾]     │        3D craft               │ Mass 820/1100  │
+│  RTG   −  2 + │     (rotate with the mouse)   │ Budget 312/420 │
+│  Solar −  0 + │                               │ Power:         │
+│  Battery …    │   role view mode ▸ X-ray      │  +220 / −155 W │
+│ [Propulsion ▸]│                               │ Heat ●●●○○     │
+│ …             │                               │ Slots 3/4 ...  │
 ├───────────────┴───────────────────────────────┴────────────────┤
-│ Журнал / Tactical Radio                     игроки ● ● ● ●     │
+│ Log / Tactical Radio                     players ● ● ● ●       │
 └────────────────────────────────────────────────────────────────┘
 ```
-На телефоне: 3D сверху, под ним каталог и параметры (см. «Телефон и планшет (M5)» ниже; вкладок нет — одна лента).
+On a phone: 3D on top, the catalog and parameters below it (see "Phone and tablet (M5)" below; there are no tabs — a single feed).
 
-## Телефон и планшет (M5, 2026-11-15)
-Ширины: телефон 375–430 px (портрет), планшет 768 px, десктоп > 900 px — без изменений. Только CSS (`src/ui/styles.css`, блок «M5») и мелкие правки разметки; вид тот же.
+## Phone and tablet (M5, 2026-11-15)
+Widths: phone 375–430 px (portrait), tablet 768 px, desktop > 900 px — unchanged. CSS only (`src/ui/styles.css`, the "M5" block) plus small markup tweaks; the look is the same.
 
-- **Общее:** нет горизонтального скролла (`body { overflow-x: clip }`), кнопки / селекты / чекбоксы ≥ 44 px на телефоне и на любом сенсорном экране (`pointer: coarse`), `viewport-fit=cover` + отступы `env(safe-area-inset-*)`. Демо-плашка на телефоне в потоке (не fixed), статус сети и тосты — снизу.
-- **Лобби:** слоты и роли по 2 в ряд, код комнаты 28 px.
-- **Конструктор / Проверка:** стенд 3D сверху (34vh, `sticky` — видно аппарат, пока листаешь каталог), под ним каталог, потом параметры + «На проверку». Вкладки отделов — горизонтальная лента. Внизу панели: Reduced Motion / Disable Flash / **Графика** и «Выйти из комнаты». Планшет: стенд на всю ширину, две панели рядом.
-- **Mission Control:** верхняя полоса (фазы, 4 состояния сигнала 2×2, точки) → сцена (36vh, `sticky`) → панель роли → журнал (до 40vh). Планшет: сцена во всю ширину, панель и журнал рядом.
-- **Кризис (телефон и планшет ≤ 900 px):** карточка кризиса становится **нижним листом** (`position: fixed`, до 64vh, своя прокрутка): «CRITICAL EVENT» + таймер закреплены сверху листа, варианты (≥ 52 px) видны без прокрутки страницы; сцена остаётся видна над листом. Глитч на узких экранах — только `clip-path` (transform/filter у `.mc` сдвинули бы fixed-лист).
-- **Отчёт / Штаб / Подготовка:** одна колонка (планшет — две), магазин в одну колонку, кнопки действий растягиваются.
-- **Выйти из комнаты** (Брифинг, Конструктор, Проверка, Mission Control): подтверждение в модалке (портал в `body`); посреди игры роль остаётся за игроком (OFFLINE, вернуться по коду), хосту пишется, кто станет хостом.
+- **General:** no horizontal scrolling (`body { overflow-x: clip }`), buttons / selects / checkboxes ≥ 44 px on a phone and on any touch screen (`pointer: coarse`), `viewport-fit=cover` + `env(safe-area-inset-*)` padding. On a phone the demo bar is in the flow (not fixed); the network status and toasts are at the bottom.
+- **Lobby:** slots and roles 2 per row, the room code at 28 px.
+- **Constructor / Review:** the 3D stand on top (34vh, `sticky` — the craft stays visible while you scroll the catalog), the catalog below it, then the parameters + "To review". The department tabs are a horizontal strip. At the bottom of the panel: Reduced Motion / Disable Flash / **Graphics** and "Leave room". Tablet: the stand at full width, two panels side by side.
+- **Mission Control:** the top strip (phases, the 4 signal states in a 2×2 grid, points) → the scene (36vh, `sticky`) → the role panel → the log (up to 40vh). Tablet: the scene at full width, the panel and the log side by side.
+- **Crisis (phone and tablet ≤ 900 px):** the crisis card becomes a **bottom sheet** (`position: fixed`, up to 64vh, with its own scrolling): "CRITICAL EVENT" + the timer are pinned at the top of the sheet, the options (≥ 52 px) are visible without scrolling the page; the scene stays visible above the sheet. The glitch on narrow screens is `clip-path` only (a transform/filter on `.mc` would shift the fixed sheet).
+- **Report / HQ / Preparation:** one column (tablet — two), the shop in one column, action buttons stretch.
+- **Leave room** (Briefing, Constructor, Review, Mission Control): a confirmation in a modal (a portal into `body`); mid-game the role stays with the player (OFFLINE, rejoin by code), and the host is told who will become host.
 
 
-## Карточка компонента
-Название · подпись под названием · иконка (рендер GLB) · масса · стоимость · энергия (+/−) · тепло · совместимость (бейдж **Обязательно / Рекомендуется / Необязательно / Бесполезно / Несовместимо** + почему) · счётчик «Установлено: 2 / Максимум: 4» · кнопки **+** и **−**.
+## Component card
+Name · a subtitle under the name · an icon (a GLB render) · mass · cost · power (+/−) · heat · compatibility (a badge **Required / Recommended / Optional / Useless / Incompatible** + why) · the "Installed: 2 / Max: 4" counter · the **+** and **−** buttons.

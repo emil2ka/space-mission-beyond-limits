@@ -1,55 +1,55 @@
-# 3D-пайплайн: Claude Design → GLB → игра
+# 3D Pipeline: Claude Design → GLB → game
 
-## 1. Генерация в Claude Design
-- Модели сгенерированы в Claude Design по общему блоку стиля ([Prompt Preamble](../05%20Assets/Prompt%20Preamble.md)) и контракту координат ([Model Contract](../05%20Assets/Model%20Contract.md)), пачками по отделам.
-- Сырые выгрузки (`assets-src/`) в репозиторий не входят; в игре — только оптимизированные `public/models/*.glb`.
+## 1. Generation in Claude Design
+- The models were generated in Claude Design from the shared style block ([Prompt Preamble](../05%20Assets/Prompt%20Preamble.md)) and the coordinate contract ([Model Contract](../05%20Assets/Model%20Contract.md)), in packs by department.
+- Raw exports (`assets-src/`) are not in the repository; the game ships only the optimized `public/models/*.glb`.
 
-## 2. Требования к каждой модели (писать в промпт)
-- Единицы — **метры**, ось Y вверх, фронт +Z.
-- **Origin = точка крепления** модуля (центр основания), у корпуса — центр масс на стенде.
-- Именованные узлы:
-  - корпус: `slot_<dept>_<n>` (пустые узлы-слоты, ориентированы наружу), `cam_*` (точки камер);
-  - модули: `pivot_*` для всего, что двигается (`pivot_rotor_1`, `pivot_dish`, `pivot_arm_1..3`, `pivot_panel_l/r`, `pivot_lid`), `fx_*` для эффектов (`fx_nozzle`, `fx_spark`, `fx_glow`);
-  - персонажи: скелет, клипы `Idle, Typing, Wave, ThumbsUp, Panic, Cheer, Shrug`.
-- Материалы: стандартный PBR, базовые цвета из палитры [Style Guide](../03%20Design/Style%20Guide.md), светящиеся части — отдельный материал `M_Emissive`.
-- Лимиты треугольников: модуль ≤ 4k, корпус ≤ 15k, персонаж ≤ 10k, окружение ≤ 40k.
+## 2. Requirements for every model (put them in the prompt)
+- Units are **meters**, Y axis up, front +Z.
+- **Origin = the module's attachment point** (the center of its base); for a hull — the center of mass on the stand.
+- Named nodes:
+  - hull: `slot_<dept>_<n>` (empty slot nodes, facing outward), `cam_*` (camera points);
+  - modules: `pivot_*` for everything that moves (`pivot_rotor_1`, `pivot_dish`, `pivot_arm_1..3`, `pivot_panel_l/r`, `pivot_lid`), `fx_*` for effects (`fx_nozzle`, `fx_spark`, `fx_glow`);
+  - characters: a skeleton, the clips `Idle, Typing, Wave, ThumbsUp, Panic, Cheer, Shrug`.
+- Materials: standard PBR, base colors from the [Style Guide](../03%20Design/Style%20Guide.md) palette, glowing parts in a separate `M_Emissive` material.
+- Triangle limits: module ≤ 4k, hull ≤ 15k, character ≤ 10k, environment ≤ 40k.
 
-## 3. Проверка и оптимизация (сделано 2026-11-14)
-Контракт для кода — `scripts/model-contract.json` (узлы, материалы, клипы, `kind`, бюджеты треугольников по kind/id). Логика — чистые модули в `scripts/lib/` (покрыты тестами).
+## 3. Validation and optimization (done 2026-11-14)
+The contract for code is `scripts/model-contract.json` (nodes, materials, clips, `kind`, triangle budgets by kind/id). The logic is pure modules in `scripts/lib/` (covered by tests).
 
-| Команда | Что делает |
+| Command | What it does |
 |---|---|
-| `pnpm models:validate [file.glb …]` | По умолчанию `assets-src/*.glb`. Таблица: id, kind, tris/бюджет, габарит, KB, статус; ниже — список ERROR/warn. Код выхода 1, если есть FAIL. |
-| `pnpm models [id …] [--force] [--no-join]` | Проверка → `assets-src/<id>.glb` → `public/models/<id>.glb` (dedup, resample, prune с keepLeaves, weld, join только незащищённых мешей, meshopt) → повторная проверка выхода → `public/models/manifest.json`. FAIL-исходник пропускается без `--force`. Предупреждение > 1.5 МБ. |
-| `pnpm models --manifest-only` | Только пересобрать `manifest.json` по тому, что лежит в `public/models/`. |
-| `pnpm models:test-set [dir] [--optimized]` | Синтетические GLB по контракту (frame_titan, rotor_system, antenna_high_gain, rtg, test_stand) в `$TMPDIR/space-mission-test-models` — **не** в `public/`. Чтобы посмотреть их в игре: `pnpm models:test-set /tmp/x && pnpm models --src /tmp/x`, потом удалить их из `public/models/` и `pnpm models --manifest-only`. |
+| `pnpm models:validate [file.glb …]` | Defaults to `assets-src/*.glb`. A table: id, kind, tris/budget, bounding size, KB, status; below it — a list of ERROR/warn. Exit code 1 if there is a FAIL. |
+| `pnpm models [id …] [--force] [--no-join]` | Validation → `assets-src/<id>.glb` → `public/models/<id>.glb` (dedup, resample, prune with keepLeaves, weld, join of unprotected meshes only, meshopt) → re-validation of the output → `public/models/manifest.json`. A FAIL source is skipped without `--force`. A warning above 1.5 MB. |
+| `pnpm models --manifest-only` | Only rebuild `manifest.json` from what is in `public/models/`. |
+| `pnpm models:test-set [dir] [--optimized]` | Synthetic GLBs per the contract (frame_titan, rotor_system, antenna_high_gain, rtg, test_stand) in `$TMPDIR/space-mission-test-models` — **not** in `public/`. To see them in the game: `pnpm models:test-set /tmp/x && pnpm models --src /tmp/x`, then remove them from `public/models/` and run `pnpm models --manifest-only`. |
 
-Что проверяет валидатор:
-- обязательные узлы / материалы (`M_Role`, `M_Lake`, `M_Gold`) / клипы астронавта, skin у персонажа; дубли защищённых имён; символы, которые three.js вырезает из имён;
-- треугольники против бюджета; размер файла; камеры/свет в GLB; текстуры; emissive не в `M_Emissive`; «outline»-оболочки;
-- габарит: единицы (≥ 200 м = см/мм), модуль 0.05–1.6 м и основание на y = 0, корпус (низ 0, верх 1.2–1.8, полуширина 0.85–1.45), накладки в координатах корпуса (роторы с y≈1.25, лыжи y = −0.45), астронавт ~1.7 м, ракета ~14 м, ожидаемые размеры окружения;
-- `frame_titan`: каждый `slot_*` — высота кольца, радиус барабана, **локальная +Y = внешняя нормаль** (дно — вниз, палуба — вверх), +Z вверх у боковых, масштаб 1, power сзади / science спереди, `cam_front` спереди;
-- `rotor_system`: `pivot_rotor_i` на площадках (±1, 1.25, ±1), ось вертикальна; `test_stand`: `mount_craft` на y = 0.80.
+What the validator checks:
+- required nodes / materials (`M_Role`, `M_Lake`, `M_Gold`) / astronaut clips, a skin on the character; duplicate protected names; characters that three.js strips from names;
+- triangles against the budget; file size; cameras/lights in the GLB; textures; emissive outside `M_Emissive`; "outline" shells;
+- bounding size: units (≥ 200 m = cm/mm), a module 0.05–1.6 m with its base at y = 0, a hull (bottom 0, top 1.2–1.8, half-width 0.85–1.45), overlays in hull coordinates (rotors at y≈1.25, skids at y = −0.45), the astronaut ~1.7 m, the rocket ~14 m, the expected environment sizes;
+- `frame_titan`: for each `slot_*` — the ring height, the drum radius, **local +Y = the outward normal** (the underside points down, the deck up), +Z up for the side slots, scale 1, power at the back / science at the front, `cam_front` at the front;
+- `rotor_system`: `pivot_rotor_i` on the pads (±1, 1.25, ±1), vertical axis; `test_stand`: `mount_craft` at y = 0.80.
 
-Оптимизатор никогда не удаляет пустые `pivot_/slot_/fx_/mount_/cam_` узлы, узлы из контракта (`lake`, `charge_*`), кости и анимированные узлы. Если меш висит прямо на `pivot_*`, он переносится в дочерний `<имя>_mesh`, чтобы квантование meshopt не сдвинуло ось.
+The optimizer never removes empty `pivot_/slot_/fx_/mount_/cam_` nodes, contract nodes (`lake`, `charge_*`), bones or animated nodes. If a mesh hangs directly on a `pivot_*`, it is moved into a child `<name>_mesh`, so that meshopt quantization does not shift the axis.
 
-## 4. В игре (сделано 2026-11-14)
-- `src/scene/models/loader.ts`: `useComponentModel(id)` — модель грузится, **только если она есть в `manifest.json`** (никаких 404), без Suspense: пока грузится или при ошибке — `null` → заглушка-примитив (`src/scene/Placeholders.tsx`, в тех же координатах контракта). GLTFLoader + MeshoptDecoder, у каждого компонента свой клон (`SkeletonUtils.clone`). Вместо drei `useGLTF` — свой маленький стор: `useGLTF` приостанавливает рендер (Suspense), а нам нужна заглушка, пока модель грузится.
-- Комикс-вид (`toon.ts`): `MeshToonMaterial` с 3-ступенчатым градиентом + чёрная обводка «inverted hull» (толщина ~постоянна в пикселях). Без обводки: `M_Emissive`, прозрачное, `lake*`, SkinnedMesh.
-- `Craft.tsx`: есть `frame_titan` → модули встают на его `slot_<dept>_<n>` (по номеру внутри отдела, `slots.ts`); нет корпуса или слотов не хватило → процедурная раскладка `layout.ts` с теми же числами. Накладки (`rotor_system`, `landing_system`, `thermal_insulation`, `power_bus`) — в начале координат корпуса. Подлёт по дуге вдоль нормали слота (0.6 с, easeOutBack), x-ray инженера (корпус полупрозрачный, обводка скрыта).
-- Механика (`mechanicsRules.ts` + `mechanics.ts`): роторы, антенна (азимут + наклон), панели, бур, радиатор, флюгер, камера pan/tilt, пульсация `fx_glow`. Reduced Motion: циклы стоят, одноразовые раскрытия сразу в конечной позе, свечение ровное.
-- `StandScene.tsx`: `hq_hangar` (`mount_stand`, `mount_console_1..4`), `test_stand` (`mount_craft`), `hq_console` с `M_Role` в цвет 4 ролей; камера наводится на аппарат и отходит дальше на узком холсте.
-- На будущее: `useEnvModel('rocket' | 'launch_pad' | 'titan_terrain')`, `useAstronautModel()` (клон + клипы для drei `useAnimations`), `nodeTransform(scene, 'mount_payload')`.
+## 4. In the game (done 2026-11-14)
+- `src/scene/models/loader.ts`: `useComponentModel(id)` — a model is loaded **only if it is in `manifest.json`** (no 404s), without Suspense: while loading or on error it returns `null` → a primitive placeholder (`src/scene/Placeholders.tsx`, in the same contract coordinates). GLTFLoader + MeshoptDecoder; each component gets its own clone (`SkeletonUtils.clone`). Instead of drei's `useGLTF` — a small store of our own: `useGLTF` suspends rendering (Suspense), but we need a placeholder while the model loads.
+- Comic look (`toon.ts`): `MeshToonMaterial` with a 3-step gradient + a black "inverted hull" outline (thickness roughly constant in pixels). No outline for: `M_Emissive`, transparent materials, `lake*`, SkinnedMesh.
+- `Craft.tsx`: if `frame_titan` exists → modules attach to its `slot_<dept>_<n>` (by number within the department, `slots.ts`); no hull or not enough slots → the procedural layout `layout.ts` with the same numbers. Overlays (`rotor_system`, `landing_system`, `thermal_insulation`, `power_bus`) sit at the hull origin. Fly-in along an arc following the slot normal (0.6 s, easeOutBack), the engineer's x-ray (the hull is semi-transparent, the outline is hidden).
+- Mechanics (`mechanicsRules.ts` + `mechanics.ts`): rotors, antenna (azimuth + tilt), panels, drill, radiator, wind vane, camera pan/tilt, `fx_glow` pulsing. Reduced Motion: loops stand still, one-time deployments jump straight to the final pose, the glow is steady.
+- `StandScene.tsx`: `hq_hangar` (`mount_stand`, `mount_console_1..4`), `test_stand` (`mount_craft`), `hq_console` with `M_Role` in the colors of the 4 roles; the camera aims at the craft and pulls back further on a narrow canvas.
+- For the future: `useEnvModel('rocket' | 'launch_pad' | 'titan_terrain')`, `useAstronautModel()` (a clone + clips for drei's `useAnimations`), `nodeTransform(scene, 'mount_payload')`.
 
-## 5. P1: Астероид, капсула, новые модули (сделано 2026-11-14)
-- **Валидатор:** `frame_asteroid` проверяется как шестигранник: боковой слот должен лежать на панели (0.9 м по нормали грани) и смотреть **по нормали грани**, а не радиально (слоты со смещением x = ±0.35 на передней/задней грани). Проверяются 30 слотов, в т.ч. `slot_recovery_1` в центре палубы, а также расстояние ≥ 0.35 м между слотами палубы. `heat_shield` (kind `capsule_part`): верх на y = 0, низ ≈ −0.1, Ø ~0.72. `parachute` может быть до 2.8 м (купол раскрыт). `landing_system__asteroid`: опоры на y = −0.35. `asteroid` / `earth` / `debris`: бюджеты из `maxTris` и проверка, что начало координат в центре, а не на полу.
-- **Корпус по миссии:** titan → `frame_titan`, asteroid → `frame_asteroid` (`layout.ts` `FRAME_BY_MISSION`). Без GLB — процедурный шестигранник и слоты по числам контракта (`SLOT_LAYOUT_ASTEROID`).
-- **Накладки:** на Астероиде берётся `<id>__asteroid`, если он есть в manifest, иначе обычный `<id>` (так что, пока варианта нет, на шестиграннике будет титановая версия). `reinforced_frame` — новая накладка.
-- **Капсула:** `return_capsule` всегда первой занимает `slot_recovery_1`. Если она стоит, первые `heat_shield` / `parachute` / `recovery_beacon` вешаются на её `mount_heat_shield` / `mount_parachute` / `mount_beacon` (из GLB, иначе числа контракта) и слот не занимают; без капсулы — на свои слоты `recovery`. Купол парашюта (`pivot_chute`) по умолчанию сложен (scale 0.001).
-- **Анимации:** `pivot_wheel_1..3` крутятся вокруг X/Y/Z, `fx_beam` пульсирует (ion_engine), robotic_arm покачивается (только у этой модели; `pivot_arm_*` стартового стола не двигаются), `pivot_lid` приоткрывается (знак угла — предположение, см. Known Issues), `pivot_damper_*` пружинят, `pivot_clouds` вращается, `led_*` мигают вразнобой, маяк мигает, `fx_glow` теплозащиты на стенде не светится. Reduced Motion: всё стоит, свечение ровное.
-- **Проверка без 150 MC:** `pnpm dev`, открыть `http://localhost:5188/?dev=1` и создать комнату — открыты все миссии. В `pnpm build` этого кода нет (`import.meta.env.DEV`).
+## 5. P1: Asteroid, capsule, new modules (done 2026-11-14)
+- **Validator:** `frame_asteroid` is checked as a hexagon: a side slot must lie on the panel (0.9 m along the face normal) and face **along the face normal**, not radially (slots offset by x = ±0.35 on the front/back face). 30 slots are checked, including `slot_recovery_1` in the center of the deck, plus a spacing of ≥ 0.35 m between deck slots. `heat_shield` (kind `capsule_part`): top at y = 0, bottom ≈ −0.1, Ø ~0.72. `parachute` may be up to 2.8 m (canopy open). `landing_system__asteroid`: feet at y = −0.35. `asteroid` / `earth` / `debris`: budgets from `maxTris`, and a check that the origin is at the center, not on the floor.
+- **Hull per mission:** titan → `frame_titan`, asteroid → `frame_asteroid` (`layout.ts` `FRAME_BY_MISSION`). Without a GLB — a procedural hexagon and slots from the contract numbers (`SLOT_LAYOUT_ASTEROID`).
+- **Overlays:** on the Asteroid, `<id>__asteroid` is used if it is in the manifest, otherwise the regular `<id>` (so until the variant exists, the hexagon gets the Titan version). `reinforced_frame` is a new overlay.
+- **Capsule:** `return_capsule` always takes `slot_recovery_1` first. If it is installed, the first `heat_shield` / `parachute` / `recovery_beacon` attach to its `mount_heat_shield` / `mount_parachute` / `mount_beacon` (from the GLB, otherwise the contract numbers) and do not take up a slot; without the capsule — they go to their own `recovery` slots. The parachute canopy (`pivot_chute`) is folded by default (scale 0.001).
+- **Animations:** `pivot_wheel_1..3` spin around X/Y/Z, `fx_beam` pulses (ion_engine), robotic_arm sways (only this model; the launch pad's `pivot_arm_*` do not move), `pivot_lid` opens slightly (the sign of the angle is a guess, see Known Issues), `pivot_damper_*` bounce, `pivot_clouds` rotates, `led_*` blink out of sync, the beacon blinks, the heat shield's `fx_glow` does not glow on the stand. Reduced Motion: everything stands still, the glow is steady.
+- **Testing without 150 MC:** `pnpm dev`, open `http://localhost:5188/?dev=1` and create a room — all missions are unlocked. This code is not in `pnpm build` (`import.meta.env.DEV`).
 
-## Уроки (не повторять)
-- Модели приходили повёрнутыми и с неверным масштабом → теперь жёсткие требования к осям и origin в промпте + автопроверка.
-- Скелетные клипы для механики — лишняя боль → механика процедурная.
-- Не генерировать модели раньше, чем зафиксирован список и стиль.
+## Lessons (do not repeat)
+- Models arrived rotated and at the wrong scale → now there are strict axis and origin requirements in the prompt + automatic validation.
+- Skeletal clips for mechanics were needless pain → mechanics are procedural.
+- Do not generate models before the list and the style are locked.

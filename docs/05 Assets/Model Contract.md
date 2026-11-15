@@ -1,49 +1,49 @@
-# Контракт моделей (Claude Design → игра)
+# Model Contract (Claude Design → game)
 
-> Принято 2026-11-14, корпуса заменены на v2 2026-11-15.txt` (корпуса и накладки). Здесь — то, на что опирается код.
+> Accepted on 2026-11-14; hulls replaced with v2 on 2026-11-15. This page holds what the code relies on.
 
-## Общее
-- Метры, Y вверх, фронт +Z. Один GLB на модель: `assets-src/<id>.glb` → оптимизированный `public/models/<id>.glb`.
-- В GLB нет обводок, света, пола, камеры. Обводку и toon-тени рисует игра.
-- Материалы `M_<что>`, плоский цвет; свет/экраны — `M_Emissive`; перекрашиваемая полоса роли — `M_Role`.
-- Узлы: `pivot_<имя>` — движущаяся часть (центр на оси), `fx_<имя>` — точка эффекта, `mount_<имя>` — точка крепления.
+## General
+- Meters, Y up, front +Z. One GLB per model: `assets-src/<id>.glb` → optimized `public/models/<id>.glb`.
+- The GLB has no outlines, lights, floor or camera. The game draws the outline and the toon shading.
+- Materials `M_<what>`, flat color; lights/screens — `M_Emissive`; the recolorable role stripe — `M_Role`.
+- Nodes: `pivot_<name>` — a moving part (center on the axis), `fx_<name>` — an effect point, `mount_<name>` — an attachment point.
 
-## Модули (на слот)
-- Основание по центру начала координат на плоскости y = 0, модуль растёт к +Y (+Y = наружу от корпуса).
-- Ставится дочерним к узлу `slot_*` корпуса с единичной трансформацией.
+## Modules (per slot)
+- The base is centered at the origin on the plane y = 0; the module grows toward +Y (+Y = outward from the hull).
+- Attached as a child of the hull's `slot_*` node with an identity transform.
 
-## Корпуса v2 (2026-11-15) — действующие
-> Почему: v1 (бочка Ø1.85 × 1.4 м и большой шестигранник) смотрелись огромными, модули 0.1–0.4 м — наклейками на стене. v2 — маленькие низкие открытые рамы с утопленными **отсеками** (bay) с цветным ободом отдела; модуль стоит **в** отсеке.
-- **Точные координаты всех слотов** (центр дна отсека `p` + внешняя нормаль `n`) — `scripts/model-contract.json` → `frames`; их зеркало в игре — `src/scene/layout.ts` (`SLOT_TABLE`), тест сверяет. Валидатор проверяет каждый слот: смещение > 0.06 м — warn, > 0.12 — ошибка; +Y против нормали — ошибка.
-- Дно отсека на 0.04 м глубже панели, обод 0.035 шириной и на 0.02 выше панели; цвет обода = `DEPT_COLOR`.
-- В игре модули ставятся прямо на дно отсека с масштабом `MODULE_SCALE` = 1.1 (`Craft.tsx`). Модуль, чьё основание шире проёма, стоит на **переходнике** (`Module.tsx` → `Adapter`): графитовый блок в отсеке с цветным воротником, высота `lift` из таблицы слотов (0.08 над дном: обод + плоские детали накладок; днище Титана 0.09, гнёзда астероида 0.07, comms на палубе Титана 0.11, recovery_2..4 астероида 0.10, кольцо капсулы 0). На задних гнёздах днища Титана (`maxFoot` 0.40) модуль крупнее места уменьшается, чтобы не задевать стойки шасси. РИТЭГ и капсула занимают `slot_<отдел>_1` первыми; на Титане РИТЭГ **лежит поперёк** в люльке (`cradle`), другой модуль в люльке — на переходнике 0.10 над V-опорами.
-- Правило низкого профиля для накладок (v2.1): в пределах 0.15 м от обода любого отсека детали накладок не выше 0.02 над панелью (плоские ленты, штекеры, накладки-полосы); объёмное — только по рёбрам/углам/под балками.
+## Hulls v2 (2026-11-15) — current
+> Why: v1 (a barrel Ø1.85 × 1.4 m and a large hexagon) looked huge, and 0.1–0.4 m modules looked like stickers on a wall. v2 are small, low, open frames with recessed **bays** with a colored rim per department; a module sits **in** a bay.
+- **Exact coordinates of all slots** (bay floor center `p` + outward normal `n`) — `scripts/model-contract.json` → `frames`; their mirror in the game is `src/scene/layout.ts` (`SLOT_TABLE`), and a test compares them. The validator checks every slot: an offset > 0.06 m — warn, > 0.12 — error; +Y against the normal — error.
+- The bay floor is 0.04 m deeper than the panel; the rim is 0.035 wide and 0.02 above the panel; the rim color = `DEPT_COLOR`.
+- In the game, modules sit right on the bay floor with a scale of `MODULE_SCALE` = 1.1 (`Craft.tsx`). A module whose base is wider than the opening sits on an **adapter** (`Module.tsx` → `Adapter`): a graphite block in the bay with a colored collar; its height `lift` comes from the slot table (0.08 above the floor: rim + flat overlay parts; the Titan underside 0.09, asteroid sockets 0.07, comms on the Titan deck 0.11, asteroid recovery_2..4 0.10, the capsule ring 0). In the rear underside sockets of the Titan (`maxFoot` 0.40), a module that is bigger than the space is scaled down so it doesn't touch the landing gear struts. The RTG and the capsule take `slot_<department>_1` first; on Titan the RTG **lies crosswise** in a cradle (`cradle`), and any other module in the cradle sits on an adapter 0.10 above the V-mounts.
+- Low-profile rule for overlays (v2.1): within 0.15 m of any bay rim, overlay parts are no higher than 0.02 above the panel (flat strips, plugs, strip overlays); bulky parts only along edges/corners/under beams.
 
-## Корпус `frame_titan` (v2)
-- Низкое шасси-«ванна» 1.1 (X) × 1.6 (Z) × 0.55; начало координат — центр днища (y = 0), палуба y = 0.55.
-- 4 толстые балки-аутригера к площадкам моторов, верх площадок (±1.00, 0.62, ±1.05).
-- v2.1 (полировка): «уши» люльки разведены до x ±0.43…±0.51 и подняты до y 1.0, между ними поперечная люлька с двумя V-опорами (пластина 0.84 × 0.51) — РИТЭГ лежит поперёк, как на концепте; отсеки на бортах ±X 0.27 × 0.27 с ободом 0.025, чтобы между ними легла золотая изоляция.
-- 26 слотов: бока ±X — по 4 отсека (y 0.28, z −0.54/−0.18/+0.18/+0.54: сзади power, спереди structure), нос +Z — 3 отсека science, корма −Z — power_6 и navigation_4, палуба — сетка 3×3 гнёзд (science_4/5 и navigation_1 спереди, comms_1..4 и navigation_2/3), люлька РИТЭГа сзади на палубе (`slot_power_1`, между двумя «ушами» до y 0.9), днище — 3 гнезда propulsion (+Y вниз).
+## Hull `frame_titan` (v2)
+- A low "tub" chassis 1.1 (X) × 1.6 (Z) × 0.55; the origin is the center of the underside (y = 0), the deck is at y = 0.55.
+- 4 thick outrigger beams to the motor pads; the top of the pads is at (±1.00, 0.62, ±1.05).
+- v2.1 (polish): the cradle "ears" are spread to x ±0.43…±0.51 and raised to y 1.0, with a crosswise cradle between them on two V-mounts (a 0.84 × 0.51 plate) — the RTG lies crosswise, as in the concept; the bays on the ±X sides are 0.27 × 0.27 with a 0.025 rim, so the gold insulation fits between them.
+- 26 slots: the ±X sides — 4 bays each (y 0.28, z −0.54/−0.18/+0.18/+0.54: power at the back, structure at the front), the +Z nose — 3 science bays, the −Z stern — power_6 and navigation_4, the deck — a 3×3 grid of sockets (science_4/5 and navigation_1 at the front, comms_1..4 and navigation_2/3), the RTG cradle at the back of the deck (`slot_power_1`, between two "ears" up to y 0.9), the underside — 3 propulsion sockets (+Y pointing down).
 - `cam_front` (0, 0.35, 0.86), `cam_top` (0, 2.2, 0).
 
-## Накладки Титана (в координатах корпуса, не на слот)
-- `rotor_system`: соосные пары, 8 роторов: `pivot_rotor_1..4` (верхние, ступица y 0.92) + `pivot_rotor_1..4_lo` (нижние, y 0.74), размах 0.9; пары крутятся навстречу (`mechanicsRules.ts`).
-- `landing_system`: 4 ноги от проушин днища (±0.38, 0, ±0.50) к 2 лыжам x = ±0.62, касание y = −0.45, `pivot_leg_1..4`.
-- `thermal_insulation` (`M_Gold`) — только между отсеками, модули не закрывает; `power_bus` (`fx_flow`) — жгуты по рейкам, штекеры у углов ободов; `reinforced_frame` — накладки на углы, отбойники, косынки, X-распорка под днищем.
+## Titan overlays (in hull coordinates, not per slot)
+- `rotor_system`: coaxial pairs, 8 rotors: `pivot_rotor_1..4` (upper, hub at y 0.92) + `pivot_rotor_1..4_lo` (lower, y 0.74), span 0.9; the pairs counter-rotate (`mechanicsRules.ts`).
+- `landing_system`: 4 legs from the underside lugs (±0.38, 0, ±0.50) to 2 skids at x = ±0.62, ground contact at y = −0.45, `pivot_leg_1..4`.
+- `thermal_insulation` (`M_Gold`) — only between bays, does not cover modules; `power_bus` (`fx_flow`) — harnesses along the rails, plugs at the rim corners; `reinforced_frame` — corner caps, bumpers, gussets, an X-brace under the underside.
 
-## Окружение
-- `test_stand`: `pivot_turntable`, `mount_craft` на y = 0.80 (туда начало координат корпуса).
-- `hq_hangar`: 18 × 12 × 8 м, открыт к +Z; `mount_stand`, `mount_console_1..4`.
+## Environment
+- `test_stand`: `pivot_turntable`, `mount_craft` at y = 0.80 (the hull origin goes there).
+- `hq_hangar`: 18 × 12 × 8 m, open toward +Z; `mount_stand`, `mount_console_1..4`.
 - `hq_console`: `M_Role`. `launch_pad`: `mount_rocket`, `pivot_arm_1..2`.
-- `rocket`: 14 м, `pivot_stage2`, `pivot_fairing_l/r`, `mount_payload`, `fx_nozzle`, `fx_nozzle_2`.
-- `titan_terrain`: тайл 60 × 60, края на высоте 0, меш `lake`.
+- `rocket`: 14 m, `pivot_stage2`, `pivot_fairing_l/r`, `mount_payload`, `fx_nozzle`, `fx_nozzle_2`.
+- `titan_terrain`: a 60 × 60 tile, edges at height 0, a `lake` mesh.
 
-## Астронавт
-SkinnedMesh, 1.7 м, `M_Role`, клипы `Idle, Typing, Wave, ThumbsUp, Panic, Cheer, Shrug`. Скелет: `Hips, Spine, Chest, Neck, Head, Shoulder/UpperArm/LowerArm/Hand_L/R, UpperLeg/LowerLeg/Foot_L/R` (+ необязательные `Thumb_L/R`, `Fingers_L/R`). Текущая версия — v2 (2026-11-14).
+## Astronaut
+SkinnedMesh, 1.7 m, `M_Role`, clips `Idle, Typing, Wave, ThumbsUp, Panic, Cheer, Shrug`. Skeleton: `Hips, Spine, Chest, Neck, Head, Shoulder/UpperArm/LowerArm/Hand_L/R, UpperLeg/LowerLeg/Foot_L/R` (+ optional `Thumb_L/R`, `Fingers_L/R`). The current version is v2 (2026-11-14).
 
-## P1: корпус Астероида и капсула (2026-11-14; корпус — v2 с 2026-11-15)
-- `frame_asteroid` v2: шестигранная ферма, апофема 0.65 (поперёк 1.3, угол 0.75), y 0…0.9, плоская грань к +Z. На каждой грани нижний отсек (y 0.27, power) и два верхних (y 0.65, смещение ±0.16: science / structure / navigation). Палуба: золотое кольцо-держатель капсулы (верх y 0.95, `slot_recovery_1`), круглые гнёзда comms (r 0.56, 30°/150°/210°/330°) и recovery_2..4 (90°, 270°, 180°). Днище: фланец двигателя (`slot_propulsion_1`) + 3 гнезда r 0.42. Опоры — 3 ноги с углов 90°/210°/330°, касание y = −0.35. 30 слотов, `cam_front`, `cam_top`.
-- Накладки для него — отдельные GLB `<id>__asteroid` (`thermal_insulation`, `power_bus`, `landing_system`, `reinforced_frame`). Игра берёт вариант по корпусу миссии, иначе обычный.
-- `reinforced_frame` — новая накладка (обе версии).
-- `return_capsule` на `slot_recovery_1` с узлами `mount_heat_shield`, `mount_parachute`, `mount_beacon`; `heat_shield` (начало координат — верх щита, щит вниз до −0.1), `parachute` (купол под `pivot_chute`, игра масштабирует 0→1), `recovery_beacon` крепятся к ним, если капсула стоит.
-- `asteroid` (`lod0`, `lod1`, `mount_sample`), `earth` (`pivot_clouds`), `debris` (`debris_1..3` в одном GLB).
+## P1: Asteroid hull and capsule (2026-11-14; the hull is v2 since 2026-11-15)
+- `frame_asteroid` v2: a hexagonal truss, apothem 0.65 (1.3 across, corner 0.75), y 0…0.9, a flat face toward +Z. Each face has one lower bay (y 0.27, power) and two upper ones (y 0.65, offset ±0.16: science / structure / navigation). Deck: a gold capsule-holder ring (top at y 0.95, `slot_recovery_1`), round comms sockets (r 0.56, 30°/150°/210°/330°) and recovery_2..4 (90°, 270°, 180°). Underside: the engine flange (`slot_propulsion_1`) + 3 sockets at r 0.42. Supports — 3 legs from the corners at 90°/210°/330°, ground contact at y = −0.35. 30 slots, `cam_front`, `cam_top`.
+- Its overlays are separate GLBs `<id>__asteroid` (`thermal_insulation`, `power_bus`, `landing_system`, `reinforced_frame`). The game picks the variant by the mission's hull, otherwise the regular one.
+- `reinforced_frame` is a new overlay (both versions).
+- `return_capsule` on `slot_recovery_1` with the nodes `mount_heat_shield`, `mount_parachute`, `mount_beacon`; `heat_shield` (origin at the top of the shield, the shield extends down to −0.1), `parachute` (the canopy under `pivot_chute`, the game scales it 0→1), and `recovery_beacon` attach to them if the capsule is installed.
+- `asteroid` (`lod0`, `lod1`, `mount_sample`), `earth` (`pivot_clouds`), `debris` (`debris_1..3` in one GLB).

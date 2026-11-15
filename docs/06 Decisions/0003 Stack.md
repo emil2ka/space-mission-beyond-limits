@@ -1,4 +1,4 @@
-# 0003 Стек — принято (2026-11-13)
-**Решение:** React 19 + TypeScript + Vite, three.js через @react-three/fiber + drei, zustand, Supabase Realtime, Vitest.
-**Почему:** r3f позволяет держать 3D и UI в одном React-дереве; Supabase предложен в ТЗ; Vite — быстрый dev.
-**Альтернативы:** Babylon.js (тяжелее, хуже с React), Unity WebGL (тяжёлый билд для телефонов, долгий старт), Colyseus (нужен свой сервер).
+# 0003 Stack — accepted (2026-11-13)
+**Decision:** React 19 + TypeScript + Vite, three.js via @react-three/fiber + drei, zustand, Supabase Realtime, Vitest.
+**Why:** r3f keeps 3D and UI in one React tree; Supabase is suggested in the spec (TZ v2.0); Vite gives fast dev.
+**Alternatives:** Babylon.js (heavier, worse with React), Unity WebGL (heavy build for phones, slow startup), Colyseus (needs our own server).

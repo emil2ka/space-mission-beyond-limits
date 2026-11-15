@@ -1,38 +1,38 @@
-# Энергетическая модель (критический пункт ТЗ)
+# Energy Model (a critical point of the spec)
 
-## Четыре разные величины
-1. **Генерация** — сколько энергии производится за тик (W). Источники: RTG, Solar Panel Array.
-2. **Потребление** — сколько требуют **включённые** системы (W).
-3. **Ёмкость батарей** — сколько можно хранить (Wh). Источники: High-Capacity Battery, Backup Battery.
-4. **Текущий заряд** — сколько реально осталось (Wh).
+## Four different quantities
+1. **Generation** — how much energy is produced per tick (W). Sources: RTG, Solar Panel Array.
+2. **Consumption** — how much the **switched-on** systems need (W).
+3. **Battery capacity** — how much can be stored (Wh). Sources: High-Capacity Battery, Backup Battery.
+4. **Current charge** — how much is actually left (Wh).
 
-## Формулы
+## Formulas
 ```
 Net Power = Total Generation − Active Consumption
 Stored(next) = clamp(Stored + Net Power × Δt, 0, Total Battery Capacity)
 ```
-- **1 тик = 10 игровых минут**, Δt = 1/6 ч, поэтому в Wh: `Net × 1/6`. В полёте 1 тик ≈ 1 секунда реального времени. Настраивается в `src/engine/constants.ts` ([0005 Tick length](../06%20Decisions/0005%20Tick%20length.md)).
-- Если Net < 0 — расходуется заряд. Когда заряд = 0, второстепенные системы отключаются **по приоритетам питания** (PDU), начиная с низшего: наука (опциональная) → нагрев приборов → навигация второстепенная → … Связь и управление отключаются последними. Backup Battery питает только критические системы.
-- Если Net > 0 — батареи заряжаются до предела, излишек теряется (показать «излишек: 30 W не используется»).
+- **1 tick = 10 game minutes**, Δt = 1/6 h, so in Wh: `Net × 1/6`. In flight, 1 tick ≈ 1 second of real time. Configured in `src/engine/constants.ts` ([0005 Tick length](../06%20Decisions/0005%20Tick%20length.md)).
+- If Net < 0, the charge is consumed. When the charge = 0, secondary systems are switched off **by power priority** (PDU), starting from the lowest: science (optional) → instrument heating → secondary navigation → … Comms and control are switched off last. The Backup Battery powers only critical systems.
+- If Net > 0, the batteries charge up to the limit, and the surplus is lost (show "surplus: 30 W unused").
 
-## Батарея — НЕ генератор
-Несколько батарей увеличивают **ёмкость**, несколько генераторов — **генерацию**. В UI батареи никогда не стоят в строке «Генерация» (приёмочный тест A, шаг 5).
+## A battery is NOT a generator
+Several batteries increase **capacity**; several generators increase **generation**. In the UI, batteries never appear in the "Generation" line (acceptance test A, step 5).
 
-## Эффективность по миссии
-| Источник | Титан | Астероид |
+## Efficiency by mission
+| Source | Titan | Asteroid |
 |---|---|---|
-| RTG | 110 W стабильно | 110 W стабильно |
-| Solar Panel Array | 1 W (×0.01) + предупреждение | 60 W × ориентация (0.5–1.0) |
-| Backup Battery | только критические системы | то же |
+| RTG | 110 W, steady | 110 W, steady |
+| Solar Panel Array | 1 W (×0.01) + a warning | 60 W × orientation (0.5–1.0) |
+| Backup Battery | critical systems only | same |
 
-## Численный разбор (всегда виден инженеру)
+## Numeric breakdown (always visible to the engineer)
 ```
-Генерация: 120 W | Потребление: 155 W | Дефицит: 35 W | Ёмкость батарей: 600 Wh | Заряда хватит на: 17 ч
+Generation: 120 W | Consumption: 155 W | Deficit: 35 W | Battery capacity: 600 Wh | Charge lasts: 17 h
 ```
-И ниже — список потребителей по убыванию с переключателями.
-Числа — условные игровые параметры, не реальные характеристики NASA.
+Below it — a list of consumers in descending order, with toggles.
+The numbers are conventional game parameters, not real NASA specifications.
 
-## Несколько экземпляров
-Для каждого компонента задан `maxInstances`, слот и ограничения. После добавления/удаления **сразу** пересчитываются масса, цена, генерация, потребление, тепло и слоты. Если следующий модуль поставить нельзя — точная причина: «Нет свободного слота энергетики (4/4)», «Превышен лимит массы на 45 кг», «Не хватает бюджета: нужно 30 М$, осталось 12 М$», «Максимум 2 экземпляра».
+## Multiple copies
+Each component has a `maxInstances`, a slot and constraints. After adding/removing, mass, cost, generation, consumption, heat and slots are recalculated **immediately**. If the next module cannot be installed, the exact reason is shown: "No free Power slot (4/4)", "Mass limit exceeded by 45 kg", "Not enough budget: needs 30 M$, 12 M$ left", "At most 2 copies".
 
-Код: `src/engine/stats.ts`, `src/engine/energy.ts`. Тесты: `src/engine/__tests__/acceptance.test.ts`. Числа: `src/engine/data/components.ts`.
+Code: `src/engine/stats.ts`, `src/engine/energy.ts`. Tests: `src/engine/__tests__/acceptance.test.ts`. Numbers: `src/engine/data/components.ts`.

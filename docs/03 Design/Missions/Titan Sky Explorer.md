@@ -1,45 +1,45 @@
 # TITAN: SKY EXPLORER
 
-**Цель:** исследовать атмосферу и поверхность Титана автономным летательным аппаратом с роторами.
-**Доступ:** с самого начала.
-**Среда:** экстремальный холод, плотная атмосфера, слабое солнце (×0.01), большая дистанция до Земли, задержка связи, автономная работа.
+**Goal:** explore Titan's atmosphere and surface with an autonomous rotorcraft.
+**Access:** from the very start.
+**Environment:** extreme cold, thick atmosphere, weak sunlight (×0.01), a long distance to Earth, signal delay, autonomous operation.
 
-## Ограничения (стартовые, условные)
-| Параметр | Значение |
+## Constraints (starting values, conventional)
+| Parameter | Value |
 |---|---|
-| Бюджет | 420 М$ |
-| Лимит массы носителя | 560 кг (корпус 250 кг, 80 М$) |
-| Слоты | энергия 6 · двигатели 3 · навигация 4 · наука 5 · связь 4 · корпус 4 · возврат 0 |
-| Задержка связи (игровая) | 6 тиков |
-| Потеря тепла средой | 220 ед./тик (без изоляции) |
+| Budget | 420 M$ |
+| Launcher mass limit | 560 kg (hull 250 kg, 80 M$) |
+| Slots | power 6 · propulsion 3 · navigation 4 · science 5 · comms 4 · structure 4 · recovery 0 |
+| Signal delay (in game) | 6 ticks |
+| Heat loss to the environment | 220 units/tick (without insulation) |
 
-## Энергия — обязательная логика
-- Солнечные панели **не основной источник**: выработка ×0.01 и предупреждение «На Титане очень мало солнечного света».
-- Основной источник — **RTG** (несколько можно, если хватает слотов, бюджета и массы).
-- Батарея хранит энергию и покрывает пики (например, полёт на роторах), но не производит.
+## Power — required logic
+- Solar panels are **not the main source**: output ×0.01 and the warning "There is very little sunlight on Titan".
+- The main source is the **RTG** (several are allowed if there are enough slots, budget and mass).
+- A battery stores energy and covers peaks (for example, rotor flight), but does not produce it.
 
-## Обязательные системы
-Rotor System · Flight Computer · любая антенна + Communication Transceiver · источник генерации ≥ базового потребления · Thermal Insulation или Heater (иначе риск замерзания).
-**Рекомендуется:** Atmospheric Sensor, High-Resolution или Wide-Angle Camera, Spectrometer, IMU, Radar/Altimeter.
-**Бесполезно:** Robotic Arm, Sample Container, Return Capsule, Heat Shield (нет возврата) — карточка объясняет почему.
+## Required systems
+Rotor System · Flight Computer · any antenna + Communication Transceiver · a generation source ≥ the base consumption · Thermal Insulation or Heater (otherwise a freezing risk).
+**Recommended:** Atmospheric Sensor, High-Resolution or Wide-Angle Camera, Spectrometer, IMU, Radar/Altimeter.
+**Useless:** Robotic Arm, Sample Container, Return Capsule, Heat Shield (no return) — the card explains why.
 
-## Фазы полёта
-1. **Перелёт** (упрощённо, 30 тиков) — проверка энергии и тепла в пути. Длины фаз и всё про полёт — [Balance Table](../Balance%20Table.md).
-2. **Вход и развёртывание** — раскрытие роторов, первый кризис возможен.
-3. **Полёт по точкам** — 3 точки на карте (дюны, озеро метана, кратер); на каждой учёный выбирает режим измерения.
-4. **Передача данных** — связь отправляет очередь пакетов.
+## Flight phases
+1. **Cruise** (simplified, 30 ticks) — power and heat are checked on the way. Phase lengths and everything about the flight — [Balance Table](../Balance%20Table.md).
+2. **Entry and deployment** — the rotors unfold; the first crisis is possible.
+3. **Flight between points** — 3 points on the map (dunes, a methane lake, a crater); at each one the scientist picks a measurement mode.
+4. **Data transmission** — comms sends the packet queue.
 
-## Научные цели
-| Цель | Нужно | Данные |
+## Science goals
+| Goal | Requires | Data |
 |---|---|---|
-| Профиль атмосферы | Atmospheric Sensor | 40 ед. |
-| Снимки поверхности | камера (HiRes лучше) | 60 ед. |
-| Химия поверхности | Spectrometer + посадка | 50 ед. |
-| Температура среды | Temperature Sensor | 20 ед. |
-Главная цель: ≥ 2 из 4 целей доставлены на Землю.
+| Atmosphere profile | Atmospheric Sensor | 40 units |
+| Surface images | a camera (HiRes is better) | 60 units |
+| Surface chemistry | Spectrometer + landing | 50 units |
+| Ambient temperature | Temperature Sensor | 20 units |
+Main goal: ≥ 2 of the 4 goals delivered to Earth.
 
-## Кризисы
-Power Drop, Signal Distortion (подробно в [Crises and Blackout](../Crises%20and%20Blackout.md)).
+## Crises
+Power Drop, Signal Distortion (details in [Crises and Blackout](../Crises%20and%20Blackout.md)).
 
-## 3D-сцена
-Оранжевая дымка, низкое тусклое солнце, дюны, озёра метана с бликами, мелкий метановый дождь. Аппарат летит на роторах между точками, камера следует сзади-сбоку. См. [3D Look](../3D%20Look.md).
+## 3D scene
+Orange haze, a low dim sun, dunes, methane lakes with glints, light methane rain. The craft flies on its rotors between points, with the camera following from behind and to the side. See [3D Look](../3D%20Look.md).

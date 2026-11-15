@@ -1,20 +1,20 @@
-# Стратегия моделей
+# Model Strategy
 
-Цель — ~70 моделей так, чтобы игра выглядела полноценно, но генерация не стала узким местом.
+The goal is ~70 models, so that the game looks complete but generation does not become a bottleneck.
 
-## Четыре слоя
-1. **Корпуса и носитель (5)** — аппарат Титана, аппарат астероида, ракета, обтекатель, капсула. Hero, самые детальные.
-2. **Модули каталога (~50)** — каждая карточка = своя модель (иконка карточки = рендер этой модели).
-3. **Окружение (8)** — ангар штаба, пульт, стенд, поверхность Титана (тайл), озеро, астероид (2 варианта LOD), Земля.
-4. **Персонажи (4)** — астронавты ролей: **одна** базовая модель + 4 цвета шеврона/шлема (это 1 генерация).
+## Four layers
+1. **Craft bodies and launcher (5)** — the Titan craft, the asteroid craft, the rocket, the fairing, the capsule. Hero assets, the most detailed.
+2. **Catalog modules (~50)** — each card = its own model (the card icon = a render of that model).
+3. **Environment (8)** — the HQ hangar, a console, the stand, the Titan surface (a tile), a lake, the asteroid (2 LOD variants), Earth.
+4. **Characters (4)** — role astronauts: **one** base model + 4 chevron/helmet colors (that is 1 generation).
 
-## Как экономить
-- Варианты (2 размера антенны, 2 батареи) = одна генерация с двумя кнопками COPY.
-- Мелкие датчики (Temperature, Radiation) — одна пачка «sensor pucks».
-- Окружение Титана — тайл + шейдер дымки, а не огромная сцена.
+## How to save effort
+- Variants (2 antenna sizes, 2 batteries) = one generation with two COPY buttons.
+- Small sensors (Temperature, Radiation) — one pack of "sensor pucks".
+- The Titan environment is a tile + a haze shader, not a huge scene.
 
-## Приоритеты
-- **P0 3D** (играбельный вертикальный срез Титана, ~22 модели): корпус Титана, ракета, ангар-минимум, стенд, ~15 модулей Титана, поверхность Титана, астронавт.
-- **P1** (~25): остальные модули, корпус астероида, капсула, астероид, Земля.
-- **P2**: варианты, декор штаба, улучшенные модули (визуально отличаются).
-Список: [Master Model List](Master%20Model%20List.md).
+## Priorities
+- **P0 3D** (a playable vertical slice of Titan, ~22 models): the Titan craft, the rocket, a minimal hangar, the stand, ~15 Titan modules, the Titan surface, the astronaut.
+- **P1** (~25): the remaining modules, the asteroid craft, the capsule, the asteroid, Earth.
+- **P2**: variants, HQ decor, upgraded modules (visually different).
+List: [Master Model List](Master%20Model%20List.md).

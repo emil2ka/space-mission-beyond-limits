@@ -1,42 +1,42 @@
-# Как игра выглядит в 3D
+# How the Game Looks in 3D
 
-Принцип: 3D показывает механику. Всё, что меняется в цифрах, видно на модели.
+Principle: 3D shows the mechanics. Everything that changes in the numbers is visible on the model.
 
-## Штаб (экраны 1–7)
-Светлый ангар космического агентства: высокий потолок, мягкий лавандовый свет, за огромным окном ракета на площадке и ночное небо. 4 пульта полукругом, у каждого **мультяшный астронавт** роли (цветной шеврон: командир — розовый, инженер — оранжевый, учёный — циан, связь — лавандовый). Анимации: ждёт (idle), печатает, машет новому игроку, READY — большой палец + пульт загорается. Отключился игрок — его астронавт «замирает» полупрозрачным, над ним Reconnecting.
+## HQ (screens 1–7)
+A bright space agency hangar: a high ceiling, soft lavender light, and behind a huge window a rocket on the pad and the night sky. 4 consoles in a semicircle, each with a **cartoon astronaut** for its role (colored chevron: commander — pink, engineer — orange, scientist — cyan, comms — lavender). Animations: waiting (idle), typing, waving to a new player, READY — a thumbs-up + the console lights up. When a player disconnects, their astronaut "freezes", semi-transparent, with Reconnecting above them.
 
-## Конструктор (экран 9)
-Чистая комната: белый пол с разметкой, аппарат на поворотном стенде, мягкие тени.
-- **Установка модуля:** модуль появляется над слотом, подлетает по дуге 0.6 с, «щелчок» + искорки болтов + лёгкое покачивание аппарата. Удаление — модуль отлетает вверх и растворяется.
-- **Несколько экземпляров** видны физически: 2 RTG = два цилиндра с рёбрами на штангах.
-- **Режимы вида по ролям:**
-  - Командир «Обзор» — значки риска над узлами.
-  - Инженер «Рентген» — корпус полупрозрачный, кабели-трубки светятся (толщина = поток, цвет зелёный → жёлтый → красный), перегретые узлы пульсируют оранжевым.
-  - Учёный «Приборы» — приборы подсвечены, конусы обзора камер/сенсоров.
-  - Связь «Связь» — луч антенны и стрелка на Землю.
-- **Проблема** (масса, тепло) — узел подсвечивается, камера мягко поворачивается к нему по клику на предупреждение.
+## Constructor (screen 9)
+A clean room: a white floor with markings, the craft on a turntable stand, soft shadows.
+- **Installing a module:** the module appears above the slot, flies in along an arc in 0.6 s, a "click" + sparks from the bolts + a slight wobble of the craft. Removal — the module flies up and dissolves.
+- **Multiple copies** are physically visible: 2 RTGs = two finned cylinders on booms.
+- **View modes per role:**
+  - Commander "Overview" — risk icons above the units.
+  - Engineer "X-ray" — the hull is semi-transparent, the cable tubes glow (thickness = flow, color green → yellow → red), overheated units pulse orange.
+  - Scientist "Instruments" — instruments are highlighted, with the view cones of cameras/sensors.
+  - Comms "Comms" — the antenna beam and an arrow pointing to Earth.
+- **A problem** (mass, heat) — the unit is highlighted, and the camera smoothly turns toward it when you click the warning.
 
-## Запуск (экран 14)
-Ракета на площадке, пар, отсчёт. Старт: пламя, дым (частицы), камера снизу → сбоку → сверху. Отделение ступеней, обтекатель раскрывается, внутри **наш аппарат** в той конфигурации, которую собрали. Длительность 12–15 с, можно пропустить (после первого раза).
+## Launch (screen 14)
+The rocket on the pad, steam, the countdown. Liftoff: flame, smoke (particles), the camera from below → from the side → from above. Stage separation, the fairing opens, and inside is **our craft** in the configuration the team built. Duration 12–15 s; can be skipped (after the first time).
 
-## Титан (экран 15)
-Оранжевая дымка (fog), тусклое низкое солнце, дюны, озёра метана с бликами, мелкий метановый дождь. Роторы крутятся (скорость = мощность), аппарат слегка раскачивается, летит между точками по сплайну. На точке — зависание, луч сенсора вниз, всплывающая «+40 данных».
+## Titan (screen 15)
+Orange haze (fog), a dim low sun, dunes, methane lakes with glints, light methane rain. The rotors spin (speed = power), the craft sways slightly and flies between points along a spline. At a point — hovering, a sensor beam pointing down, and a pop-up "+40 data".
 
-## Астероид (экран 15)
-Чёрный космос, яркие звёзды, медленно кувыркающийся астероид с кратерами. Импульсы двигателей ориентации — короткие струи. Сближение: камера из-за аппарата, дальномерная сетка. Отбор: рука разгибается (3 сустава), касание, облако пыли, образец в контейнер, крышка закрывается. Возврат: капсула отделяется, вход в атмосферу (раскалённый щит, плазменный след), парашют, маяк мигает.
+## Asteroid (screen 15)
+Black space, bright stars, a slowly tumbling cratered asteroid. Attitude-thruster pulses are short jets. Approach: the camera behind the craft, a rangefinder grid. Sampling: the arm unfolds (3 joints), touches down, a cloud of dust, the sample goes into the container, the lid closes. Return: the capsule separates, atmospheric entry (a glowing shield, a plasma trail), the parachute, the blinking beacon.
 
-## Кризисы (экран 16)
-- Debris Alert — обломки летят через кадр, удары по щиту (вспышки), камера дрожит (если нет Reduced Motion).
-- Power Drop — искры на конкретном узле, свет приборов гаснет по очереди.
-- Signal Distortion / blackout — картинка с аппарата застывает, рассыпается в помехи, надпись NO SIGNAL; когда связь вернётся — «догрузка» кадров.
-- Arm Jam — рука дёргается и застревает, красный контур на приводе.
-- Overheat — марево над узлом, оранжевое свечение.
+## Crises (screen 16)
+- Debris Alert — debris flies across the frame, hits on the shield (flashes), the camera shakes (unless Reduced Motion is on).
+- Power Drop — sparks on a specific unit, instrument lights go out one by one.
+- Signal Distortion / blackout — the picture from the craft freezes, breaks up into static, the caption NO SIGNAL; when the link returns, frames "catch up".
+- Arm Jam — the arm twitches and gets stuck, a red outline on the drive.
+- Overheat — heat haze above the unit, an orange glow.
 
-## Отчёт (экран 17)
-Повтор 3 ключевых моментов в 3D (камера по записанному таймлайну) с подписями причин.
+## Report (screen 17)
+A replay of 3 key moments in 3D (the camera follows the recorded timeline) with captions explaining the causes.
 
-## Техника
-- three.js через react-three-fiber, drei (OrbitControls, Environment, ContactShadows), postprocessing (Bloom, Vignette).
-- Модели — GLB, стилизованные low-poly, общая палитра (одна текстура-градиент на все модули).
-- Анимация механики — **процедурная в коде** по именованным узлам (`pivot_*`), персонажи — скелетные клипы в GLB. См. [Animations](../05%20Assets/Animations.md).
-- Качество: High (тени, bloom, частицы), Low для телефонов (без теней и bloom, меньше частиц).
+## Technology
+- three.js via react-three-fiber, drei (OrbitControls, Environment, ContactShadows), postprocessing (Bloom, Vignette).
+- Models are GLB, stylized low-poly, with a shared palette (one gradient texture for all modules).
+- Mechanical animation is **procedural in code** on named nodes (`pivot_*`); characters use skeletal clips in the GLB. See [Animations](../05%20Assets/Animations.md).
+- Quality: High (shadows, bloom, particles), Low for phones (no shadows or bloom, fewer particles).

@@ -1,36 +1,36 @@
-# Стиль: cel-shaded комикс (вариант 5)
+# Style: cel-shaded comic (option 5)
 
-> 2026-11-13: для 3D выбран cel-shaded комикс ([0008 Cel-shaded comic style](../06%20Decisions/0008%20Cel-shaded%20comic%20style.md)). Палитра UI ниже — из ТЗ; согласовать с 3D (открытый вопрос).
+> 2026-11-13: a cel-shaded comic style was chosen for 3D ([0008 Cel-shaded comic style](../06%20Decisions/0008%20Cel-shaded%20comic%20style.md)). The UI palette below comes from the spec (TZ v2.0); it still has to be reconciled with 3D (open question).
 
-## Исходный стиль ТЗ: Cute Futuristic Space Agency
+## The spec's original style: Cute Futuristic Space Agency
 
-Эстетичный современный sci-fi, уютный, но не детский.
+Stylish modern sci-fi, cozy but not childish.
 
-## Палитра
-| Токен | Цвет | Где |
+## Palette
+| Token | Color | Where |
 |---|---|---|
-| navy-900 | `#0E1330` | фон, космос |
-| navy-700 | `#1C2452` | панели |
-| lavender | `#B8A9F0` | основной акцент, свет штаба |
-| ice | `#CFE8FF` | текст второго уровня, лёд Титана |
-| cyan | `#5BE0E6` | интерактив, данные |
-| white | `#F7F8FF` | основной текст, корпус |
-| pink | `#FF9EC7` | маленькие акценты, командир |
-| ok / warn / risk / crit | `#4CD69A` / `#FFD25C` / `#FF9A4A` / `#FF5A6A` | только статусы |
+| navy-900 | `#0E1330` | background, space |
+| navy-700 | `#1C2452` | panels |
+| lavender | `#B8A9F0` | main accent, HQ lighting |
+| ice | `#CFE8FF` | secondary text, Titan ice |
+| cyan | `#5BE0E6` | interactive elements, data |
+| white | `#F7F8FF` | main text, hull |
+| pink | `#FF9EC7` | small accents, commander |
+| ok / warn / risk / crit | `#4CD69A` / `#FFD25C` / `#FF9A4A` / `#FF5A6A` | statuses only |
 
-## Интерфейс
-Аккуратные карточки со скруглениями 14–18 px, читаемая типографика (Inter / Manrope, цифры моноширинные — JetBrains Mono), мягкое свечение и тени, полупрозрачные панели (glass), плавные переходы 150–250 мс, атмосферный космический фон, адаптивная раскладка.
+## Interface
+Neat cards with 14–18 px rounded corners, readable typography (Inter / Manrope, monospaced numbers — JetBrains Mono), soft glow and shadows, semi-transparent (glass) panels, smooth 150–250 ms transitions, an atmospheric space background, a responsive layout.
 
-## 3D-модели (обновлено: стиль 5)
-- Толстые чёрные контуры, плоские цвета в 2–3 тона, полутон в тенях, без тонких деталей. Подробно — [Prompt Preamble](../05%20Assets/Prompt%20Preamble.md).
-- (старое) Скруглённые формы, крупные читаемые детали, фаски. Low-poly (модуль 1–4k треугольников, корпус до 15k, персонаж до 10k).
-- Материалы: матовый белый корпус, лавандовые/циан детали, золотая фольга (термоизоляция) приглушённая, светящиеся полоски-индикаторы.
-- Не реализм NASA, а «игрушечно-премиальный» стиль — как дорогая настольная модель.
+## 3D models (updated: style 5)
+- Thick black outlines, flat colors in 2–3 tones, halftone in the shadows, no thin details. Details in [Prompt Preamble](../05%20Assets/Prompt%20Preamble.md).
+- (old) Rounded shapes, large readable details, bevels. Low-poly (a module 1–4k triangles, the hull up to 15k, a character up to 10k).
+- Materials: matte white hull, lavender/cyan details, muted gold foil (thermal insulation), glowing indicator strips.
+- Not NASA realism but a "premium toy" style — like an expensive desk model.
 
-## Аварийный экран
-Контрастирует со спокойным интерфейсом, но не причиняет дискомфорт: красно-оранжевый слой 25% прозрачности, без стробоскопа.
+## Emergency screen
+Contrasts with the calm interface but causes no discomfort: a red-orange overlay at 25% opacity, no strobe.
 
-Промпт-блок для генераторов: [Prompt Preamble](../05%20Assets/Prompt%20Preamble.md).
+Prompt block for generators: [Prompt Preamble](../05%20Assets/Prompt%20Preamble.md).
 
-## Звук
-Всё синтезируется в коде, мягко и уютно, без сирен и «наказывающих» звуков. Подробно — [Sound](Sound.md).
+## Sound
+Everything is synthesized in code, soft and cozy, with no sirens and no "punishing" sounds. Details in [Sound](Sound.md).

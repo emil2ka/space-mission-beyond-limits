@@ -1,25 +1,25 @@
-# Анимации
+# Animations
 
-## Механика — процедурно в коде (по узлам `pivot_*`)
-| Модуль | Узел | Анимация | Зависит от |
+## Mechanics — procedural in code (on `pivot_*` nodes)
+| Module | Node | Animation | Depends on |
 |---|---|---|---|
-| Rotor System | `pivot_rotor_1..4` | вращение | мощность полёта |
-| High-Gain Antenna | `pivot_dish` (азимут), `pivot_dish_tilt` | плавное наведение на Землю | ошибка наведения (связь) |
-| Solar Panel Array | `pivot_panel_l/r` | раскрытие после отделения | фаза |
-| Robotic Arm | `pivot_arm_1..3`, `pivot_claw` | IK-лайт: 3 сустава к цели | отбор образца |
-| Drill | `pivot_drill` | вращение + опускание | интенсивность |
-| Reaction Wheels | `pivot_wheel` | вращение | манёвры |
-| Sample Container | `pivot_lid` | закрытие | упаковка |
-| Parachute | `pivot_chute` (scale) | раскрытие | фаза возврата |
-| Chemical Engine/Thrusters | `fx_nozzle*` | пламя-частицы + свет | тяга |
-| RTG | `fx_glow` | мягкая пульсация, ярче при перегреве | тепло |
-| Камеры/сенсоры | `fx_lens` | конус обзора (режим учёного) | — |
+| Rotor System | `pivot_rotor_1..4` | rotation | flight power |
+| High-Gain Antenna | `pivot_dish` (azimuth), `pivot_dish_tilt` | smooth aiming at Earth | aiming error (comms) |
+| Solar Panel Array | `pivot_panel_l/r` | unfolding after separation | phase |
+| Robotic Arm | `pivot_arm_1..3`, `pivot_claw` | IK-lite: 3 joints toward the target | sampling |
+| Drill | `pivot_drill` | rotation + lowering | intensity |
+| Reaction Wheels | `pivot_wheel` | rotation | maneuvers |
+| Sample Container | `pivot_lid` | closing | packing |
+| Parachute | `pivot_chute` (scale) | opening | return phase |
+| Chemical Engine/Thrusters | `fx_nozzle*` | flame particles + light | thrust |
+| RTG | `fx_glow` | soft pulsing, brighter when overheating | heat |
+| Cameras/sensors | `fx_lens` | view cone (scientist mode) | — |
 
-## Общие анимации
-- Подлёт модуля к слоту (дуга 0.6 с, easeOutBack) + искры + покачивание корпуса.
-- Отлёт при удалении.
-- Тряска камеры при ударах (выкл. при Reduced Motion).
-- Помехи/«застывание» картинки при blackout (пост-эффект).
+## Shared animations
+- A module flying to its slot (0.6 s arc, easeOutBack) + sparks + a wobble of the hull.
+- Flying away on removal.
+- Camera shake on impacts (off with Reduced Motion).
+- Static/"freezing" of the picture during a blackout (post-effect).
 
-## Персонажи — скелетные клипы в GLB
-`Idle`, `Typing`, `Wave`, `ThumbsUp` (READY), `Panic` (кризис), `Cheer` (успех), `Shrug` (провал). 7 клипов, одна модель на 4 роли.
+## Characters — skeletal clips in the GLB
+`Idle`, `Typing`, `Wave`, `ThumbsUp` (READY), `Panic` (crisis), `Cheer` (success), `Shrug` (failure). 7 clips, one model for all 4 roles.

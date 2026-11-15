@@ -1,5 +1,5 @@
-# 0001 Основа — ТЗ v2.0 — принято (2026-11-13)
-**Контекст:** получено ТЗ «SPACE MISSION: BEYOND LIMITS» v2.0.
-**Решение:** ТЗ — базовый источник требований. Отклонения фиксируются отдельными решениями.
-**Почему:** у ТЗ есть приёмочные тесты A–F и критерий готовности — по ним и меряем.
-Ссылки: [Game Overview](../03%20Design/Game%20Overview.md)
+# 0001 Foundation — the spec (TZ v2.0) — accepted (2026-11-13)
+**Context:** we received the spec "SPACE MISSION: BEYOND LIMITS" v2.0.
+**Decision:** the spec is the baseline source of requirements. Deviations are recorded as separate decisions.
+**Why:** the spec has acceptance tests A–F and a definition of done — that is what we measure against.
+Links: [Game Overview](../03%20Design/Game%20Overview.md)

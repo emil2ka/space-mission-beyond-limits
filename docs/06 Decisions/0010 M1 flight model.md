@@ -1,13 +1,13 @@
-# 0010 Модель полёта Титана в M1 — принято (2026-11-14)
+# 0010 Titan flight model in M1 — accepted (2026-11-14)
 
-**Контекст:** контракт M1 ([M1 Flight Contract](../04%20Tech/M1%20Flight%20Contract.md)) и ТЗ оставляли открытыми несколько правил полёта. Решения части A (движок):
+**Context:** the M1 contract ([M1 Flight Contract](../04%20Tech/M1%20Flight%20Contract.md)) and the spec (TZ v2.0) left several flight rules open. Part A (engine) decisions:
 
-1. **Перегруз массы до +10 % — предупреждение, больше — блокер.** Контракт называл перегруз блокером, но приёмочный тест C ТЗ требует, чтобы командир мог утвердить перегруз с записью, а отчёт связал его с последствиями. Последствия перегруза: жёсткий вход (корпус −3 % на каждый 1 % перегруза, максимум −25), роторы тянут больше мощности (+3 % на 1 %), полёт медленнее (−2 % на 1 %).
-2. **Перегрузка шины, замерзание, перегрев — предупреждения, не блокеры.** Это принятые риски: они становятся кризисами Power Drop / Freeze / Overheat в полёте.
-3. **Team Trust** снижается (−15) только при запуске, утверждённом вопреки предупреждению (`approve-against-warning`), **и только если этот риск сработал** в полёте (ТЗ §3.1). Неудачный исход сам по себе не штрафуется.
-4. **Overheat бывает двух видов:** критический (баланс ≥ 200 три тика подряд) и «накопленный» (≥ 120 «жарко» 60 тиков подряд, вне перелёта) — так два RTG под изоляцией без радиатора дают перегрев в фазе 3, как в примере 1 из [Consequences](../03%20Design/Consequences.md).
-5. **Signal Distortion = метановая буря:** без Signal Amplifier буря приходит всегда, с ним — только на 20 % сидов и слабее. Время бури задаёт сид комнаты. Если никто не ответил, помехи перерастают в полную потерю связи на 20 тиков — работает Autonomy Planner (тест D).
-6. **Вход в атмосферу: первые 15 тиков нет связи.** Без правил на `Signal = LOST` включается Safe Protocol (аппарат зависает и выключает науку) — это и есть повод настроить Autonomy Planner.
-7. **MC:** движок начисляет заработанные MC сразу после полёта; обслуживание (`mc.upkeep`) — только расчёт для экрана подготовки к следующей попытке (P1), не списывается автоматически.
+1. **Mass overload up to +10 % is a warning; more is a blocker.** The contract called overload a blocker, but the spec's acceptance test C requires that the commander can approve an overload with a record, and that the report links it to its consequences. Overload consequences: hard entry (hull −3 % per 1 % of overload, max −25), rotors draw more power (+3 % per 1 %), slower flight (−2 % per 1 %).
+2. **Bus overload, freezing and overheating are warnings, not blockers.** These are accepted risks: in flight they become the Power Drop / Freeze / Overheat crises.
+3. **Team Trust** drops (−15) only for a launch approved against a warning (`approve-against-warning`), **and only if that risk actually fired** in flight (spec §3.1). A failed outcome on its own is not penalized.
+4. **Overheat comes in two kinds:** critical (balance ≥ 200 for three ticks in a row) and "accumulated" (≥ 120, "hot", for 60 ticks in a row, outside the cruise) — this way two RTGs under insulation without a radiator overheat in phase 3, as in example 1 of [Consequences](../03%20Design/Consequences.md).
+5. **Signal Distortion = methane storm:** without a Signal Amplifier the storm always comes; with one, only on 20 % of seeds and weaker. The storm timing is set by the room seed. If nobody responds, the interference grows into a full signal loss for 20 ticks — the Autonomy Planner takes over (test D).
+6. **Atmospheric entry: no link for the first 15 ticks.** Without rules for `Signal = LOST`, the Safe Protocol kicks in (the craft hovers and turns science off) — which is exactly the reason to set up the Autonomy Planner.
+7. **MC:** the engine credits earned MC right after the flight; upkeep (`mc.upkeep`) is only a calculation for the screen that prepares the next attempt (P1) and is not charged automatically.
 
-**Почему:** причинность от сборки (0006), прозрачные числа в отчёте, никакой случайности кроме сида.
+**Why:** causality from the build (0006), transparent numbers in the report, no randomness except the seed.

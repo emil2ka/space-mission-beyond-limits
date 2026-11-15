@@ -1,23 +1,23 @@
-# Известные ограничения
+# Known issues
 
-## Не проверено
-- **Полный полёт вчетвером на разных устройствах через Supabase.** Проверено: 4 вкладки в локальном режиме (тест F) и 2 игрока онлайн на живом сайте (комната, вход по коду, синхронизация).
-- **Реальные телефоны и школьные ноутбуки.** Всё проверено в эмуляции Chrome (iPhone SE / 14, Android, замедление CPU в 4–6 раз, программный рендер SwiftShader) — см. [Device QA](Device%20QA.md). Цель ≥ 30 FPS на Low при 6× CPU подтверждена только для конструктора Титана.
-- **Звук на слух** на разных устройствах. Проверено тестами событий и в браузере.
+## Not verified yet
+- **A full four-player flight on separate devices via Supabase.** Verified: 4 tabs in local mode (test F) and 2 players online on the live site (room, joining by code, sync).
+- **Real phones and school laptops.** Everything was checked in Chrome emulation (iPhone SE / 14, Android, CPU slowed 4–6×, SwiftShader software rendering) — see [Device QA](Device%20QA.md). The target of ≥ 30 FPS on Low at 6× CPU slowdown is confirmed only for the Titan builder.
+- **Sound by ear** on different devices. Checked by sound-event tests and in the browser.
 
-## Графика
-- **Low: нет комикс-обводок** — общий материал обводки скрыт, потому что обводки удваивают число draw calls. На телефонах в режиме «Авто» контура нет. Это сознательный размен.
-- **Сглаживание** задаётся при создании WebGL-контекста: при переключении Low ↔ High посреди сцены сразу меняются плотность пикселей, частицы, тени и обводки, а сглаживание — только при следующем открытии сцены. В момент переключения на 1–2 с может просесть FPS.
-- **«Авто»** выбирает Low для сенсорных экранов с короткой стороной < 820 px, `deviceMemory` ≤ 4 ГБ, ≤ 2 ядер, программного рендера и слабых GPU (Intel HD / UHD 6xx, Mali, Adreno 2xx–5xx, PowerVR). Страховка: High < 40 FPS → Low, Low < 26 FPS → плотность пикселей 0.75.
-- **Повтор миссии в отчёте** создаёт новый WebGL-контекст на каждую главу (≈ 1 с компиляции шейдеров на слабой машине).
+## Graphics
+- **Low has no comic outlines** — the shared outline material is hidden because outlines double the draw calls. On phones in "Auto" there is no comic contour. This is a deliberate trade-off.
+- **Antialiasing** is set when the WebGL context is created: switching Low ↔ High mid-scene changes pixel density, particles, shadows and outlines at once, but antialiasing only the next time the scene opens. FPS may dip for 1–2 s during the switch.
+- **"Auto"** picks Low for touch screens with a short side < 820 px, `deviceMemory` ≤ 4 GB, ≤ 2 cores, software rendering and weak GPUs (Intel HD / UHD 6xx, Mali, Adreno 2xx–5xx, PowerVR). Safety net: High < 40 FPS → Low, Low < 26 FPS → pixel density 0.75.
+- **The mission replay in the report** creates a new WebGL context for every chapter (≈ 1 s of shader compilation on a weak machine).
 
-## Интерфейс
-- На телефоне кнопки «!» и настроек закреплены в правом верхнем углу и при прокрутке могут перекрывать контент под собой (например, «Автономия» в конструкторе).
+## Interface
+- On phones the "!" and settings buttons are pinned to the top-right corner and can cover content underneath while scrolling (e.g. "Autonomy" in the builder).
 
-## Модели
-- `validate-glb` на оптимизированном `astronaut.glb` пишет «feet at y=-1.00»: после квантования meshopt масштаб скин-меша уходит в inverse bind matrices. В three.js модель правильная (1.715 м, ноги на 0).
-- Если меш висит прямо на узле `pivot_*`, оптимизатор переносит его в `<имя>_mesh`. Код ищет узлы по имени, анимацию это не ломает, но в иерархии появляется лишний узел.
+## Models
+- `validate-glb` reports "feet at y=-1.00" for the optimized `astronaut.glb`: after meshopt quantization the skinned mesh's scale moves into the inverse bind matrices. In three.js the model is correct (1.715 m, feet at 0).
+- If a mesh hangs directly on a `pivot_*` node, the optimizer moves it into `<name>_mesh`. The code finds nodes by name, so animation still works, but an extra node appears in the hierarchy.
 
-## Прочее
-- В консоли два предупреждения библиотек (не наши): `THREE.Clock deprecated` (R3F) и `PCFSoftShadowMap has been removed` (R3F `shadows` по умолчанию).
-- В исходном PDF ТЗ часть слов отображалась квадратами ■■■ (стр. 5, 9, 10). Смысл восстановлен по контексту — см. [Open Questions](../07%20Tasks/Open%20Questions.md).
+## Other
+- Two library warnings in the console (not ours): `THREE.Clock deprecated` (R3F) and `PCFSoftShadowMap has been removed` (R3F `shadows` default).
+- In the original spec PDF some words rendered as ■■■ squares (pp. 5, 9, 10). The meaning was restored from context — see [Open Questions](../07%20Tasks/Open%20Questions.md).

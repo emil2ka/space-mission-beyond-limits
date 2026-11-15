@@ -1,27 +1,27 @@
-# Инженерные компромиссы и цепочки последствий
+# Engineering Trade-offs and Chains of Consequences
 
-Каждая значимая деталь имеет: **прямой эффект**, **побочный эффект**, **влияние минимум на две роли**, **возможное аварийное последствие**, **объяснение в отчёте**. В карточке `src/engine/data/components.ts` это поля `purpose`, `sideEffect`, `roles`, `failure` (объяснение для отчёта — TODO).
+Every significant part has: a **direct effect**, a **side effect**, an **impact on at least two roles**, a **possible failure consequence**, and an **explanation in the report**. In the card in `src/engine/data/components.ts` these are the fields `purpose`, `sideEffect`, `roles`, `failure` (the report explanation is TODO).
 
-## Пример 1 — несколько RTG
-1. Инженер добавляет второй RTG → генерация +110 W.
-2. Масса +45 кг, цена +60 М$, тепло +90 ед.
-3. Командир видит риск превышения бюджета/массы.
-4. Учёный получает больше энергии для приборов.
-5. Без радиатора — риск перегрева (кризис Overheat, отчёт: «Два RTG без Thermal Radiator → перегрев электроники в фазе 3»).
+## Example 1 — several RTGs
+1. The engineer adds a second RTG → generation +110 W.
+2. Mass +45 kg, cost +60 M$, heat +90 units.
+3. The commander sees the risk of going over budget/mass.
+4. The scientist gets more power for instruments.
+5. Without a radiator — overheating risk (Overheat crisis; the report says: "Two RTGs without a Thermal Radiator → electronics overheated in phase 3").
 
-## Пример 2 — High-Gain Antenna
-- Плюс: высокая скорость передачи. Минус: узкий луч, нужно точное наведение и энергия.
-- Связь активно наводит антенну; при смене ориентации связь может прерваться.
-- Учёный видит очередь данных, которые не отправляются.
+## Example 2 — High-Gain Antenna
+- Pro: high data rate. Con: a narrow beam that needs precise aiming and power.
+- Comms actively aims the antenna; when the orientation changes, the link can drop.
+- The scientist sees a queue of data that is not being sent.
 
-## Пример 3 — солнечные панели
-- В подходящей среде (астероид) дополнительные панели повышают генерацию; растут масса и цена.
-- Может быть превышен лимит носителя → командир убирает другой модуль или принимает риск.
-- На Титане панели не решают дефицит из-за слабого освещения.
+## Example 3 — solar panels
+- In a suitable environment (the asteroid) extra panels raise generation; mass and cost go up.
+- The launcher limit may be exceeded → the commander removes another module or accepts the risk.
+- On Titan, panels do not fix the deficit because of the weak sunlight.
 
-## Как это устроено в коде
-- Движок пишет каждое событие в **журнал причин** (`CauseLog`): `{tick, kind, causeIds[], text}`.
-- Решения командира тоже пишутся: `{kind:'approve-against-warning', warningId}`.
-- Отчёт строится из журнала: каждая проблема → найденная причина → совет. См. [Mission Report](Mission%20Report.md).
+## How it works in code
+- The engine writes every event to a **cause log** (`CauseLog`): `{tick, kind, causeIds[], text}`.
+- Commander decisions are recorded too: `{kind:'approve-against-warning', warningId}`.
+- The report is built from the log: each problem → the cause found → advice. See [Mission Report](Mission%20Report.md).
 
-Не нужна сложная физика. Нужна прозрачная и последовательная игровая модель.
+No complex physics is needed. What is needed is a transparent and consistent game model.

@@ -1,135 +1,135 @@
-# Мультиплеер
+# Multiplayer
 
-## Модель: хост-авторитет
-- Хост (создатель комнаты) держит каноническое состояние и применяет `reduce()` из `src/engine/room.ts` ([0004 Host authority](../06%20Decisions/0004%20Host%20authority.md)).
-- Клиенты шлют **действия**, хост проверяет (член комнаты, роль, этап, ограничения) и рассылает **новое состояние целиком** с номером `version` (≈ 6 КБ в полёте).
-- Отказ (`error`) уходит только тому, кто прислал действие; состояние при этом не меняется (тесты `multiplayer.test.ts`).
-- Хост сохраняет состояние (`transport.save`): каждые 10 версий и всегда при смене этапа / игроков / ролей / READY / онлайна / хоста (`shouldSave` в `src/net/transport.ts`).
+## Model: host authority
+- The host (the room's creator) holds the canonical state and applies `reduce()` from `src/engine/room.ts` ([0004 Host authority](../06%20Decisions/0004%20Host%20authority.md)).
+- Clients send **actions**; the host validates them (room membership, role, stage, constraints) and broadcasts the **whole new state** with a `version` number (≈ 6 KB in flight).
+- A rejection (`error`) goes only to whoever sent the action; the state does not change (tests in `multiplayer.test.ts`).
+- The host saves the state (`transport.save`): every 10 versions and always on a change of stage / players / roles / READY / online status / host (`shouldSave` in `src/net/transport.ts`).
 
-## Протокол (одинаковый для обоих транспортов)
-| Сообщение | Кто шлёт | Что делает |
+## Protocol (the same for both transports)
+| Message | Sent by | What it does |
 |---|---|---|
-| `action` | любой клиент | хост применяет `reduce` и рассылает `state` |
-| `state` | хост (и клиенты в ответ на `hello`, пока хоста нет) | клиент принимает, если версия новее; при равной версии побеждает хост с меньшим `joinOrder` |
-| `hello` | входящий / вернувшийся клиент | хост отвечает `state`; если хоста нет в сети или спрашивает сам хост (перезагрузился) — отвечают клиенты своим последним `state` |
-| `error` | хост | текст отказа игроку `to` |
-Присутствие (кто сейчас подключён) — забота транспорта: `onPresence(ids)`.
+| `action` | any client | the host applies `reduce` and broadcasts `state` |
+| `state` | the host (and clients in reply to `hello` while there is no host) | the client accepts it if the version is newer; on an equal version the host with the lower `joinOrder` wins |
+| `hello` | a joining / returning client | the host replies with `state`; if the host is offline or the host itself is asking (it reloaded), the clients reply with their latest `state` |
+| `error` | the host | the rejection text for player `to` |
+Presence (who is connected right now) is the transport's job: `onPresence(ids)`.
 
-## Транспорты
-| Транспорт | Когда | Присутствие | Статус |
+## Transports
+| Transport | When | Presence | Status |
 |---|---|---|---|
-| `LocalTransport` | нет ключей Supabase. BroadcastChannel между вкладками одного браузера — честный **локальный режим** (баннер сверху) | пинг каждую 1 с, тишина 3.5 с или `bye` при закрытии вкладки → не в сети; новая вкладка просит всех ответить сразу | **проверен в 4 вкладках** (тест F, 2026-11-14) |
-| `SupabaseTransport` | есть `VITE_SUPABASE_URL` и `VITE_SUPABASE_ANON_KEY` — включается сам (`src/net/index.ts`) | Realtime presence канала `room:<КОД>`; после автопереподключения канала присутствие отмечается заново | написан по тому же контракту, **не проверен** (нет проекта) |
-Таймеры пинга и часов полёта идут через Web Worker (`src/net/clock.ts`): браузер не тормозит их во фоновой вкладке (обычный `setTimeout` там срабатывает раз в минуту).
-Фиктивных ботов, выдающих себя за игроков, нет (требование ТЗ).
+| `LocalTransport` | no Supabase keys. BroadcastChannel between tabs of the same browser — an honest **local mode** (a banner at the top) | a ping every 1 s; 3.5 s of silence or a `bye` when the tab closes → offline; a new tab asks everyone to reply right away | **verified in 4 tabs** (test F, 2026-11-14) |
+| `SupabaseTransport` | `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are set — turns on automatically (`src/net/index.ts`) | Realtime presence on the `room:<CODE>` channel; after the channel auto-reconnects, presence is re-tracked | written to the same contract, **not verified** (no project) |
+Ping and flight-clock timers run in a Web Worker (`src/net/clock.ts`): the browser does not throttle them in a background tab (a plain `setTimeout` fires only once a minute there).
+There are no fake bots pretending to be players (a requirement of the spec, TZ v2.0).
 
-## Кто я: playerId
-- `playerId` хранится в `localStorage` (`sm:pids`), имя — `sm:name:<id>`, последняя комната — `sm:room:<id>`.
-- Вкладки одного браузера делят `localStorage`, поэтому каждая открытая вкладка держит **Web Lock** на своём id. Новая вкладка берёт первый свободный id (игрок, закрывший вкладку, возвращается собой) или создаёт новый. Перезагрузка сохраняет id через `sessionStorage`.
-- На телефоне / ноутбуке с одной вкладкой это просто «игрок этого устройства».
-- При запуске вкладка сама входит в последнюю комнату (`sm:room:<id>`). «Выйти» эту память стирает.
+## Who am I: playerId
+- `playerId` is stored in `localStorage` (`sm:pids`), the name in `sm:name:<id>`, the last room in `sm:room:<id>`.
+- Tabs of the same browser share `localStorage`, so each open tab holds a **Web Lock** on its id. A new tab takes the first free id (a player who closed their tab comes back as themselves) or creates a new one. A reload keeps the id via `sessionStorage`.
+- On a phone / laptop with a single tab, this is simply "the player on this device".
+- On startup, the tab rejoins the last room by itself (`sm:room:<id>`). "Leave" clears this memory.
 
-## Комната (лобби)
-- Код: 6 символов без похожих (без 0/O/1/I/L).
-- 4 слота: имя, «(вы)», ★ хост, роль, **ONLINE / Reconnecting… N с / OFFLINE**, **READY**.
-- Роль не может быть занята дважды: проверка в движке (`pickRole` → «Эта роль уже занята.») и кнопка роли выключена с подписью «занята: <имя>». Исключение (0013 §4): у игрока с двумя ролями лишнюю роль может забрать другой игрок в лобби — карточка «У <имя> две — забрать».
-- У игрока может быть несколько ролей: `Player.roles` (первая — своя, `Player.role` = `roles[0]` для старых экранов и клиентов; старые сохранения без `roles` движок дополняет сам, `normalizeRoles`).
-- READY — только с ролью; смена роли (своей или назначенной хостом) снимает READY.
-- Миссию выбирает хост. «Начать брифинг» — только хост и только когда: **2, 3 или 4 игрока** (один — только демо), все в сети, у всех роль, все READY. Пока нельзя — рядом написано, чего ждём.
-- **Свободные роли (2–3 игрока):** хост раздаёт их в лобби (`assignRole {target, role, give}`), по умолчанию — поровну (`rolePlan`: роль уходит игроку с меньшим числом ролей, при равенстве — раньше вошедшему). То, что получит каждый по умолчанию, видно в слоте заранее; при старте `goStage` раздаёт оставшиеся свободные роли и пишет это в журнал. Игрок может сам отказаться от лишней роли (`assignRole` на себя, `give: false`).
-- Пятый игрок получает «В комнате уже 4 игрока.»; после старта новые не входят («Игра уже началась»), но известный игрок может вернуться — со всеми своими ролями.
+## Room (lobby)
+- Code: 6 characters, without look-alikes (no 0/O/1/I/L).
+- 4 slots: name, "(you)", ★ host, role, **ONLINE / Reconnecting… N s / OFFLINE**, **READY**.
+- A role cannot be taken twice: checked in the engine (`pickRole` → "This role is already taken.") and the role button is disabled with the caption "Taken: <name>". Exception (0013 §4): if a player has two roles, another player in the lobby can take the extra one — the card "<name> has two — take it".
+- A player can have several roles: `Player.roles` (the first is their own; `Player.role` = `roles[0]` for older screens and clients; the engine fills in `roles` for older saves by itself, `normalizeRoles`).
+- READY only with a role; changing a role (your own or one assigned by the host) clears READY.
+- The host picks the mission. "Start the briefing" — only the host, and only when there are **2, 3 or 4 players** (one — demo only), all online, everyone with a role, everyone READY. Until then, the screen says what we are waiting for.
+- **Free roles (2–3 players):** the host hands them out in the lobby (`assignRole {target, role, give}`), evenly by default (`rolePlan`: a role goes to the player with fewer roles; on a tie, to whoever joined earlier). What each player will get by default is visible in their slot in advance; at the start, `goStage` hands out the remaining free roles and records this in the log. A player can give up an extra role themselves (`assignRole` on themselves, `give: false`).
+- A fifth player gets "The room already has 4 players."; after the start, new players cannot join ("The game has already started"), but a known player can come back — with all their roles.
 
-## Демо-режим
-- Включает хост: кнопка «Демо-режим: играть одному» на главном экране или галочка в лобби (только в лобби).
-- Нужен для игры **одному** (2–4 игрока начинают и без него, 0013). В демо правила отделов выключены — всё ставится сразу, свободные роли не раздаются. **Только в нём** игрок может переключать роль после лобби (`pickRole` вне лобби без демо → «Роль меняют только в лобби (или в демо-режиме).»). Занятую роль взять нельзя и в демо.
-- В демо кризис ждёт выбора всех ролей с вариантами (один игрок отвечает за всех по очереди).
-- Подпись «ДЕМО-РЕЖИМ» — в лобби и в баннере сверху на всех экранах.
+## Demo mode
+- Turned on by the host: the "Demo mode: play solo" button on the home screen or a checkbox in the lobby (lobby only).
+- Needed for playing **solo** (2–4 players can start without it, 0013). In demo mode the department rules are off — everything is installed right away, and free roles are not handed out. **Only in demo mode** can a player switch roles after the lobby (`pickRole` outside the lobby without demo → "Roles can only be changed in the lobby (or in demo mode)."). A taken role cannot be picked even in demo.
+- In demo mode, a crisis waits for choices from all roles that have options (one player answers for everyone in turn).
+- The "DEMO MODE" label is shown in the lobby and in the banner at the top of every screen.
 
-## Отключение и возвращение
-- Хост сверяет `room.players[].online` с присутствием транспорта (`presence`, только хост). Первые 4 с после подключения хост никого не отмечает офлайн («ещё не услышал» ≠ «ушёл»).
-- Отключение → у остальных «Reconnecting… 30 с» (`offlineAt` + `RECONNECT_MS`), в лобби — в слоте, в игре — плашкой сверху «Имя (роль): Reconnecting… N с», потом OFFLINE.
-- В лобби слот освобождается через 30 с (`dropPlayer`). В игре слот и роль остаются за игроком навсегда.
-- Возвращение с тем же `playerId` (перезагрузка или новая вкладка): `hello` → полное состояние → `join` отмечает ONLINE. Роль, сборка, этап, полёт — как были.
-- Кризис ждёт только роли игроков **в сети** (все роли каждого такого игрока); если игрок отключился, а остальные уже выбрали — кризис закрывается сразу.
+## Disconnecting and rejoining
+- The host matches `room.players[].online` against the transport's presence (`presence`, host only). For the first 4 s after connecting, the host marks nobody offline ("not heard yet" ≠ "gone").
+- Disconnect → the others see "Reconnecting… 30 s" (`offlineAt` + `RECONNECT_MS`): in the lobby — in the slot, in the game — as a bar at the top, "Name (role): Reconnecting… N s", then OFFLINE.
+- In the lobby, the slot is freed after 30 s (`dropPlayer`). In the game, the slot and the role stay with the player for good.
+- Rejoining with the same `playerId` (reload or a new tab): `hello` → the full state → `join` marks them ONLINE. Role, build, stage and flight are as they were.
+- A crisis waits only for the roles of players who are **online** (all roles of each such player); if a player disconnects and the others have already chosen, the crisis closes right away.
 
-## Уход хоста
-- Клиент не видит хоста в присутствии → плашка «Хост <имя> не отвечает — через N с хостом станет <имя>».
-- Через **10 с** (`HOST_TIMEOUT_MS`) хостом становится игрок в сети с наименьшим `joinOrder` (`electHost`). Он берёт **своё последнее полученное состояние**, применяет `claimHost` (старый хост → OFFLINE), рассылает его и сохраняет.
-- **Часы полёта переходят к новому хосту** (тики идут из `syncTicker` того, кто сейчас хост). Пока хоста нет, полёт стоит на месте (до 10 с).
-- Если хост умер во время ролика запуска, новый хост сам завершает запуск (`launchDone`).
-- Старый хост возвращается обычным игроком со своей ролью.
-- Хост перезагрузил вкладку быстрее 10 с: он спрашивает `hello`, клиенты отвечают своим последним состоянием, он продолжает хостом без потери версий.
-- Все ушли, потом кто-то вернулся: если в сети он один, он становится хостом на сохранённом состоянии комнаты.
-- Ничья (двое заявились хостом одновременно): одинаковая версия → побеждает меньший `joinOrder`, второй становится клиентом.
+## Host leaving
+- A client does not see the host in presence → a bar: "Host <name> is not responding — in N s the new host will be <name>".
+- After **10 s** (`HOST_TIMEOUT_MS`) the online player with the lowest `joinOrder` becomes host (`electHost`). They take **their latest received state**, apply `claimHost` (the old host → OFFLINE), broadcast it and save it.
+- **The flight clock passes to the new host** (ticks come from the `syncTicker` of whoever is host now). While there is no host, the flight stands still (up to 10 s).
+- If the host died during the launch cutscene, the new host finishes the launch itself (`launchDone`).
+- The old host comes back as a regular player with their role.
+- The host reloaded the tab in under 10 s: it sends `hello`, the clients reply with their latest state, and it continues as host without losing versions.
+- Everyone left, then someone came back: if they are the only one online, they become host on the room's saved state.
+- A tie (two players claimed host at the same time): with the same version → the lower `joinOrder` wins, the other becomes a client.
 
-## Права ролей (в `reduce`, отказ — понятная ошибка, состояние не меняется)
-| Действие | Кто может |
+## Role permissions (in `reduce`; a rejection is a clear error, the state does not change)
+| Action | Who can |
 |---|---|
-| любое, кроме `join` | только игрок этой комнаты («Вы не в этой комнате.») |
-| `selectMission`, `goStage`, `setDemo`, `launchDone`, `tick`, `presence`, `dropPlayer` | хост |
-| `pickRole` | в лобби — любой (свободную роль); после — только в демо |
-| `setReady` | в лобби, с ролью |
-| `approve`, `veto` | командир («Утверждает только командир.», «Вето — право командира.»). При Team Trust < 50 утверждение вопреки критическому предупреждению ставит `pendingKey` и ждёт `secondKey` |
-| `scienceMode`, `chooseSite` | научный специалист |
-| `crisisChoice` | вариант любой из своих ролей («Этот вариант — для другой роли.») |
-| `radio`, `command` | фраза / команда любой из своих ролей (роль берётся из фразы / команды) |
-| `unlockMission`, `buyUpgrade`, `confirmPrep` | командир или хост |
-| `addComponent` / `removeComponent` | любой игрок: свой отдел в пределах доли — сразу; чужой отдел или сверх доли — **запрос** командиру (`room.requests`, 0013 §2). Командир ставит любой модуль сразу. В демо всё сразу |
-| `setBudgetSplit` | командир, в конструкторе (доли %, шаг 5, сумма 100) |
-| `resolveRequest` | командир: одобрить (модуль ставится, записан на автора) или вето с причиной |
-| `cancelRequest` | автор запроса (или командир) |
-| `secondKey` | игроки из `pendingKey.need` — владельцы отдела предупреждения (если отдел у самого командира — любой другой игрок в сети); отказ — с причиной |
-| `assignRole` | хост в лобби (дать свободную роль / передать лишнюю / освободить); игрок — взять себе свободную роль или отказаться от лишней |
-| `submitReview`, `openTasks` | любой игрок; не пока ждут запросы («Сначала командир решает запросы отделов») |
-Права `radio` / `setRules` / команд blackout — у сессии «рация / Autonomy Planner / blackout».
+| anything except `join` | only a player in this room ("You are not in this room.") |
+| `selectMission`, `goStage`, `setDemo`, `launchDone`, `tick`, `presence`, `dropPlayer` | the host |
+| `pickRole` | in the lobby — anyone (a free role); afterwards — only in demo |
+| `setReady` | in the lobby, with a role |
+| `approve`, `veto` | the commander ("Only the commander approves.", "Veto is the commander's right."). With Team Trust < 50, approving against a critical warning sets `pendingKey` and waits for `secondKey` |
+| `scienceMode`, `chooseSite` | the Science Officer |
+| `crisisChoice` | an option of any of your roles ("This option is for another role.") |
+| `radio`, `command` | a phrase / command of any of your roles (the role is taken from the phrase / command) |
+| `unlockMission`, `buyUpgrade`, `confirmPrep` | the commander or the host |
+| `addComponent` / `removeComponent` | any player: your own department within the share — right away; another department or over the share — a **request** to the commander (`room.requests`, 0013 §2). The commander installs any module right away. In demo, everything right away |
+| `setBudgetSplit` | the commander, in the Constructor (shares in %, step 5, total 100) |
+| `resolveRequest` | the commander: approve (the module is installed, credited to the author) or veto with a reason |
+| `cancelRequest` | the request's author (or the commander) |
+| `secondKey` | players from `pendingKey.need` — owners of the warning's department (if the commander holds that department, any other online player); a refusal comes with a reason |
+| `assignRole` | the host in the lobby (give a free role / hand over an extra one / free it up); a player — take a free role for themselves or give up an extra one |
+| `submitReview`, `openTasks` | any player; not while requests are pending ("The commander must decide department requests first") |
+Permissions for `radio` / `setRules` / blackout commands are covered by the "radio / Autonomy Planner / blackout" session.
 
-## Полёт
-Тики считает хост (1 тик/с, `?dev=1&speed=N` — ускорение в dev) и рассылает состояние каждый тик. Каждый клиент рисует панель **своей** роли (`panelFor(myRole, …)`). Проверено: 4 вкладки показывают один и тот же тик и разные панели. Игрок с несколькими ролями видит вкладку на каждую роль (`panelFor` для активной, радио — всех своих ролей).
+## Flight
+The host counts ticks (1 tick/s; `?dev=1&speed=N` speeds it up in dev) and broadcasts the state every tick. Each client renders the panel of **its own** role (`panelFor(myRole, …)`). Verified: 4 tabs show the same tick and different panels. A player with several roles sees a tab for each role (`panelFor` for the active one; radio — for all their roles).
 
-## Состояние комнаты для правил 0013 (через тот же `reduce`, одинаково для обоих транспортов)
-| Поле | Что |
+## Room state for the 0013 rules (via the same `reduce`, identical for both transports)
+| Field | What |
 |---|---|
-| `players[].roles` | все роли игрока |
-| `requests` | запросы этой попытки: `kind` add/remove, модуль, отдел-владелец, автор и его роль, причины (`foreign` / `over-share` + `overBy`), статус pending / approved / vetoed / cancelled, причина вето. Новая попытка (уход из отчёта) их сбрасывает; уход хоста из конструктора гасит ждущие |
-| `budgetSplit` | `{ split: {engineer, science, comms} %, set, by }` или null — доля по умолчанию миссии (`DEFAULT_SPLIT`) |
-| `pendingKey` | утверждение, ждущее второго ключа: предупреждения, командир, `need` / `any`, отделы, повёрнутые ключи |
-| `trustHistory` | последние 12 изменений Team Trust с причиной, номером полёта, «было → стало» |
-| `decisionLog` | кроме утверждений и вето — `request-approve`, `request-veto`, `key-denied`; у утверждения со вторым ключом — `keys` |
-| `attemptLogFrom` | с какой записи журнала началась попытка (вклад игроков в отчёте) |
-Хост сохраняет состояние сразу и при смене ролей / статуса запросов / второго ключа (`shouldSave`).
+| `players[].roles` | all of a player's roles |
+| `requests` | this attempt's requests: `kind` add/remove, the module, the owner department, the author and their role, the reasons (`foreign` / `over-share` + `overBy`), status pending / approved / vetoed / cancelled, the veto reason. A new attempt (leaving the report) resets them; the host leaving the Constructor expires the pending ones |
+| `budgetSplit` | `{ split: {engineer, science, comms} %, set, by }` or null — the mission's default share (`DEFAULT_SPLIT`) |
+| `pendingKey` | an approval waiting for a second key: warnings, the commander, `need` / `any`, departments, turned keys |
+| `trustHistory` | the last 12 Team Trust changes with the reason, the flight number, "before → after" |
+| `decisionLog` | besides approvals and vetoes — `request-approve`, `request-veto`, `key-denied`; an approval with a second key has `keys` |
+| `attemptLogFrom` | the log entry where the attempt started (player contributions in the report) |
+The host saves the state immediately and also on changes of roles / request status / the second key (`shouldSave`).
 
-## Как подключить Supabase (пошагово)
-Без ключей игра работает в локальном режиме (вкладки одного браузера). Чтобы играть с разных устройств:
+## How to connect Supabase (step by step)
+Without keys the game runs in local mode (tabs of the same browser). To play from different devices:
 
-1. **Аккаунт и проект.** Зайдите на https://supabase.com → Sign in (через GitHub) → **New project**. Имя — `space-mission`, пароль базы — любой длинный (сохраните в менеджер паролей, в игре он не нужен), регион — ближайший (например, Frankfurt). Бесплатного плана хватает. Подождите 1–2 минуты, пока проект создаётся.
-2. **Таблица и правила доступа.** Слева **SQL Editor** → **New query** → вставьте целиком файл `supabase/schema.sql` из репозитория → **Run**. Должно быть «Success. No rows returned». Скрипт можно запускать повторно.
-3. **Ключи.** Слева **Project Settings → API** (в новых проектах — **API Keys**). Скопируйте:
-   - **Project URL** (вида `https://abcd1234.supabase.co`);
-   - **anon public** key (или **Publishable key** `sb_publishable_…` в новом интерфейсе). **Не** берите `service_role` / secret key — он даёт полный доступ и не должен попадать в браузер.
-4. **Файл `.env.local`.** В корне репозитория скопируйте `.env.example` в `.env.local` и впишите:
+1. **Account and project.** Go to https://supabase.com → Sign in (with GitHub) → **New project**. Name — `space-mission`, database password — any long one (save it in a password manager; the game does not need it), region — the nearest one (for example, Frankfurt). The free plan is enough. Wait 1–2 minutes while the project is created.
+2. **Table and access rules.** On the left, **SQL Editor** → **New query** → paste the whole `supabase/schema.sql` file from the repository → **Run**. You should see "Success. No rows returned". The script can be run again.
+3. **Keys.** On the left, **Project Settings → API** (in new projects — **API Keys**). Copy:
+   - the **Project URL** (like `https://abcd1234.supabase.co`);
+   - the **anon public** key (or the **Publishable key** `sb_publishable_…` in the new interface). Do **not** take the `service_role` / secret key — it grants full access and must never reach the browser.
+4. **The `.env.local` file.** In the repository root, copy `.env.example` to `.env.local` and fill in:
    ```
    VITE_SUPABASE_URL=https://abcd1234.supabase.co
    VITE_SUPABASE_ANON_KEY=<anon / publishable key>
    ```
-   `.env.local` в `.gitignore` — в git он не попадёт. Никогда не коммитьте ключи.
-5. **Перезапуск.** Остановите `pnpm dev` и запустите снова (Vite читает `.env.local` только при старте). Жёлтый баннер «Локальный режим» должен исчезнуть — это значит, что включился `SupabaseTransport`.
-6. **Проверка.** Создайте комнату на одном устройстве, войдите по коду с другого (телефон в той же или другой сети). В Supabase → **Table Editor → rooms** появится строка с кодом комнаты.
-7. **Для деплоя** (Vercel / Netlify): добавьте те же две переменные в настройки окружения хостинга и пересоберите.
+   `.env.local` is in `.gitignore` — it will not get into git. Never commit keys.
+5. **Restart.** Stop `pnpm dev` and start it again (Vite reads `.env.local` only at startup). The yellow "Local mode" banner should disappear — that means `SupabaseTransport` is on.
+6. **Check.** Create a room on one device and join by code from another (a phone on the same or a different network). In Supabase → **Table Editor → rooms**, a row with the room code appears.
+7. **For deployment** (Vercel / Netlify): add the same two variables to the hosting's environment settings and rebuild.
 
-Если не работает: в консоли браузера ищите `[supabase] save failed` / `Realtime: CHANNEL_ERROR`; проверьте, что SQL выполнился без ошибок и ключ — anon/publishable, а не secret.
+If it doesn't work: look in the browser console for `[supabase] save failed` / `Realtime: CHANNEL_ERROR`; check that the SQL ran without errors and that the key is anon/publishable, not secret.
 
-## Безопасность
-Образовательная кооп-игра без ставок — защиты от читов не делаем (хост доверяет действиям клиентов, кроме проверок правил).
-- **RLS по коду комнаты:** клиент шлёт код в заголовке `x-room-code`; политики `rooms` пускают читать и писать только строку с этим кодом — список комнат получить нельзя, удалять нельзя (`supabase/schema.sql`).
-- Триггер `rooms_keep_newest` не даёт записать состояние старее сохранённого (медленный бывший хост не откатит комнату).
-- Realtime-канал `room:<КОД>` публичный: подключиться может тот, кто знает код (≈ 887 млн вариантов). Приватные каналы Realtime Authorization — позже, если понадобится.
+## Security
+An educational co-op game with no stakes — we do not build cheat protection (the host trusts client actions, apart from the rule checks).
+- **RLS by room code:** the client sends the code in the `x-room-code` header; the `rooms` policies allow reading and writing only the row with that code — you cannot list rooms or delete them (`supabase/schema.sql`).
+- The `rooms_keep_newest` trigger prevents writing a state older than the saved one (a slow former host cannot roll the room back).
+- The Realtime channel `room:<CODE>` is public: anyone who knows the code can connect (≈ 887 million combinations). Private channels via Realtime Authorization — later, if needed.
 
-## Живой сайт
-- https://space-mission-tau.vercel.app (Vercel) + Supabase-проект `space-mission`. 2026-11-15: комната через Supabase создаётся, второй игрок входит по коду, строка в `rooms` пишется — **проверено**.
+## Live site
+- https://space-mission-tau.vercel.app (Vercel) + the Supabase project `space-mission`. 2026-11-15: a room is created through Supabase, a second player joins by code, the row in `rooms` is written — **verified**.
 
-## Не проверено
-- Правила 0013 через `SupabaseTransport` (состояние идёт тем же `reduce`, новых сообщений нет — должно работать, но не запускалось). Через `LocalTransport` проверено вкладками: 2 и 3 игрока (`node scripts/qa/rules.mjs`, 26 проверок, скриншоты `05 Assets/UI/kit/shots/rules/`).
-- Командир ушёл из сети во время сборки: запросы ждут его (автор может отозвать, хост — уйти из конструктора, тогда они гаснут); переназначить командира в игре нельзя.
-- `SupabaseTransport` и `schema.sql` против настоящего проекта (нет ключей): присутствие, автопереподключение канала, RLS-заголовок, лимиты сообщений Realtime (состояние ~6 КБ × 1–10 в секунду).
-- Настоящие разные устройства / мобильная сеть, долгий обрыв сети (сейчас проверены закрытие вкладки и перезагрузка).
-- Шесть и больше вкладок одного браузера с разными комнатами одновременно (id берутся из общего списка до 8 штук).
+## Not verified
+- The 0013 rules through `SupabaseTransport` (the state goes through the same `reduce` and there are no new messages — it should work, but it has not been run). Through `LocalTransport` it is verified with tabs: 2 and 3 players (`node scripts/qa/rules.mjs`, 26 checks).
+- The commander goes offline during the build: requests wait for them (the author can withdraw, the host can leave the Constructor, and then they expire); the commander cannot be reassigned during the game.
+- `SupabaseTransport` beyond the 2-player check on the live site: presence over a long session, channel auto-reconnect, Realtime message limits (a ~6 KB state × 1–10 per second).
+- Real separate devices / a mobile network, a long network outage (so far, closing a tab and reloading have been verified).
+- Six or more tabs of the same browser with different rooms at the same time (ids come from a shared list of up to 8).

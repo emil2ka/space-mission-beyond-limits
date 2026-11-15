@@ -1,27 +1,27 @@
-# Список иконок UI (общий для макетов Claude Design и генерации в ChatGPT)
+# UI Icon List (shared by the Claude Design mockups and the ChatGPT generation)
 
-> 2026-11-15. Имена — обязательные: макеты UI ставят их как плейсхолдеры, ChatGPT-сессия режет иконки в `public/icons/ui/<name>.png` (прозрачный фон, 128×128, плюс `@2x` 256×256), код подключает по имени.
-> Стиль: cel-shaded комикс как в 3D ([Style Guide](../../03%20Design/Style%20Guide.md), [Prompt Preamble](../Prompt%20Preamble.md)) — толстый тёмный контур, плоские цвета палитры (кремовый, фиолетово-серый, графит, бирюзовый, тёплый оранжевый, приглушённое золото, глубокий синий), 2 тона тени, без текста, читается на 24–32 px, вид спереди, одинаковая толщина контура и масштаб.
+> 2026-11-15. The names are mandatory: UI mockups use them as placeholders, the ChatGPT session cuts the icons into `public/icons/ui/<name>.png` (transparent background, 128×128, plus `@2x` 256×256), and the code loads them by name.
+> Style: cel-shaded comic as in 3D ([Style Guide](../../03%20Design/Style%20Guide.md), [Prompt Preamble](../Prompt%20Preamble.md)) — a thick dark outline, flat palette colors (cream, purple-grey, graphite, teal, warm orange, muted gold, deep blue), 2 shadow tones, no text, readable at 24–32 px, front view, the same outline thickness and scale.
 
-## Отделы (7)
-`dept_power` (молния в батарее) · `dept_propulsion` (сопло с пламенем) · `dept_navigation` (компас/гироскоп) · `dept_science` (колба/линза) · `dept_comms` (тарелка с волнами) · `dept_structure` (щит/рама) · `dept_recovery` (капсула с парашютом)
+## Departments (7)
+`dept_power` (a lightning bolt in a battery) · `dept_propulsion` (a nozzle with a flame) · `dept_navigation` (a compass/gyroscope) · `dept_science` (a flask/lens) · `dept_comms` (a dish with waves) · `dept_structure` (a shield/frame) · `dept_recovery` (a capsule with a parachute)
 
-## Ресурсы и параметры (10)
-`res_mass` (гиря) · `res_budget` (купюра М$) · `res_credits` (монета MC) · `res_power_gen` (молния вверх) · `res_power_use` (молния вниз) · `res_battery` · `res_heat` (термометр) · `res_signal` (антенна с дугами) · `res_data` (стопка дискет/чип) · `res_fuel` (канистра/бак)
+## Resources and parameters (10)
+`res_mass` (a weight) · `res_budget` (an M$ banknote) · `res_credits` (an MC coin) · `res_power_gen` (a lightning bolt pointing up) · `res_power_use` (a lightning bolt pointing down) · `res_battery` · `res_heat` (a thermometer) · `res_signal` (an antenna with arcs) · `res_data` (a stack of floppy disks/a chip) · `res_fuel` (a canister/tank)
 
-## Роли (4)
-`role_commander` (звезда/шеврон, розовый) · `role_engineer` (гаечный ключ, оранжевый) · `role_science` (атом/колба, бирюзовый) · `role_comms` (наушники, лавандовый)
+## Roles (4)
+`role_commander` (a star/chevron, pink) · `role_engineer` (a wrench, orange) · `role_science` (an atom/flask, teal) · `role_comms` (headphones, lavender)
 
-## Статусы (9)
-`st_ok` (галочка) · `st_warn` (треугольник) · `st_crit` (молния в круге) · `st_info` (i) · `st_locked` (замок) · `need_required` · `need_recommended` · `need_optional` · `need_useless`
+## Statuses (9)
+`st_ok` (a check mark) · `st_warn` (a triangle) · `st_crit` (a lightning bolt in a circle) · `st_info` (i) · `st_locked` (a padlock) · `need_required` · `need_recommended` · `need_optional` · `need_useless`
 
-## Действия (14)
-`act_add` (+) · `act_remove` (−) · `act_approve` (печать «одобрено»/галочка в круге) · `act_veto` (крестик в круге) · `act_launch` (ракета) · `act_radio` (рация) · `act_settings` (шестерёнка) · `act_sound` (динамик) · `act_sound_off` · `act_exit` (дверь со стрелкой) · `act_replay` (круговая стрелка) · `act_play` · `act_pause` · `act_skip`
+## Actions (14)
+`act_add` (+) · `act_remove` (−) · `act_approve` (an "approved" stamp/a check mark in a circle) · `act_veto` (a cross in a circle) · `act_launch` (a rocket) · `act_radio` (a walkie-talkie) · `act_settings` (a gear) · `act_sound` (a speaker) · `act_sound_off` · `act_exit` (a door with an arrow) · `act_replay` (a circular arrow) · `act_play` · `act_pause` · `act_skip`
 
-## Полёт (12)
-`fl_phase` (флажок) · `fl_waypoint` (метка на карте) · `fl_crisis` (мигалка) · `fl_blackout` (перечёркнутая антенна) · `fl_rule` (блок «если→то») · `fl_timer` (секундомер) · `fl_hull` (корпус-щит с трещиной) · `fl_sample` (контейнер с камнем) · `fl_capsule` · `fl_storm` (облако с молнией) · `fl_debris` (обломки) · `fl_log` (журнал)
+## Flight (12)
+`fl_phase` (a flag) · `fl_waypoint` (a map pin) · `fl_crisis` (a flashing beacon light) · `fl_blackout` (a crossed-out antenna) · `fl_rule` (an "if→then" block) · `fl_timer` (a stopwatch) · `fl_hull` (a hull shield with a crack) · `fl_sample` (a container with a rock) · `fl_capsule` · `fl_storm` (a cloud with lightning) · `fl_debris` (debris) · `fl_log` (a logbook)
 
-## Миссии и штаб (6)
-`mis_titan` (оранжевая планета в дымке) · `mis_asteroid` (серый астероид) · `hq_upgrade` (стрелка вверх на детали) · `hq_history` (папка) · `hq_repair` (ключ + отвёртка) · `hq_insurance` (щит с галочкой)
+## Missions and HQ (6)
+`mis_titan` (an orange planet in haze) · `mis_asteroid` (a grey asteroid) · `hq_upgrade` (an arrow pointing up over parts) · `hq_history` (a folder) · `hq_repair` (a wrench + a screwdriver) · `hq_insurance` (a shield with a check mark)
 
-**Итого: 62 иконки.**
+**Total: 62 icons.**

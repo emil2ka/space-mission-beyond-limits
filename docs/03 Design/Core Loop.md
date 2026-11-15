@@ -1,30 +1,30 @@
-# Игровой цикл
+# Core Loop
 
-| # | Этап | Экран | Кто действует | Что даёт 3D |
+| # | Stage | Screen | Who acts | What 3D adds |
 |---|---|---|---|---|
-| 1 | Создать комнату / войти по коду | Главный, Создание, Подключение | Хост / все | Ангар штаба на фоне |
-| 2 | Выбрать роль | Lobby, Выбор роли | Все | 4 астронавта у пультов, READY = пульт загорается |
-| 3 | Выбрать миссию, брифинг | Выбор миссии, Брифинг | Хост выбирает, все читают | Голограмма цели (Титан / астероид) |
-| 4 | Распределить бюджет | Бюджет | Командир | — |
-| 5 | Собрать аппарат | Конструктор | Все, каждый свой отдел | Аппарат на стенде, модули подлетают к слотам |
-| 6 | Проверка: масса, энергия, тепло, связь, совместимость | Проверка готовности | Все | Проблемные узлы подсвечены |
-| 7 | Правила If–Then | Autonomy Planner | Все, сохраняет инженер/командир | — |
-| 8 | Утверждение / вето | Утверждение | Командир | Камера облетает аппарат |
-| 9 | Запуск | Обратный отсчёт | Все | Ракета, старт, отделение ступеней |
-| 10 | Научные задачи, аварии | Mission Control + панели ролей | Все | Сцена миссии в реальном времени |
-| 11 | Кризисы и blackout | Кризисный экран | Все | Помехи, обломки, искры |
-| 12 | Отчёт, кредиты, обслуживание | Mission Report, Кредиты | Все / командир платит | Повтор ключевых моментов |
+| 1 | Create a room / join by code | Home, Create, Join | Host / everyone | HQ hangar in the background |
+| 2 | Pick a role | Lobby, Role selection | Everyone | 4 astronauts at their consoles, READY = the console lights up |
+| 3 | Pick a mission, briefing | Mission selection, Briefing | The host picks, everyone reads | Hologram of the target (Titan / asteroid) |
+| 4 | Split the budget | Budget | Commander | — |
+| 5 | Build the spacecraft | Constructor | Everyone, each in their own department | The craft on a stand, modules fly to their slots |
+| 6 | Check: mass, power, heat, comms, compatibility | Readiness check | Everyone | Problem units are highlighted |
+| 7 | If–Then rules | Autonomy Planner | Everyone; the engineer/commander saves | — |
+| 8 | Approval / veto | Approval | Commander | The camera flies around the craft |
+| 9 | Launch | Countdown | Everyone | Rocket, liftoff, stage separation |
+| 10 | Science tasks, failures | Mission Control + role panels | Everyone | The mission scene in real time |
+| 11 | Crises and blackout | Crisis screen | Everyone | Interference, debris, sparks |
+| 12 | Report, credits, maintenance | Mission Report, Credits | Everyone / the commander pays | Replay of the key moments |
 
-## Время
-- Подготовка (этапы 1–8): 10–15 минут.
-- Полёт (9–11): 8–12 минут, около 3 кризисов.
-- Отчёт: 2 минуты.
-- **Итого одна попытка ≈ 25 минут** — помещается в урок.
+## Time
+- Preparation (stages 1–8): 10–15 minutes.
+- Flight (9–11): 8–12 minutes, about 3 crises.
+- Report: 2 minutes.
+- **Total for one attempt ≈ 25 minutes** — fits into a school lesson.
 
-## Как идёт полёт
-Миссия разбита на **фазы** (например, Титан: Перелёт → Вход → Развёртывание → Полёт по точкам → Передача данных). Каждая фаза — N тиков симуляции. На каждом тике движок считает энергию, тепло, данные и связь, проверяет правила If–Then и триггеры кризисов. Детали в [Simulation Engine](../04%20Tech/Simulation%20Engine.md).
+## How the flight works
+The mission is split into **phases** (for example, Titan: Cruise → Entry → Deployment → Flight between points → Data transmission). Each phase is N simulation ticks. On every tick the engine computes power, heat, data and comms, checks the If–Then rules and the crisis triggers. Details in [Simulation Engine](../04%20Tech/Simulation%20Engine.md).
 
-## Нельзя
-- Исправлять ошибки автоматически.
-- Штрафовать за любой неудачный исход. Штраф (Team Trust) только за сознательное игнорирование показанного предупреждения.
-- Делать таймер на каждое действие. Таймер 15–30 с только у значимых кризисов.
+## Never
+- Fix mistakes automatically.
+- Penalize any unsuccessful outcome. The penalty (Team Trust) is only for knowingly ignoring a warning that was shown.
+- Put a timer on every action. A 15–30 s timer only for significant crises.

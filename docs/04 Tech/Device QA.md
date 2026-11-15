@@ -1,160 +1,160 @@
-# Device QA — слабые ноутбуки, звук, телефоны
+# Device QA — weak laptops, sound, phones
 
-> 2026-11-15. Всё ниже — **эмуляция** в headless Chrome на Mac (M5): троттлинг CPU через CDP, программный рендер SwiftShader вместо видеокарты, профили сети и телефонов. Реального школьного ноутбука, реального телефона и ушей не было — что из этого следует, см. «Что проверено только эмуляцией».
+> 2026-11-15. Everything below is **emulation** in headless Chrome on a Mac (M5): CPU throttling via CDP, SwiftShader software rendering instead of a graphics card, network and phone profiles. There was no real school laptop, no real phone and no ears — for what follows from this, see "What was verified only by emulation".
 
-## Как повторить
-Скрипты в `scripts/qa/` (puppeteer-core + системный Chrome, результаты — `scripts/qa/out/`, в git не идут):
+## How to reproduce
+Scripts in `scripts/qa/` (puppeteer-core + the system Chrome; results go to `scripts/qa/out/` and are not committed to git):
 
-| Скрипт | Что делает |
+| Script | What it does |
 |---|---|
-| `pnpm qa:perf` (`perf.mjs`) | FPS (rAF, окно 10 с после прогрева 4 с), p95 кадра, long tasks, JS heap, draw calls / треугольники (`window.__sm_fps`) на 7 экранах × Low / High / Авто. `--cpu 4\|6`, `--gpu swiftshader\|metal`, `--ab before=URL,after=URL --reps 3` — до/после по очереди (шум машины бьёт по обеим сторонам), `--fakegpu "<строка>"` — подменить имя видеокарты для проверки «Авто». |
-| `pnpm qa:load` (`load.mjs`) | Главный экран на «Slow 4G» / «Fast 4G» × 4 CPU, холодный кэш: FCP, «интерактивен», байты. Нужна продакшен-сборка (`vite build` + `vite preview`). |
-| `pnpm qa:audio` (`audio.mjs`) | Рендер каждого звука и фона **движком игры** в OfflineAudioContext (вместе с компрессором), пик / RMS / LUFS (BS.1770, K-фильтр) / клиппинг / DC / длительность; плюс живая страница: AudioContext до и после жеста, «выкл», «Общая 0», «Фон 0». `--soft` — режим «Без резких звуков». |
-| `pnpm qa:mobile` (`mobile.mjs`) | iPhone SE / iPhone 14 / Android 412×915, касания, DPR 2–3, 4× CPU: весь цикл в демо, на каждом экране — горизонтальный скролл, кнопки < 44 px, вылезающие элементы; имя + клавиатура, шрифт полей (iOS-зум), ландшафт, потеря WebGL-контекста. Скриншоты → `docs/05 Assets/UI/kit/shots/qa/`. |
-| `lan.mjs`, `profile.mjs`, `shot.mjs` | открытие по http с другого IP (небезопасный контекст), CPU-профиль экрана, быстрый скриншот. |
+| `pnpm qa:perf` (`perf.mjs`) | FPS (rAF, a 10 s window after a 4 s warm-up), p95 frame time, long tasks, JS heap, draw calls / triangles (`window.__sm_fps`) on 7 screens × Low / High / Auto. `--cpu 4\|6`, `--gpu swiftshader\|metal`, `--ab before=URL,after=URL --reps 3` — before/after in alternation (machine noise hits both sides), `--fakegpu "<string>"` — spoof the graphics card name to test "Auto". |
+| `pnpm qa:load` (`load.mjs`) | The home screen on "Slow 4G" / "Fast 4G" × 4 CPU, cold cache: FCP, "interactive", bytes. Needs a production build (`vite build` + `vite preview`). |
+| `pnpm qa:audio` (`audio.mjs`) | Renders every sound and background with **the game's engine** in an OfflineAudioContext (together with the compressor): peak / RMS / LUFS (BS.1770, K-filter) / clipping / DC / duration; plus the live page: AudioContext before and after a gesture, "off", "Master 0", "Background 0". `--soft` — the "No harsh sounds" mode. |
+| `pnpm qa:mobile` (`mobile.mjs`) | iPhone SE / iPhone 14 / Android 412×915, touch, DPR 2–3, 4× CPU: the whole loop in demo; on every screen — horizontal scroll, buttons < 44 px, overflowing elements; name + keyboard, input font size (iOS zoom), landscape, WebGL context loss. |
+| `lan.mjs`, `profile.mjs`, `shot.mjs` | opening over http from another IP (an insecure context), a CPU profile of a screen, a quick screenshot. |
 
-Серверы для замеров:
-- `scripts/qa/vite.qa.config.mjs` — dev-сервер **без HMR и без слежения за файлами** (иначе любая правка файлов перезагружает страницу посреди замера); `QA_ROOT=<папка>` — отдать другую копию (например `git archive HEAD` как «до»).
-- `scripts/qa/vite.qa-build.config.mjs` — **продакшен-сборка** (React/three в prod-режиме, реальная цена JS), но с dev-хуками (`?dev=1`, счётчик FPS) и стором для драйвера. Цифры FPS ниже — с неё. В dev-сервере React добавляет ~10 % CPU (`jsxDEV`).
+Servers for measurements:
+- `scripts/qa/vite.qa.config.mjs` — a dev server **without HMR and without file watching** (otherwise any file edit reloads the page mid-measurement); `QA_ROOT=<folder>` — serve a different copy (for example, `git archive HEAD` as "before").
+- `scripts/qa/vite.qa-build.config.mjs` — a **production build** (React/three in prod mode, the real cost of JS), but with dev hooks (`?dev=1`, the FPS counter) and a store for the driver. The FPS figures below come from it. On the dev server React adds ~10 % CPU (`jsxDEV`).
 
-Машина была нагружена другими задачами (load average до 20 на 10 ядрах), поэтому разброс одного и того же прогона ±30–50 %. Поэтому сравнения до/после — парами по очереди; часть прогонов выброшена (см. «Честно о цифрах»).
+The machine was loaded with other tasks (load average up to 20 on 10 cores), so the spread of the same run is ±30–50 %. That is why before/after comparisons are done in alternating pairs; some runs were discarded (see "Honest about the numbers").
 
-## 1. Слабый ноутбук
-Профиль: окно 1366×768, DPR 1, `deviceMemory` 4, 4 потока, CPU 4× / 6× медленнее, **SwiftShader** (видеокарты нет вообще — хуже любой Intel UHD; это нижняя граница) и для сравнения настоящая видеокарта Mac (Metal) с тем же CPU.
+## 1. Weak laptop
+Profile: a 1366×768 window, DPR 1, `deviceMemory` 4, 4 threads, CPU 4× / 6× slower, **SwiftShader** (no graphics card at all — worse than any Intel UHD; this is the lower bound) and, for comparison, the Mac's real graphics card (Metal) with the same CPU.
 
 ### FPS (6× CPU, SwiftShader, 1366×768)
-**До** (HEAD, по одному прогону, dev-сервер):
+**Before** (HEAD, one run each, dev server):
 
-| Экран | Low | High | Авто → |
+| Screen | Low | High | Auto → |
 |---|---|---|---|
-| Конструктор Титан | 22.3 (267 draw calls) | 3.5 (735) | Low |
-| Конструктор Астероид | 24.2 (352) | 3.9 (970) | Low |
-| Запуск | ≈ 30–50* (217) | 7.1 (398) | Low |
-| Полёт Титан | 22.5, **24 long tasks / 1.6 с за 10 с** (257, 306 тыс. тр.) | 6.0 | Low |
-| Полёт Астероид | 33.9, 27 long tasks / 2.3 с (314) | 13.6 (581) | Low |
-| Возвращение (капсула, вход) | 48.6 (32) | 17.3 (55) | — |
-| Отчёт, 3D-повтор | 19.0, 29 long tasks (217) | 7.7 | Low |
+| Constructor, Titan | 22.3 (267 draw calls) | 3.5 (735) | Low |
+| Constructor, Asteroid | 24.2 (352) | 3.9 (970) | Low |
+| Launch | ≈ 30–50* (217) | 7.1 (398) | Low |
+| Flight, Titan | 22.5, **24 long tasks / 1.6 s in 10 s** (257, 306k tris) | 6.0 | Low |
+| Flight, Asteroid | 33.9, 27 long tasks / 2.3 s (314) | 13.6 (581) | Low |
+| Return (capsule, entry) | 48.6 (32) | 17.3 (55) | — |
+| Report, 3D replay | 19.0, 29 long tasks (217) | 7.7 | Low |
 
-\* окно запуска частично захватывало полёт; по отдельным прогонам 25–29.
+\* the launch window partly captured the flight; separate runs gave 25–29.
 
-**До → после** (prod-сборка, пары до/после по очереди):
+**Before → after** (prod build, alternating before/after pairs):
 
-| Экран, Low | До | После | Чем |
+| Screen, Low | Before | After | Why |
 |---|---|---|---|
-| Конструктор Титан (3 + 2 чистых прогона) | 22.0 / 23.2 / 23.5 → **медиана 23.2** | 30.9 / 39.7 → **≈ 35** | тень заморожена |
-| Конструктор Астероид (нагруженная машина) | медиана 11.5 | медиана 19 | то же |
-| Запуск (нагруженная машина) | медиана 24.8 | медиана 26.9 | — (не трогали) |
-| Полёт Титан | 13.7 FPS, **38 long tasks / 2.7 с** | лучи → карта высот: 3.3 мс → 0.006 мс на запрос, long tasks от рельефа исчезают; чистого прогона после нет | карта высот |
+| Constructor, Titan (3 + 2 clean runs) | 22.0 / 23.2 / 23.5 → **median 23.2** | 30.9 / 39.7 → **≈ 35** | the shadow is frozen |
+| Constructor, Asteroid (loaded machine) | median 11.5 | median 19 | same |
+| Launch (loaded machine) | median 24.8 | median 26.9 | — (not touched) |
+| Flight, Titan | 13.7 FPS, **38 long tasks / 2.7 s** | rays → a heightmap: 3.3 ms → 0.006 ms per query, the terrain long tasks are gone; no clean run afterwards | heightmap |
 
-High на SwiftShader — 3–17 FPS: без видеокарты High неиграбелен, поэтому важно, что «Авто» уходит на Low, а страховка ловит пропущенные случаи.
+High on SwiftShader gives 3–17 FPS: without a graphics card High is unplayable, so it matters that "Auto" falls back to Low and that the safety net catches the missed cases.
 
-С настоящей видеокартой (Metal) и тем же 6× CPU узкое место — JS: в prod-сборке после правок полёт без long tasks, в телефонном прогоне (4× CPU) полёт на Low — 31–58 FPS.
+With a real graphics card (Metal) and the same 6× CPU, the bottleneck is JS: in the prod build after the fixes the flight has no long tasks; in the phone run (4× CPU) the flight on Low gives 31–58 FPS.
 
-**Честно о цифрах.** Полную матрицу (все экраны × 3 повтора × 4×/6× × Metal) снять не успели: машина была сильно нагружена другими процессами, прогоны с параллельной нагрузкой выброшены. Цель «≥ 30 FPS на Low при 6×» по эмуляции **достигнута для конструктора Титана**; для конструктора Астероида, полёта и повтора отчёта на SwiftShader — не подтверждена (до правок 19–34). Дополнительно на Low включается dpr 0.75, если FPS < 26, — в телефонном прогоне это сработало на всех трёх профилях. Повторить: `node scripts/qa/perf.mjs --q low --reps 3 --ab before=…,after=…`.
+**Honest about the numbers.** We did not manage to capture the full matrix (all screens × 3 repeats × 4×/6× × Metal): the machine was heavily loaded by other processes, and runs with parallel load were discarded. The goal "≥ 30 FPS on Low at 6×" is **met for the Titan Constructor** under emulation; for the Asteroid Constructor, the flight and the report replay on SwiftShader it is not confirmed (19–34 before the fixes). In addition, on Low dpr 0.75 turns on if FPS < 26 — in the phone run this kicked in on all three profiles. To repeat: `node scripts/qa/perf.mjs --q low --reps 3 --ab before=…,after=…`.
 
 
-### Что нашли (самое дорогое)
-1. **Полёт Титана: высота рельефа лучами по 9 тайлам без BVH.** `makeGround` пускал 3 луча каждые 0.2 с в 9 копий рельефа (~34 тыс. треугольников каждая) — 3.3 мс на луч без троттлинга, при 6× это long task 80–170 мс несколько раз в секунду (профиль: `getVertexPosition` + `intersectTriangle` + `_computeIntersections` ≈ 15 % кадра; в prod-сборке «до» — 38 long tasks / 2.7 с за 10 с).
-2. **Тень под аппаратом в конструкторе (drei `ContactShadows`)** каждый кадр заново рисует всю сцену (все ~270–350 draw calls) в текстуру + 2 прохода размытия — фактически удваивает работу стенда.
-3. **Главный экран тянул весь 3D-движок**: один чанк 1.7 МБ (470 КБ gzip) — three + R3F + drei грузились до первого кадра.
-4. Шрифты Google подключены блокирующим `<link rel=stylesheet>`.
-5. Draw calls на Low (стенд 270 / 350, полёт 260 / 315, повтор отчёта 220) — в основном меши моделей; обводки на Low уже скрыты, тени выключены. Текстуры маленькие, GLB до 200 КБ (3.4 МБ все), водопада загрузки нет: модели следующей сцены уже предзагружаются (M5).
-6. Повтор отчёта пересоздаёт WebGL-канвас на каждой главе (≈ 1 с компиляции шейдеров на слабой машине) — оставлено как есть, см. «Дальше».
+### What we found (the most expensive)
+1. **Titan flight: terrain height via rays over 9 tiles without a BVH.** `makeGround` cast 3 rays every 0.2 s into 9 copies of the terrain (~34k triangles each) — 3.3 ms per ray without throttling; at 6× that is an 80–170 ms long task several times a second (profile: `getVertexPosition` + `intersectTriangle` + `_computeIntersections` ≈ 15 % of the frame; in the prod build "before" — 38 long tasks / 2.7 s in 10 s).
+2. **The shadow under the craft in the Constructor (drei `ContactShadows`)** redraws the whole scene every frame (all ~270–350 draw calls) into a texture + 2 blur passes — effectively doubling the stand's work.
+3. **The home screen pulled in the whole 3D engine**: a single 1.7 MB chunk (470 KB gzip) — three + R3F + drei loaded before the first frame.
+4. Google Fonts were included via a render-blocking `<link rel=stylesheet>`.
+5. Draw calls on Low (stand 270 / 350, flight 260 / 315, report replay 220) — mostly model meshes; outlines are already hidden on Low and shadows are off. Textures are small, GLBs are up to 200 KB (3.4 MB in total), there is no loading waterfall: the next scene's models are already preloaded (M5).
+6. The report replay recreates the WebGL canvas for every chapter (≈ 1 s of shader compilation on a weak machine) — left as is, see "Next".
 
-### Исправления
-| Что | Где | Эффект |
+### Fixes
+| What | Where | Effect |
 |---|---|---|
-| Рельеф Титана: **карта высот** (сетка 0.5 м, растеризация треугольников один раз, 24 мс) вместо лучей | `src/scene/TitanScene.tsx` (`makeHeightfield`, `makeGround`) | 3.3 мс → 0.006 мс на запрос; расхождение с лучом ≤ 8 см (среднее 2.5 мм), проверено на 400 точках |
-| `ContactShadows` на Low «замораживается» через 4 с после изменения сборки (модели успевают встать), разрешение 256 | `src/scene/StandScene.tsx` (`StandShadow`) | минус целый проход сцены каждый кадр на Low |
-| **Код-сплит**: Constructor / Review / Flight / Report — `React.lazy`, начинают грузиться сразу после входа в комнату | `src/ui/App.tsx` | главный экран: 470 → 155 КБ JS (gzip) |
-| Шрифты — `preload` + `onload`, без блокировки первого кадра | `index.html` | |
-| **Авто:** + бюджетные Intel (`UHD Graphics 6xx` / просто `UHD Graphics`, т. е. Celeron / Pentium / i3), Mali-G31/G51/G52/G57, «Basic Render Driver»; правило вынесено в чистую `pickAuto()` и покрыто тестом на реальных строках ANGLE / Mesa | `src/ui/graphics.ts`, `src/scene/__tests__/quality.test.ts` | Iris Xe / UHD 7xx / Apple / NVIDIA остаются High |
-| **Страховка FPS:** на High средний FPS < 40 за 5 с (после 3 с прогрева) → «Авто» сам переходит на Low и запоминает это на устройстве (`sm:autoLow`; явный выбор High сбрасывает). На Low < 26 FPS → 3D рендерится с dpr 0.75 до конца сессии (интерфейс остаётся чётким) | `src/scene/quality.tsx` (`FpsGuard`), `src/ui/graphics.ts` | пропущенная детектором слабая машина всё равно уходит на Low |
-| Подсказка «Авто · Low (было N FPS)» обновляется сразу | `src/ui/components/common.tsx` (одна строка: `useAutoQuality`) | |
+| Titan terrain: a **heightmap** (0.5 m grid, triangles rasterized once, 24 ms) instead of rays | `src/scene/TitanScene.tsx` (`makeHeightfield`, `makeGround`) | 3.3 ms → 0.006 ms per query; deviation from the ray ≤ 8 cm (mean 2.5 mm), checked on 400 points |
+| `ContactShadows` on Low "freezes" 4 s after the build changes (the models have time to settle), resolution 256 | `src/scene/StandScene.tsx` (`StandShadow`) | one whole scene pass fewer every frame on Low |
+| **Code splitting**: Constructor / Review / Flight / Report via `React.lazy`, starting to load right after joining a room | `src/ui/App.tsx` | home screen: 470 → 155 KB of JS (gzip) |
+| Fonts — `preload` + `onload`, without blocking the first frame | `index.html` | |
+| **Auto:** + budget Intel (`UHD Graphics 6xx` / plain `UHD Graphics`, i.e. Celeron / Pentium / i3), Mali-G31/G51/G52/G57, "Basic Render Driver"; the rule is moved into a pure `pickAuto()` and covered by a test on real ANGLE / Mesa strings | `src/ui/graphics.ts`, `src/scene/__tests__/quality.test.ts` | Iris Xe / UHD 7xx / Apple / NVIDIA stay on High |
+| **FPS safety net:** on High, an average FPS < 40 over 5 s (after a 3 s warm-up) → "Auto" switches to Low by itself and remembers it on the device (`sm:autoLow`; an explicit High choice resets it). On Low < 26 FPS → 3D renders at dpr 0.75 for the rest of the session (the interface stays sharp) | `src/scene/quality.tsx` (`FpsGuard`), `src/ui/graphics.ts` | a weak machine missed by the detector still ends up on Low |
+| The "Auto · Low (was N FPS)" hint updates immediately | `src/ui/components/common.tsx` (one line: `useAutoQuality`) | |
 
-### «Авто» на слабой машине
-- 4 ГБ памяти / 4 потока / SwiftShader → **Low** («память 4 ГБ»; SwiftShader и так в списке слабых) — и до, и после.
-- `Intel(R) UHD Graphics 620` при 8 ГБ / 8 потоках: до — **High** (правило не знало UHD), после — **Low** («слабая видеокарта») — проверено тестом `pickAuto` на реальных строках ANGLE.
-- Страховка FPS (High < 40 FPS → Low) проверена тестом правила и кодом; прогон «Iris Xe поверх SwiftShader» запланирован в `scripts/qa/out/matrix.sh`, но не снят.
+### "Auto" on a weak machine
+- 4 GB of memory / 4 threads / SwiftShader → **Low** ("4 GB memory"; SwiftShader is on the weak list anyway) — both before and after.
+- `Intel(R) UHD Graphics 620` with 8 GB / 8 threads: before — **High** (the rule did not know UHD), after — **Low** ("weak graphics card") — verified by the `pickAuto` test on real ANGLE strings.
+- The FPS safety net (High < 40 FPS → Low) is verified by the rule test and in code; an "Iris Xe on top of SwiftShader" run is scheduled in `scripts/qa/out/matrix.sh` but has not been captured.
 
-### Загрузка главного экрана (prod-сборка, 4× CPU, холодный кэш, медиана из 3)
-| Сеть | До: FCP / интерактивен / байты | После |
+### Home screen loading (prod build, 4× CPU, cold cache, median of 3)
+| Network | Before: FCP / interactive / bytes | After |
 |---|---|---|
-| Slow 4G (1.4 Мбит/с, RTT 563 мс) | 4.51 с / 4.49 с / 510 КБ | **2.49 с / 2.46 с / 195 КБ** |
-| Fast 4G | 1.26 с / 1.23 с | **0.86 с / 0.83 с** |
+| Slow 4G (1.4 Mbit/s, RTT 563 ms) | 4.51 s / 4.49 s / 510 KB | **2.49 s / 2.46 s / 195 KB** |
+| Fast 4G | 1.26 s / 1.23 s | **0.86 s / 0.83 s** |
 
-Цель «интерактивен < ~5 с на Slow 4G» выполнялась и раньше впритык (4.5 с), теперь с запасом. 3D-чанк (1 МБ / 276 КБ gzip) догружается в лобби, пока команда выбирает роли; если сеть совсем медленная и конструктор открыли раньше — на долю секунды видно «Загрузка…».
+The goal "interactive < ~5 s on Slow 4G" was met before too, but only just (4.5 s); now with a margin. The 3D chunk (1 MB / 276 KB gzip) finishes loading in the lobby while the team picks roles; if the network is very slow and the Constructor is opened earlier, "Loading…" is visible for a fraction of a second.
 
-## 2. Звук (без ушей — замеры)
-Метод: каждый звук и каждый фоновый слой рендерится офлайн **тем же `AudioEngine`** (вместе с мастер-компрессором), громкости по умолчанию (общая 60 %, фон 50 %, эффекты 70 %) и на 100 %. LUFS-M max — максимальная громкость за 400 мс (для коротких звуков это честнее интегральной); фон — после 4 с (когда закончился плавный вход).
+## 2. Sound (no ears — measurements)
+Method: every sound and every background layer is rendered offline by **the same `AudioEngine`** (together with the master compressor), at default volumes (master 60 %, background 50 %, effects 70 %) and at 100 %. LUFS-M max is the maximum loudness over 400 ms (fairer than integrated loudness for short sounds); backgrounds are measured after 4 s (once the fade-in has finished).
 
-Громкости по умолчанию, LUFS-M max (пик dBFS). Клиппинга (|x| ≥ 1) нет **ни в одном** рендере, ни на 100 %.
+Default volumes, LUFS-M max (peak dBFS). There is no clipping (|x| ≥ 1) in **any** render, even at 100 %.
 
-| Звук | До | После | Вердикт |
+| Sound | Before | After | Verdict |
 |---|---|---|---|
-| UI-клик | −62 (−43) | −62 | тихий «тик», на 30 LU тише тревог ✓ |
-| Модуль поставлен / снят | −46 / −49 | — | ✓ |
-| Утверждено / вето | −28 / −39 | — | ✓ |
-| **Кризис (зуммер)** | **−38.1** (−22.5) | **−30.7** (−14.7) | был тише колокольчика «утверждено» и гула штаба → +7.5 дБ |
-| Кризис поверх бури+ротора+помех | −33.1 при фоне −35.9 (+2.8 LU) | **−28.0 при фоне −36.2 (+8 LU)** | теперь слышно поверх фона |
-| Кризис, «Без резких звуков» | — | −32.2 (−21.9) | мягче, но +6 LU над фоном ✓ |
-| Кризис решён / закрыт | −31.8 / −37 | — | ✓ |
-| **Радио / SOS** | **−45.9 / −44.1** | **−38.1 / −36.4** | было тише фона штаба (игровая информация!) → +8 дБ |
-| Связь потеряна / вернулась | −38.1 / −43.2 | −34.2 / −37.6 | +4 / +6 дБ |
-| Маяк капсулы | −44.8 | −39.1 | +6 дБ |
-| Захват, заклинило, герметизация, капсула, парашют, посадка | −36…−41 | — | ✓ |
-| Старт (весь) | −22.4 (−12.2) | −23.3 (−12.8) | самый громкий момент, рёв −1.5 дБ ✓ |
-| Итоги Perfect / Success / Partial / Failed | −27…−29 | — | ✓ |
-| **Фон штаба** | **−36.3** | **−40.0** | был громче зуммера → −4 дБ |
-| Фон космоса | −36.7 | −40.2 | −4 дБ |
-| Ветер Титана / Земли | −41 / −45 | — | ✓ |
-| Дождь (буря), ротор, ион, хим. | −38 / −46 / −48 / −44 | — | ✓ |
-| Помехи (нет связи) | −43 | — | ✓ |
-| Плазма входа | −33.1 | −36.7 | −3 дБ |
-| **DC-смещение** (коричневый шум) | до 7·10⁻⁴ (фон Титана), 2.6·10⁻³ на 100 % | ≤ 1·10⁻⁴ | вычитаем среднее буфера шума |
+| UI click | −62 (−43) | −62 | a quiet "tick", 30 LU quieter than alarms ✓ |
+| Module installed / removed | −46 / −49 | — | ✓ |
+| Approved / veto | −28 / −39 | — | ✓ |
+| **Crisis (buzzer)** | **−38.1** (−22.5) | **−30.7** (−14.7) | was quieter than the "approved" chime and the HQ hum → +7.5 dB |
+| Crisis over storm+rotor+static | −33.1 over a −35.9 background (+2.8 LU) | **−28.0 over a −36.2 background (+8 LU)** | now audible over the background |
+| Crisis, "No harsh sounds" | — | −32.2 (−21.9) | softer, but +6 LU above the background ✓ |
+| Crisis resolved / closed | −31.8 / −37 | — | ✓ |
+| **Radio / SOS** | **−45.9 / −44.1** | **−38.1 / −36.4** | was quieter than the HQ background (game information!) → +8 dB |
+| Signal lost / back | −38.1 / −43.2 | −34.2 / −37.6 | +4 / +6 dB |
+| Capsule beacon | −44.8 | −39.1 | +6 dB |
+| Grab, jam, sealing, capsule, parachute, touchdown | −36…−41 | — | ✓ |
+| Launch (whole) | −22.4 (−12.2) | −23.3 (−12.8) | the loudest moment, roar −1.5 dB ✓ |
+| Perfect / Success / Partial / Failed outcomes | −27…−29 | — | ✓ |
+| **HQ background** | **−36.3** | **−40.0** | was louder than the buzzer → −4 dB |
+| Space background | −36.7 | −40.2 | −4 dB |
+| Titan / Earth wind | −41 / −45 | — | ✓ |
+| Rain (storm), rotor, ion, chemical | −38 / −46 / −48 / −44 | — | ✓ |
+| Static (no link) | −43 | — | ✓ |
+| Entry plasma | −33.1 | −36.7 | −3 dB |
+| **DC offset** (brown noise) | up to 7·10⁻⁴ (Titan background), 2.6·10⁻³ at 100 % | ≤ 1·10⁻⁴ | we subtract the noise buffer's mean |
 
-На 100 % всех ползунков: максимальный пик −5.5 dBFS (старт), кризис над бурей −6.8 dBFS — запас есть, компрессор почти не работает.
+With all sliders at 100 %: the maximum peak is −5.5 dBFS (launch), the crisis over the storm is −6.8 dBFS — there is headroom, and the compressor barely works.
 
-Живая страница: до первого клика AudioContext **не создаётся** (`none`), после клика — `running`, предупреждений autoplay в консоли нет; «Звук выкл» и «Общая 0» → тишина (−∞), «Фон 0» → −112 dBFS (тишина), гул штаба при 60 % — −42 dBFS RMS. Правки — только числа в `src/audio/engine.ts`.
+Live page: before the first click the AudioContext is **not created** (`none`), after the click — `running`, no autoplay warnings in the console; "Sound off" and "Master 0" → silence (−∞), "Background 0" → −112 dBFS (silence), the HQ hum at 60 % — −42 dBFS RMS. The changes are only numbers in `src/audio/engine.ts`.
 
 
-## 3. Телефоны
-Профили: iPhone SE 375×667 @2, iPhone 14 390×844 @3 (+ эмуляция safe-area 47/34 px — Chrome это умеет), Android 412×915 @2.625; касания, мобильный UA, 4× CPU. Цикл в демо: Главная → Лобби → Штаб → Брифинг → Конструктор → Проверка → Старт → Полёт до первого кризиса → Отчёт. Скриншоты: `docs/05 Assets/UI/kit/shots/qa/<se|14|android>-<экран>.jpg`.
+## 3. Phones
+Profiles: iPhone SE 375×667 @2, iPhone 14 390×844 @3 (+ safe-area emulation 47/34 px — Chrome can do this), Android 412×915 @2.625; touch, a mobile UA, 4× CPU. The loop in demo: Home → Lobby → HQ → Briefing → Constructor → Review → Launch → Flight until the first crisis → Report.
 
 | | iPhone SE | iPhone 14 | Android 412×915 |
 |---|---|---|---|
-| «Авто» | Low («телефон») | Low | Low |
-| Горизонтальный скролл (11 экранов + 2 ландшафта) | 0 | 0 | 0 |
-| Кнопки < 44 px | было 3 (Авто/Low/High, 40 px) → **0** | 0 | 0 |
-| Имя + клавиатура (−45 % высоты) | поле видно, 16 px (нет iOS-зума) | ✓ | ✓ |
-| Потеря WebGL-контекста (конструктор, полёт) | восстанавливается, 60 FPS, 0 ошибок | ✓ | ✓ |
-| Полёт на Low, 4× CPU (Metal) | 31–52 FPS | 58 | 58 |
-| Ошибок в консоли | 0 | 0 | 0 |
+| "Auto" | Low ("phone") | Low | Low |
+| Horizontal scroll (11 screens + 2 landscape) | 0 | 0 | 0 |
+| Buttons < 44 px | there were 3 (Auto/Low/High, 40 px) → **0** | 0 | 0 |
+| Name + keyboard (−45 % of height) | the field is visible, 16 px (no iOS zoom) | ✓ | ✓ |
+| WebGL context loss (Constructor, flight) | recovers, 60 FPS, 0 errors | ✓ | ✓ |
+| Flight on Low, 4× CPU (Metal) | 31–52 FPS | 58 | 58 |
+| Console errors | 0 | 0 | 0 |
 
-Вкладки отделов в конструкторе выходят за край — это горизонтальная лента с прокруткой, так и задумано.
+The department tabs in the Constructor extend past the edge — it is a horizontally scrolling strip, by design.
 
-**Найдено и исправлено:**
-1. **Игра не запускалась по Wi-Fi с телефона.** По `http://192.168…` нет `crypto.randomUUID` (только безопасный контекст) → `claimPlayerId` падал, id игрока пустой, все кнопки главного экрана неактивны. Проверено `lan.mjs` с IP компьютера: до — `crypto.randomUUID is not a function`, кнопки выключены; после — демо открывается. Фолбэк `newId()` на `getRandomValues` в `src/store/identity.ts` + тест `src/store/__tests__/identity.test.ts`.
-2. Переключатель графики Авто/Low/High — 40 px на сенсорных экранах → 44 px (`src/ui/styles.css`, блок «Device QA»).
-3. Селекты 14–15 px → 16 px на сенсорных экранах (iOS приближает страницу к полю < 16 px).
-4. Телефон боком (высота ≤ 500 px): компактная шапка, 3D-окно 78–82 % высоты (было 46 vh ≈ 170 px, 3D начиналось ниже края экрана). Android боком (915 px, «десктопная» сетка): окно полёта было ≈ 40 px высотой — для коротких экранов > 900 px страница теперь прокручивается, 3D 80 vh (последнее правило в браузере не перепроверено).
+**Found and fixed:**
+1. **The game did not start over Wi-Fi from a phone.** Over `http://192.168…` there is no `crypto.randomUUID` (secure context only) → `claimPlayerId` crashed, the player id was empty, and all home screen buttons were disabled. Verified with `lan.mjs` using the computer's IP: before — `crypto.randomUUID is not a function`, buttons disabled; after — the demo opens. A `newId()` fallback to `getRandomValues` in `src/store/identity.ts` + the test `src/store/__tests__/identity.test.ts`.
+2. The Auto/Low/High graphics switch was 40 px on touch screens → 44 px (`src/ui/styles.css`, the "Device QA" block).
+3. Selects 14–15 px → 16 px on touch screens (iOS zooms the page into a field < 16 px).
+4. A phone held sideways (height ≤ 500 px): a compact header, the 3D window at 78–82 % of the height (it was 46 vh ≈ 170 px, and the 3D started below the edge of the screen). Android sideways (915 px, the "desktop" grid): the flight window was ≈ 40 px tall — for short screens > 900 px the page now scrolls, 3D 80 vh (this last rule has not been re-checked in the browser).
 
 
-## Как открыть игру на своём телефоне (по Wi-Fi, без Supabase)
-1. Телефон и компьютер — в одной Wi-Fi сети.
-2. На компьютере в папке проекта: `pnpm dev:lan`. Vite напечатает две строки, нужна **Network**, например `http://192.168.68.116:5173/`.
-3. Открыть этот адрес в браузере телефона (Safari / Chrome). Для демо одному: ввести имя → «Демо-режим: играть одному». Для быстрого полёта: добавить `?dev=1&speed=10` к адресу.
-4. Если не открывается: macOS может спросить «Разрешить входящие подключения для node» — разрешить; в «Системные настройки → Сеть → Файрвол» node не должен быть заблокирован. Гостевые / школьные Wi-Fi часто изолируют устройства друг от друга — тогда подойдёт раздача интернета с телефона (компьютер подключается к ней).
-5. Звук на iPhone: включить звонок (переключатель сбоку), первым касанием разблокируется звук.
-6. Ограничение: по `http://192.168…` браузер считает страницу небезопасной — нет `crypto.randomUUID`, Web Locks, буфера обмена. Это учтено (см. исправления), но мультиплеер между телефоном и компьютером в локальном режиме **не работает**: локальный транспорт — это вкладки одного браузера. Несколько устройств — только через Supabase ([Multiplayer](Multiplayer.md)).
+## How to open the game on your phone (over Wi-Fi, without Supabase)
+1. The phone and the computer are on the same Wi-Fi network.
+2. On the computer, in the project folder: `pnpm dev:lan`. Vite prints two lines; you need **Network**, for example `http://192.168.68.116:5173/`.
+3. Open this address in the phone's browser (Safari / Chrome). For a solo demo: enter a name → "Demo mode: play solo". For a quick flight: add `?dev=1&speed=10` to the address.
+4. If it doesn't open: macOS may ask to "Allow incoming connections for node" — allow it; in "System Settings → Network → Firewall", node must not be blocked. Guest / school Wi-Fi networks often isolate devices from each other — then use the phone's hotspot (the computer connects to it).
+5. Sound on an iPhone: turn the ringer on (the side switch); the first tap unlocks sound.
+6. Limitation: over `http://192.168…` the browser treats the page as insecure — there is no `crypto.randomUUID`, no Web Locks, no clipboard. This is handled (see the fixes), but multiplayer between a phone and a computer **does not work** in local mode: the local transport is tabs of a single browser. Multiple devices — only via Supabase ([Multiplayer](Multiplayer.md)).
 
-## Что проверено только эмуляцией (не на железе)
-- **FPS на реальных школьных ноутбуках.** SwiftShader — программный рендер, он медленнее любой встроенной видеокарты по заливке пикселей, а Metal на M5 — быстрее любой; реальный Intel UHD где-то между. CPU-троттлинг 6× замедляет только поток страницы, а не GPU-процесс и не драйвер. Нужна проверка на живом Celeron / UHD 600–620 с Windows.
-- **Телефоны.** Chrome-эмуляция: не Safari/WebKit, нет настоящей экранной клавиатуры (имитирована уменьшением высоты окна), нет тепла / троттлинга батареи, нет реального GPU телефона, safe-area эмулирована только сверху/снизу. iOS Safari (поворот, 100dvh, звук после блокировки экрана) не проверен.
-- **Звук на слух.** Уровни измерены и выровнены, но тембр («не режет ли уши», «не наказывающий ли Failed») — только ушами, см. [Sound](../03%20Design/Sound.md) «Как послушать».
-- **Потеря WebGL-контекста** проверена искусственно (`WEBGL_lose_context`): three.js восстанавливает всё сам. Настоящая потеря (свернули вкладку на iPhone, драйвер упал) может вести себя иначе.
+## What was verified only by emulation (not on hardware)
+- **FPS on real school laptops.** SwiftShader is a software renderer, slower at pixel fill than any integrated graphics card, while Metal on the M5 is faster than any of them; a real Intel UHD is somewhere in between. 6× CPU throttling slows down only the page thread, not the GPU process or the driver. A check on a live Celeron / UHD 600–620 with Windows is needed.
+- **Phones.** Chrome emulation: not Safari/WebKit, no real on-screen keyboard (imitated by reducing the window height), no heat / battery throttling, no real phone GPU, safe-area emulated only at the top/bottom. iOS Safari (rotation, 100dvh, sound after the screen locks) has not been tested.
+- **Sound by ear.** Levels are measured and balanced, but the timbre ("does it hurt the ears", "does Failed sound punishing") can only be judged by ear, see [Sound](../03%20Design/Sound.md), "How to listen".
+- **WebGL context loss** was tested artificially (`WEBGL_lose_context`): three.js restores everything by itself. A real loss (a tab minimized on an iPhone, a driver crash) may behave differently.
 
-## Дальше
-- Повтор отчёта: один канвас на все главы вместо нового WebGL-контекста на каждую.
-- Low: снимать невидимые оболочки обводок из графа сцены (сейчас они скрыты материалом, но обходятся каждый кадр).
-- Конструктор на телефоне: фиксированная кнопка звука перекрывает контент при прокрутке (есть в [Known Issues](Known%20Issues.md)).
+## Next
+- Report replay: one canvas for all chapters instead of a new WebGL context for each.
+- Low: remove the invisible outline shells from the scene graph (right now they are hidden by the material but still traversed every frame).
+- Constructor on a phone: the fixed sound button covers content while scrolling (listed in [Known Issues](Known%20Issues.md)).
